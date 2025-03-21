@@ -6,25 +6,15 @@ const { saveInCache } = require('../database/cache.js');
 require('dotenv').config();
 module.exports.meganStart = async (data) => {
 
-   // ARRUMAR DEPOIS        @@@@@@@@@@@@@@@@@@@@@@
-   //if (process.env.NODE_ENV === 'development' && process.env.FRANQUIA_ID) {
-   //   const message = {};
-   //   const from_client = '77777777777.@c.us';
-   //   const franquia_id = process.env.FRANQUIA_ID;
-   //   message.from = from_client;
-   //   message.body = '1';
-   //} else {
    const { message } = data;
    const { franquia_id } = message;
    const from_client = message.from;
-   //}
 
    try {
       const response = await execStage();
 
 
       const data = {
-         //message: message,  ???????
          response: response ? response : null, // SE COLOCAR "CHATBOT DESATIVADO!" NO RESPONSE VAI DESATIVAR QUEBRAR O BOT
          obj_store: storage[from_client].obj_store,
          attendant: storage[from_client].attendant,
