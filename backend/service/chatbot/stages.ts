@@ -1,14 +1,19 @@
 import {
-  initialStage
+  initialStage,
+  stageOne,
 } from './stages/index.js';
 
 import { storage } from './storage.js';
 
 export const stages = [
   {
-    descricao: 'Welcome',
+    description: 'Welcome',
     stage: initialStage,
-  }
+  },
+  {
+    description: 'Store',
+    stage: stageOne,
+  },
 ];
 
 export const getStage = async ({ id, stage }: { id: string, stage?: number }): Promise<number> => {

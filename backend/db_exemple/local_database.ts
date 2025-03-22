@@ -26,12 +26,17 @@ function writeDatabase(data: any) {
 // Função para obter um estágio específico
 export function getMessageDatabase(stage: any) {
   const db = readDatabase();
-  return db.stages[stage] || null;
+  return db.database[stage] || null;
+}
+
+export function getAllItemsDatabase(get_items: any) {
+  const db = readDatabase();
+  return db.database[get_items] || null;
 }
 
 // Função para atualizar um estágio
 function updateStage(stage: any, messages: any) {
   const db = readDatabase();
-  db.stages[stage] = messages;
+  db.database[stage] = messages;
   writeDatabase(db);
 }

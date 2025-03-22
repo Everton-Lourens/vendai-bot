@@ -18,7 +18,11 @@ export const chatbot = async (data: {
    };
 }> => {
 
-   const { id, stage, message } = data;
+//   const { id, stage, message } = data;
+
+   const id = '123456'
+   const stage = 1
+   const message = '1'
 
    try {
       const currentStage = await getStage({ id, stage });
