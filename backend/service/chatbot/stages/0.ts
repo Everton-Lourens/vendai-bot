@@ -1,6 +1,5 @@
 import { storage } from '../storage.js';
 import { getMessageDatabase } from '../../../db_exemple/local_database.js';
-import { logger } from '../../../helpers/logger.js';
 
 export const initialStage = {
   async exec({ id, message }: { id: string, message: string }): Promise<{ nextStage: number; order: {}; response: string }> {
