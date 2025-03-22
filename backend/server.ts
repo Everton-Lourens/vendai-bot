@@ -28,6 +28,7 @@ app.use('/v1/chat', apiRouter);
 apiRouter.get('/', (req, res) => {
     chatbot({ id: '123456', stage: 0, message: 'ola' }).then((response) => {
         res.status(201).json({
+            messageAlert: 'Rota Get de teste',
             data: response
         }).end();
     }).catch(() => {
