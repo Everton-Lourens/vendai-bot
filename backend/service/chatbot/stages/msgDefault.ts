@@ -1,12 +1,9 @@
-
-
-module.exports.msgStage = {
+export const msgStage = {
    0: {
       message_1:
          'Escolha a loja a mais\n' +
          'próxima de você:\n' +
          '*——————————*',
-
       message_2:
          'Você já está conectado! ✅\n' +
          '*FALE COM O CLIENTE AGORA:*',
@@ -16,12 +13,10 @@ module.exports.msgStage = {
          '👋 Bem-vindo(a)\n' +
          'Sou a *Megan,* Assistente Virtual.\n' +
          '```Posso te ajudar?``` 🙋‍♀ 🥰\n\n' +
-
          '*——————————*\n' +
          '1️⃣ *–> FAZER PEDIDO*\n' +
          '2️⃣ *→* ```TAXA De Entrega```\n' +
          '3️⃣ *→* ```FALAR C/ Atendente```',
-
       message_2:
          '1️⃣ *–> FAZER PEDIDO* \n' +
          //'#️⃣ → Criar link de pagamento\n' +
@@ -37,9 +32,7 @@ module.exports.msgStage = {
       message_1:
          '✍️ AGORA DIGITE SEU ENDEREÇO\n' +
          '*––> EM APENAS 1 MENSAGEM*```!``` *<––*\n\n' +
-
          '```Por Exemplo:```\n\n' +
-
          '( ```Rua,Número,Bairro,Referência``` )',
    },
    5: {
@@ -59,14 +52,11 @@ module.exports.msgStage = {
       message_1:
          'Deseja retomar o atendimento\n' +
          'de algum cliente?\n\n' +
-
          '*——————————*\n' +
          '#️⃣ *–> HISTÓRICO DE CLIENTES*',
-
       message_2:
          '✅ *Atendimento encerrado por:*\n🤖 MeganBot.com.br',
-
       message_3:
-      '✅ *Atendimento encerrado por:*\n🤖 MeganBot.com.br',
+         '✅ *Atendimento encerrado por:*\n🤖 MeganBot.com.br',
    },
 };
