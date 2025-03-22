@@ -1,18 +1,28 @@
-import { logger } from '../../../helpers/logger.js';
 import { storage } from '../storage.js';
-import { msgStage } from './msgDefault.js';
+import { getMessageDatabase } from '../../../db_exemple/local_database.js';
+import { logger } from '../../../helpers/logger.js';
 
 export const initialStage = {
   async exec({ id, message }: { id: string, message: string }): Promise<{ nextStage: number; order: {}; response: string }> {
-
-
-
-    //const { nextStage, order, response } = hello;
-
-
     storage[id].stage = 1;
 
-    return { nextStage: 1, order: storage[id], response: 'AAAAAAAAAA' };
+    // Recebe uma lista do nome das lojas
+    const response = getMessageDatabase('stage_0')?.message_1 || 'Erro ao buscar mensagem do banco de dados';
+
+    // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário
+    storage[id].trackRecordResponse.push({
+      id,
+      currentStage: 0,
+      nextStage: storage[id].stage,
+      message,
+      response
+    });
+
+    return {
+      nextStage: storage[id].stage,
+      order: storage[id],
+      response
+    };
 
     /*
     async function wellcome() {

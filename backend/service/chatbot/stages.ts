@@ -15,14 +15,16 @@ export const getStage = async ({ id, stage }: { id: string, stage?: number }): P
 
   const order: {
     stage: number,
-    attendant: boolean,
+    wantsHumanService: boolean,
     items: any[],
     address: null,
+    trackRecordResponse: any[],
   } = {
     stage: stage ?? 0,
-    attendant: false,
+    wantsHumanService: false,
     items: [],
     address: null,
+    trackRecordResponse: [],
   };
 
   storage[id] = order;

@@ -1,0 +1,19 @@
+{
+    "stages": {
+      "stage_0": {
+        "message_1": "Escolha a loja a mais\npróxima de você:\n*——————————*",
+        "message_2": "1️⃣ *–> FAZER PEDIDO* \n3️⃣ *→* ```FALAR C/ Atendente```"
+      },
+      "stage_1": {
+        "message_1": "👋 Bem-vindo(a)\nSou a *Megan,* Assistente Virtual.\n```Posso te ajudar?``` 🙋‍♀ 🥰\n\n*——————————*\n1️⃣ *–> FAZER PEDIDO*\n2️⃣ *→* ```TAXA De Entrega```\n3️⃣ *→* ```FALAR C/ Atendente```",
+        "message_2": "1️⃣ *–> FAZER PEDIDO* \n3️⃣ *→* ```FALAR C/ Atendente```"
+      },
+      "stage_4": {
+        "message_1": "✍️ AGORA DIGITE SEU ENDEREÇO\n*––> EM APENAS 1 MENSAGEM*```!``` *<––*\n\n```Por Exemplo:```\n\n( ```Rua,Número,Bairro,Referência``` )"
+      },
+      "stage_5": {
+        "message_1": "*–>🛑 –FORMA DE PAGAMENTO:*\n*——————————*\n1️⃣ *–> Pix*\n2️⃣ *→* ```Dinheiro```\n3️⃣ *→* ```Cartão```"
+      }
+    }
+  }
+  
