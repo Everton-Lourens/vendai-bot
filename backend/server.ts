@@ -14,7 +14,7 @@ const app = express();
 const apiRouter = Router();
 
 app.use(cors({
-    origin: 'http://localhost:8081',
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,

@@ -1,0 +1,78 @@
+@import "@/styles/colors.scss";
+
+.homeContainer {
+  padding: 3rem 8rem;
+  flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .connectionContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    gap: 3rem;
+    margin-top: -3rem;
+
+    h2 {
+      font-weight: 600;
+      font-size: 2rem;
+    }
+
+    .connectionQrCode {
+      background: $white-color;
+      padding: 0.5rem;
+      border-radius: 20px;
+    }
+
+    .connectionUser {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      gap: 2rem;
+
+      h3 {
+        text-transform: uppercase;
+      }
+    }
+
+    .connectionStatus {
+      font-weight: 600;
+
+      &.connected {
+        color: $green-color-100;
+      }
+
+      &.pending {
+        color: $blue-color-100;
+      }
+
+      &.disconnected {
+        color: $red-color-100;
+      }
+    }
+
+    .goToSendMessagesButton,
+    .reconnectButton {
+      color: $white-color;
+
+      font-size: 0.875rem;
+      font-weight: 500;
+      border-radius: 20px;
+
+      padding: 1rem 1.2rem;
+      border: none;
+    }
+
+    .goToSendMessagesButton {
+      background: $purple-color-100;
+    }
+
+    .reconnectButton {
+      background: $green-color-100;
+    }
+  }
+}
