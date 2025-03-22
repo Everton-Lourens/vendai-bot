@@ -4,15 +4,20 @@ import { validate } from 'uuid';
 import { logger } from '../helpers/logger.js';
 
 export const validateBody = (req: Request): boolean => {
-    const { id, stage, message } = req.body;
+    try {
+        const { client } = req.body;
+        const { id, stage, message } = client;
 
-    if (!validate(id)) return false;
+        if (!validate(id)) return false;
 
-    if (typeof message !== 'string') return false;
+        if (typeof message !== 'string') return false;
 
-    if (typeof stage !== 'number') return false;
+        if (typeof stage !== 'number') return false;
 
-    return true;
+        return true;
+    } catch (error) {
+        return false;
+    }
 };
 
 export const validationFilter = (req: Request, res: Response, next: NextFunction): void => {
