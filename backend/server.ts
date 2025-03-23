@@ -26,6 +26,18 @@ app.use('/v1/chat', apiRouter);
 /////////////////////////
 // Rota de teste
 apiRouter.get('/', (req, res) => {
+    logger.info('@@@@@@@@@@@@@@@@@ Rota Get de teste @@@@@@@@@@@@@@@@@');
+    chatbot({ id: '123456', stage: 0, message: 'ola' }).then((response) => {
+        res.status(201).json({
+            messageAlert: 'Rota Get de teste',
+            data: response
+        }).end();
+    }).catch(() => {
+        res.status(422).end();
+    });
+});
+apiRouter.post('/', (req, res) => {
+    logger.info(req.body);
     chatbot({ id: '123456', stage: 0, message: 'ola' }).then((response) => {
         res.status(201).json({
             messageAlert: 'Rota Get de teste',
@@ -37,7 +49,7 @@ apiRouter.get('/', (req, res) => {
 });
 /////////////////////////
 
-apiRouter.post('/', validationFilter, (req, res) => {
+apiRouter.get('/', validationFilter, (req, res) => { //post
     chatbot(req.body).then((response) => {
         res.status(201).json({
             data: response

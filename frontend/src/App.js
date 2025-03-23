@@ -2,38 +2,54 @@ import './ChatScreen.css';
 import React, { useEffect, useState } from 'react';
 
 const ChatScreen = () => {
-  const [responseChatBot, setResponseChatBot] = useState({});
+  const [messageResponse, setMessageResponse] = useState('');
   const [message, setMessage] = useState('');
   const [chatMessages, setChatMessages] = useState([]);
+  const [dataResponseChatbot, setDataResponseChatbot] = useState({
+    client: {
+      id: 0,
+      stage: 0,
+      message: '',
+    }
+  });
+  const apiChatbot = async () => {
+    fetch('http://localhost:3005/v1/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(dataResponseChatbot),
+    }).then((response) => response.json())
+      .then((data) => {
+        const { client } = data?.data;
+        setDataResponseChatbot({ client });
+        setMessageResponse(data?.data?.client?.response);
+      })
+      .catch((error) => {
+        console.error('Erro ao enviar mensagem:', error);
+      });
+  };
 
+  const sendMessageFromChatbot = React.useCallback(() => {
+    !messageResponse && apiChatbot();
+    messageResponse && setChatMessages((prevMessages) => [...prevMessages, { text: messageResponse, sender: "bot" }]);
+  }, [messageResponse]);
 
-  const sendMessage = () => {
+  const sendMessageToChatbot = () => {
     if (message.trim() !== '') {
-      // Em uma versão sem socket, aqui você poderia enviar a mensagem para o servidor
+      apiChatbot();
       setChatMessages((prevMessages) => [...prevMessages, { text: message, sender: "me" }]);
-      setMessage('');      
+      setMessage('');
+      setTimeout(() => {
+        sendMessageFromChatbot();
+      }, 1000);
     }
   };
 
   useEffect(() => {
-    fetch('http://localhost:3005/v1/chat', {
-      method: 'GET',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        id: '123456',
-        stage: 0,
-        message: 'ola'
-      }),
-    }).then((response) => response.json())
-      .then((data) => {
-        setChatMessages((prevMessages) => [...prevMessages, { text: data.client.response, sender: "bot" }]);
-        setResponseChatBot(data);
-      })
-      .catch((error) => {
-        console.error('Erro ao enviar mensagem:', error);
-      })
+    setTimeout(() => {
+      sendMessageFromChatbot();
+    }, 500);
+  }, [messageResponse, sendMessageFromChatbot]);
 
-  }, []);
   return (
     <div style={styles.container}>
       <ul style={styles.messageList}>
@@ -59,9 +75,9 @@ const ChatScreen = () => {
           placeholder="Digite sua mensagem..."
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()}
+          onKeyDown={(e) => e.key === 'Enter' && sendMessageToChatbot()}
         />
-        <button onClick={sendMessage} style={styles.button}>Enviar</button>
+        <button onClick={sendMessageToChatbot} style={styles.button}>Enviar</button>
       </div>
     </div>
   );
@@ -81,7 +97,7 @@ const styles = {
   messageList: {
     listStyleType: 'none',
     padding: 0,
-    width: '80%',
+    width: '100%',
     maxHeight: '70vh',
     overflowY: 'auto',
     marginBottom: '10%',
@@ -90,18 +106,21 @@ const styles = {
     padding: "10px 15px",
     borderRadius: "10px",
     marginBottom: "10px",
-    maxWidth: "100%",
+    maxWidth: "45%",
     wordBreak: "break-word",
-    backgroundColor: "#bac8d6",
+    backgroundColor: "rgb(220, 204, 241)", 
+    marginLeft: "20%",
   },
   message_me: {
     padding: "10px 15px",
     borderRadius: "10px",
     marginBottom: "10px",
-    maxWidth: "100%",
+    maxWidth: "45%",
     wordBreak: "break-word",
-    backgroundColor: "#e0e0e0",
     textAlign: "right",
+    marginLeft: "auto",
+    backgroundColor: "rgb(209, 209, 209)", //#bac8d6
+    marginRight: "20%",
   },
   inputContainer: {
     display: 'flex',
