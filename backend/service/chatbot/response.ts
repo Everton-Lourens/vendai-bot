@@ -24,6 +24,8 @@ export const chatbot = async (data: {
 }> => {
    try {
       const client = data?.client || data;
+console.log(client);
+
       const { id, stage, message } = client;
 
       const currentStage = await getStage({ id, stage });
@@ -48,7 +50,8 @@ export const chatbot = async (data: {
       return successResponse;
 
    } catch (error) {
-      logger.error('Erro desconhecido ao executar o chatbot', error);
+      logger.error('Erro desconhecido ao executar o chatbot');
+      logger.error(error);
       const errorResponse = formatApiResponse({
          status: 500,
          message: 'Erro desconhecido ao executar o chatbot',

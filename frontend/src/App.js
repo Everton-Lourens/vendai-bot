@@ -35,7 +35,7 @@ const App = () => {
         setDataResponseChatbot({ client });
         setMessageResponse(data?.data?.client?.response);
         setTimeout(() => {
-          setMessages((prevMessages) => [...prevMessages, { text: data?.data?.client?.response, sender: "bot" }]);
+          data?.data?.client?.response && setMessages((prevMessages) => [...prevMessages, { text: data?.data?.client?.response, sender: "bot" }]);
         }, 1000);
       })
       .catch((error) => {
@@ -69,12 +69,13 @@ const App = () => {
           <div
             key={index}
             className={message.sender === 'user' ? 'message user' : 'message bot'}
-            dangerouslySetInnerHTML={{ __html: message.text.replace(/\n/g, "<br>") }}
+            dangerouslySetInnerHTML={{ __html: message?.text?.replace(/\n/g, "<br>") }}
           ></div>
         ))}
       </div>
       <div className="input-container">
         <input
+          autoFocus
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}

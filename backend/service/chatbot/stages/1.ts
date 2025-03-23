@@ -15,7 +15,7 @@ export const stageOne = {
       }
       else if (message === '3') {
         storage[id].wantsHumanService = true;
-        storage[id].stage = 6; // vai para o stage do atendente
+        storage[id].stage = 3; // vai para o stage do atendente
         return getMessageDatabase('attendant_stage')?.message_1 || 'Erro ao buscar mensagem do banco de dados';
       }
       else {

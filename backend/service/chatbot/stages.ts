@@ -2,6 +2,7 @@ import {
   initialStage,
   stageOne,
   stageTwo,
+  stageThree,
 } from './stages/index.js';
 
 import { storage } from './storage.js';
@@ -18,6 +19,10 @@ export const stages = [
   {
     description: 'Choose the items',
     stage: stageTwo,
+  },
+  {
+    description: 'Attendant stage',
+    stage: stageThree,
   },
 ];
 
