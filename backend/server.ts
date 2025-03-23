@@ -36,8 +36,8 @@ apiRouter.get('/', (req, res) => {
         res.status(422).end();
     });
 });
+/*
 apiRouter.post('/', (req, res) => {
-    logger.info(req.body);
     chatbot({ id: '123456', stage: 0, message: 'ola' }).then((response) => {
         res.status(201).json({
             messageAlert: 'Rota Get de teste',
@@ -47,9 +47,10 @@ apiRouter.post('/', (req, res) => {
         res.status(422).end();
     });
 });
+*/
 /////////////////////////
 
-apiRouter.get('/', validationFilter, (req, res) => { //post
+apiRouter.post('/', validationFilter, (req, res) => {
     chatbot(req.body).then((response) => {
         res.status(201).json({
             data: response

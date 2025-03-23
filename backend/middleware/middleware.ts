@@ -1,13 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import _ from 'lodash';
-import { validate } from 'uuid';
+import { validate, v4 as uuid } from 'uuid';
 import { logger } from '../helpers/logger.js';
 
 export const validateBody = (req: Request): boolean => {
     try {
         const { client } = req.body;
-        const { id, stage, message } = client;
+        var { id, stage, message } = client;
 
+        id === 999 ? id = uuid() : id;  // PENAS PARA TESTES, DEPOIS QUE COLOCAR UUID DOS CLIENTES NÃO SERÁ MAIS NECESASÁRIO
+console.log(id);
+console.log(id);
+console.log(id);
         if (!validate(id)) return false;
 
         if (typeof message !== 'string') return false;
@@ -23,7 +27,7 @@ export const validateBody = (req: Request): boolean => {
 export const validationFilter = (req: Request, res: Response, next: NextFunction): void => {
     try {
         if (!validateBody(req)) {
-            console.log('Erro de validação');
+            logger.error('Erro de validação');
             // Type 'Response<any, Record<string, any>>' is not assignable to type 'void'
             res.status(422).json({ message: 'Dados inválidos no corpo da requisição.' });
             return;
