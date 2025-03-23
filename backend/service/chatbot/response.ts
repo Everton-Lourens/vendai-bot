@@ -24,7 +24,6 @@ export const chatbot = async (data: {
 }> => {
    try {
       const client = data?.client || data;
-console.log(client);
 
       const { id, stage, message } = client;
 

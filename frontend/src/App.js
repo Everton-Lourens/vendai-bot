@@ -5,7 +5,6 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const messageListRef = useRef(null);
-  const [messageResponse, setMessageResponse] = useState('');
 
   const [dataResponseChatbot, setDataResponseChatbot] = useState({
     client: {
@@ -33,7 +32,6 @@ const App = () => {
       .then((data) => {
         const { client } = data?.data;
         setDataResponseChatbot({ client });
-        setMessageResponse(data?.data?.client?.response);
         setTimeout(() => {
           data?.data?.client?.response && setMessages((prevMessages) => [...prevMessages, { text: data?.data?.client?.response, sender: "bot" }]);
         }, 1000);
@@ -54,13 +52,9 @@ const App = () => {
     }
   };
 
-  /*
-  useEffect(() => {
-    setTimeout(() => {
-      sendMessageFromChatbot();
-    }, 500);
-  }, [messageResponse, sendMessageFromChatbot]);
-  */
+  const sendToJsonBackend = () => {
+    window.open('http://localhost:3005/', '_blank');
+  };
 
   return (
     <div className="chat-container">
@@ -74,6 +68,7 @@ const App = () => {
         ))}
       </div>
       <div className="input-container">
+      <button style={{marginRight: '10px', backgroundColor: 'gray'}} onClick={sendToJsonBackend}>Backend</button>
         <input
           autoFocus
           type="text"

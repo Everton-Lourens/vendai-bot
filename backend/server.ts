@@ -6,7 +6,11 @@ import process from 'process';
 import { errorHandler, validationFilter } from './middleware/middleware.js';
 import { chatbot } from './service/chatbot/response.js';
 import { logger } from './helpers/logger.js';
-
+////////////
+// apenas para exemplo do body backend
+// PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+const lastJsonBody: any = [];
+///////////
 const TIMEOUT = Number(process.env.REQ_TIMEOUT) || 5000;
 const PORT = Number(process.env.REQ_TIMEOUT) || 3005;
 
@@ -35,10 +39,29 @@ apiRouter.get('/', (req, res) => {
         res.status(422).end();
     });
 });
+
+app.get('/', (req, res) => {
+    try {
+        // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+        // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+        res.status(201).json({
+            messageAlert: 'Rota Get de teste',
+            data: lastJsonBody
+        }).end();
+        // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+    } catch (error) {
+        console.error('Erro ao enviar ultimo json response:', error);
+        res.status(422).end();
+    }
+});
 /////////////////////////
 
 apiRouter.post('/', validationFilter, (req, res) => {
     chatbot(req.body).then((response) => {
+        ////////////////////////////////
+        lastJsonBody.unshift(response);
+        // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+        ////////////////////////////////
         res.status(201).json({
             data: response
         }).end();
