@@ -9,9 +9,9 @@ const App = () => {
 
   const [dataResponseChatbot, setDataResponseChatbot] = useState({
     client: {
-      id: 999,
+      id: '999',
       stage: 0,
-      message: '',
+      message: input,
     }
   });
 
@@ -21,21 +21,10 @@ const App = () => {
     }
   }, [messages]); // Sempre que `chatMessages` mudar, o chat rola para baixo
 
-  const sendMessageToChatbot = () => {
-    if (input.trim()) {
-      setMessages([
-        ...messages,
-        { text: input, sender: 'user' },
-      ]);
-      apiChatbot();
-      setTimeout(() => {
-        sendMessageFromChatbot();
-      }, 1000);
-      setInput('');
-    }
-  };
+  const apiChatbot = () => {
 
-  const apiChatbot = async () => {
+    dataResponseChatbot.client.message = input;
+
     fetch('http://localhost:3005/v1/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -45,24 +34,33 @@ const App = () => {
         const { client } = data?.data;
         setDataResponseChatbot({ client });
         setMessageResponse(data?.data?.client?.response);
+        setTimeout(() => {
+          setMessages((prevMessages) => [...prevMessages, { text: data?.data?.client?.response, sender: "bot" }]);
+        }, 1000);
       })
       .catch((error) => {
         console.error('Erro ao enviar mensagem:', error);
       });
   };
 
+  const sendMessageToChatbot = () => {
+    if (input.trim()) {
+      setMessages([
+        ...messages,
+        { text: input, sender: 'user' },
+      ]);
+      apiChatbot();
+      setInput('');
+    }
+  };
 
-  const sendMessageFromChatbot = React.useCallback(() => {
-    !messageResponse && apiChatbot();
-    messageResponse && setMessages((prevMessages) => [...prevMessages, { text: messageResponse, sender: "bot" }]);
-  }, [messageResponse]);
-
-
+  /*
   useEffect(() => {
     setTimeout(() => {
       sendMessageFromChatbot();
     }, 500);
   }, [messageResponse, sendMessageFromChatbot]);
+  */
 
   return (
     <div className="chat-container">

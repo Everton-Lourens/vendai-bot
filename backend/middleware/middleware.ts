@@ -8,10 +8,9 @@ export const validateBody = (req: Request): boolean => {
         const { client } = req.body;
         var { id, stage, message } = client;
 
-        id === 999 ? id = uuid() : id;  // PENAS PARA TESTES, DEPOIS QUE COLOCAR UUID DOS CLIENTES NÃO SERÁ MAIS NECESASÁRIO
-console.log(id);
-console.log(id);
-console.log(id);
+        id === '999' ? id = uuid() : id;  // PENAS PARA TESTES, DEPOIS QUE COLOCAR UUID DOS CLIENTES NÃO SERÁ MAIS NECESASÁRIO
+        req.body.client.id = id;
+
         if (!validate(id)) return false;
 
         if (typeof message !== 'string') return false;

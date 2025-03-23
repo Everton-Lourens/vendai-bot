@@ -34,7 +34,7 @@ body {
     background-color: #e0e0e0;
     align-self: flex-end;
     margin-left: auto;
-    max-width: 50%;
+    max-width: 30%;
     margin-right: 10%;
 }
 
@@ -42,7 +42,7 @@ body {
     background-color: #559cff;
     color: white;
     align-self: flex-start;
-    max-width: 50%;
+    max-width: 15%;
     margin-left: 10%;
 }
 

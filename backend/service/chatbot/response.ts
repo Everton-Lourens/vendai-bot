@@ -2,10 +2,15 @@ import { logger } from '../../helpers/logger.js';
 import { formatApiResponse } from '../../helpers/bodyResponse.js';
 import { stages, getStage } from './stages.js';
 
-export const chatbot = async (data: {
+interface Client {
    id: string;
-   stage?: number;
+   stage: number;
    message: string;
+   [key: string]: any; // Optional: To allow additional properties
+}
+
+export const chatbot = async (data: {
+   client: Client;
 }): Promise<{
    status: number;
    message: string;
@@ -13,18 +18,14 @@ export const chatbot = async (data: {
    client: {
       id: string;
       message: string;
-      order: object;
+      order: object | undefined;
       response: string;
    };
 }> => {
-
-//   const { id, stage, message } = data;
-
-   const id = '123456'
-   const stage = 2
-   const message = '1'
-
    try {
+      const client = data?.client || data;
+      const { id, stage, message } = client;
+
       const currentStage = await getStage({ id, stage });
 
       const { nextStage, order, response } = await stages[currentStage].stage.exec({

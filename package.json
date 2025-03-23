@@ -6,8 +6,8 @@
   "main": "index.js",
   "scripts": {
     "back": "node --loader ts-node/esm backend/server.js",
-    "front": "node front.js",
-    "start": "node index.js",
+    "front": "cd frontend && npm start",
+    "start": "concurrently \"node --loader ts-node/esm backend/server.js\" \"cd frontend && npm start\"",
     "test": "jest"
   },
   "repository": {
@@ -31,6 +31,7 @@
     "@types/express": "^5.0.1",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.13.11",
+    "concurrently": "^9.1.2",
     "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "pino-pretty": "^13.0.0",
