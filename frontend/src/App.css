@@ -42,16 +42,46 @@ body {
     background-color: #559cff;
     color: white;
     align-self: flex-start;
-    max-width: 15%;
+    max-width: 25%; /* Para telas grandes */
     margin-left: 10%;
 }
+
+/* Telas menores (exemplo: 1024px) */
+@media (max-width: 1024px) {
+    .bot {
+        max-width: 40%;
+    }
+}
+
+/* Telas ainda menores (exemplo: 768px) */
+@media (max-width: 768px) {
+    .bot {
+        max-width: 60%;
+    }
+}
+
+/* Celulares pequenos (exemplo: 480px) */
+@media (max-width: 480px) {
+    .bot {
+        max-width: 80%;
+    }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 320px) {
+    .bot {
+        max-width: 90%;
+    }
+}
+
 
 .input-container {
     display: flex;
     padding: 10px;
-    background-color: white;
+    background-color: rgb(219, 219, 219);
     border-top: 1px solid #ddd;
     width: 70%;
+    border-radius: 15px;
     margin: 0 auto;
     margin-bottom: 2%;
 }

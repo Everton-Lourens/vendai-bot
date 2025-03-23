@@ -69,9 +69,8 @@ const App = () => {
           <div
             key={index}
             className={message.sender === 'user' ? 'message user' : 'message bot'}
-          >
-            <p>{message.text}</p>
-          </div>
+            dangerouslySetInnerHTML={{ __html: message.text.replace(/\n/g, "<br>") }}
+          ></div>
         ))}
       </div>
       <div className="input-container">
