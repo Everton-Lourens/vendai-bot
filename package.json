@@ -5,9 +5,10 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "back": "node --loader ts-node/esm backend/server.js",
-    "front": "cd frontend && npm start",
-    "start": "concurrently \"node --loader ts-node/esm backend/server.js\" \"cd frontend && npm start\"",
+    "setup": "npm install --prefix backend && npm install --prefix frontend",
+    "back": "npm run start --prefix backend",
+    "front": "npm run start --prefix frontend",
+    "start": "concurrently \"node --loader ts-node/esm backend/server.js\" \"npm start --prefix frontend\"",
     "test": "jest"
   },
   "repository": {
