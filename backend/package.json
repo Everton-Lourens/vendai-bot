@@ -5,9 +5,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "back": "node --loader ts-node/esm backend/server.js",
-    "front": "cd frontend && npm start",
-    "start": "concurrently \"node --loader ts-node/esm backend/server.js\" \"cd frontend && npm start\"",
+    "dev": "node --loader ts-node/esm server.js",
+    "start": "node server.js",
     "test": "jest"
   },
   "repository": {
@@ -26,15 +25,13 @@
     "url": "https://github.com/Everton-Lourens/bot/issues"
   },
   "homepage": "https://github.com/Everton-Lourens/bot#readme",
-  "devDependencies": {
-    "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.1",
-    "@types/lodash": "^4.17.16",
-    "@types/node": "^22.13.11",
-    "concurrently": "^9.1.2",
-    "jest": "^29.7.0",
-    "pino-pretty": "^13.0.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.8.2"
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "lodash": "^4.17.21",
+    "pino": "^9.6.0",
+    "react": "^19.0.0",
+    "uuid": "^11.1.0"
   }
 }

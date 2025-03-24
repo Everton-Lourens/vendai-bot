@@ -1,6 +1,6 @@
 //APENAS UM EXEMPLO DE BANCO DE DADOS LOCAL EM JSON CRIADO POR CHATGPT
 import fs from 'fs';
-const path = './backend/db_exemple/database.json';
+const path = './backend/src/db_exemple/database.json';
 
 // Função para ler o banco de dados
 function readDatabase() {

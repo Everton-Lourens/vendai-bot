@@ -3,9 +3,9 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
 import process from 'process';
-import { errorHandler, validationFilter } from './middleware/middleware.js';
-import { chatbot } from './service/chatbot/response.js';
-import { logger } from './helpers/logger.js';
+import { errorHandler, validationFilter } from './src/middleware/middleware.js';
+import { chatbot } from './src/api/chatbot/response.js';
+import { logger } from './src/helpers/logger.js';
 ////////////
 // apenas para exemplo do body backend
 // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
