@@ -8,9 +8,9 @@ export const stageOne = {
       if (message === '1') {
         storage[id].stage = 2; // stage da escolha dos itens
 
-        const allItems2 = getAllItemsDatabase('all_items');
+        const allItems2 = getAllItemsDatabase('all_items2');
         const itemsDescription = Object.values(allItems2)
-          .map((item: any) => item?.description)
+          .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}`)
           .join('\n');
         return itemsDescription || 'Erro ao buscar itens do banco de dados';
 
@@ -45,4 +45,17 @@ export const stageOne = {
     };
 
   },
+}
+
+
+function numberEmoji(number: number) {
+  const blueEmojis = [
+      "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
+  ];
+
+  if (number < 0 || number > 9) {
+      return number;
+  }
+
+  return blueEmojis[number];
 }

@@ -1,7 +1,7 @@
 {
   "database": {
     "stage_0": {
-      "message_1": "👋 Bem-vindo(a)\nSou a Megan, Assistente Virtual.\nPosso te ajudar? 🙋‍♀ 🥰\n\n——————————\n1️⃣ –> FAZER PEDIDO\n2️⃣ → TAXA De Entrega\n3️⃣ → FALAR C/ Atendente"
+      "message_1": "👋 Bem-vindo(a)\nSou a Megan, Assistente Virtual.\nPosso te ajudar? 🙋‍♀ 🥰\n\n——————————\n1️⃣ –> FAZER PEDIDO\n2️⃣ → TAXA de Entrega\n3️⃣ → FALAR C/ Atendente"
     },
     "stage_1": {
       "message_1": "1️⃣ –> FAZER PEDIDO \n3️⃣ → FALAR C/ Atendente"

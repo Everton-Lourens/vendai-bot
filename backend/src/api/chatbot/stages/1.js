@@ -1,11 +1,15 @@
 import { storage } from '../storage.js';
-import { getMessageDatabase } from '../../../db_exemple/local_database.js';
+import { getMessageDatabase, getAllItemsDatabase } from '../../../db_exemple/local_database.js';
 export const stageOne = {
     async exec({ id, message }) {
         const response = await (async () => {
             if (message === '1') {
                 storage[id].stage = 2; // stage da escolha dos itens
-                return getMessageDatabase('all_items')?.message_1 || 'Erro ao buscar mensagem do banco de dados';
+                const allItems2 = getAllItemsDatabase('all_items2');
+                const itemsDescription = Object.values(allItems2)
+                    .map((item, index) => `${numberEmoji(index)} → ${item?.description}`)
+                    .join('\n');
+                return itemsDescription || 'Erro ao buscar itens do banco de dados';
             }
             else if (message === '2') {
                 storage[id].stage = 1; // permanece nesse stage, apenas mostra a taxa de entrega
@@ -35,3 +39,12 @@ export const stageOne = {
         };
     },
 };
+function numberEmoji(number) {
+    const blueEmojis = [
+        "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
+    ];
+    if (number < 0 || number > 9) {
+        return number;
+    }
+    return blueEmojis[number];
+}

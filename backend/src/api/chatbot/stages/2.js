@@ -3,21 +3,13 @@ import { getMessageDatabase } from '../../../db_exemple/local_database.js';
 export const stageTwo = {
     async exec({ id, message }) {
         const response = await (async () => {
-            if (getMessageDatabase('all_items')[message]) {
-                const newItem = getMessageDatabase('all_items')[message];
-                storage[id].items.push(newItem); // adiciona o item ao carrinho;
-                //////////////////////
-                //Apenas para deixar o chatbot mais interessante para apresentação, depois vou apagar, pois não faz sentido:
-                const allItems = [
-                    '1️⃣ → Pequena: R$ 20,00',
-                    '2️⃣ → Média: R$ 25,00',
-                    '3️⃣ → Grande: R$ 30,00',
-                    '4️⃣ → Família: R$ 35,00'
-                ];
-                //////////////////////
+            if (getMessageDatabase('all_items2')[message]) {
+                const newItem = getMessageDatabase('all_items2')[message];
+                storage[id].items.push(newItem?.id); // adiciona o item ao carrinho;
+                const itemDescription = newItem?.description;
                 // //Por enquanto apenas envia para um atendente, mas da para criar mais coisas ao invés de enviar para atendente de imadiato
                 storage[id].stage = 3; // vai para o stage do atendente
-                return `${allItems[(Number(message) - 1)]}\n` +
+                return `${itemDescription}\n` +
                     '——————————\n' +
                     'Ótima escolha!\n' +
                     getMessageDatabase('attendant_stage')?.message_1;

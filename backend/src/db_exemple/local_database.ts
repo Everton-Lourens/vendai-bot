@@ -1,6 +1,14 @@
 //APENAS UM EXEMPLO DE BANCO DE DADOS LOCAL EM JSON CRIADO POR CHATGPT
 import fs from 'fs';
-const path = './backend/src/db_exemple/database.json';
+import { fileURLToPath } from 'url';
+import { dirname, resolve } from 'path';
+
+// Obtém o caminho do arquivo atual
+const __filename = fileURLToPath(import.meta.url);
+
+// Obtém o diretório do arquivo atual
+const __dirname = dirname(__filename);
+const path = resolve(__dirname, './database.json');
 
 // Função para ler o banco de dados
 function readDatabase() {
