@@ -1,0 +1,67 @@
+version: '3.4'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "3005:3005"
+    volumes:
+      - ./backend:/app
+    environment:
+      - NODE_ENV=production
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=production
+
+  app1: &app
+    build: .
+    hostname: app1
+    environment:
+      PINO_LOG_LEVEL: "debug"
+      REQ_TIMEOUT: "2000"
+      NODE_ENV: production
+      CLUSTER: true
+      CLUSTER_WORKERS: 5
+    expose:
+      - "8080"
+    depends_on:
+      - backend
+    ulimits:
+      nproc: 1000000
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: '0.6GB'
+  app2:
+    <<: *app
+    hostname: app2
+
+  nginx: # Load Balancer
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app1
+      - app2
+    ports:
+      - "9999:9999"
+    ulimits:
+      nproc: 1000000
+      nofile:
+        soft: 1000000
+        hard: 1000000
+    deploy:
+      resources:
+        limits:
+          cpus: '0.1'
+          memory: '0.3GB'

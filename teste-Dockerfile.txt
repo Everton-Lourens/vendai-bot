@@ -1,0 +1,20 @@
+# Use a imagem Node.js 20 com Alpine como base
+FROM node:20-alpine
+
+# Defina o diretório de trabalho no contêiner
+WORKDIR /app
+
+# Copie apenas os arquivos de dependências primeiro para otimizar o cache
+COPY package*.json ./
+
+# Instale as dependências do Node.js
+RUN npm ci --production || npm install --production
+
+# Copie o restante dos arquivos para o contêiner
+COPY . .
+
+# Exponha a porta utilizada pela aplicação (se aplicável)
+EXPOSE 3000
+
+# Comando padrão ao iniciar o contêiner para te
+CMD ["npm", "start"]
