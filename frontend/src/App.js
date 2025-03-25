@@ -5,6 +5,7 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const messageListRef = useRef(null);
+  const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 9999) : 8080;
 
   const [dataResponseChatbot, setDataResponseChatbot] = useState({
     client: {
@@ -24,7 +25,7 @@ const App = () => {
 
     dataResponseChatbot.client.message = input;
 
-    fetch('http://localhost:9999/v1/chat', {
+    fetch(`http://localhost:${port}/v1/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataResponseChatbot),
@@ -53,7 +54,7 @@ const App = () => {
   };
 
   const sendToJsonBackend = () => {
-    window.open('http://localhost:3005/', '_blank');
+    window.open(`http://localhost:${port}/`, '_blank');
   };
 
   return (
@@ -68,7 +69,7 @@ const App = () => {
         ))}
       </div>
       <div className="input-container">
-      <button style={{marginRight: '10px', backgroundColor: 'gray'}} onClick={sendToJsonBackend}>Backend</button>
+        <button style={{ marginRight: '10px', backgroundColor: 'gray' }} onClick={sendToJsonBackend}>Backend</button>
         <input
           autoFocus
           type="text"

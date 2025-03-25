@@ -25,6 +25,24 @@
       "3": "9e5f8a3a-926b-43f1-a2f3-0339b515bbd3",
       "4": "4d2b0a9e-61bc-42e0-9d5b-d6c4e5fcb3d9"
     },
+    "all_items2": {
+      "1": {
+        "description": "Pequena: R$ 20,00",
+        "id": "f47c3d29-1f76-4d98-8cd7-7fc5d2d6b245"
+      },
+      "2": {
+        "description": "Média: R$ 25,00",
+        "id": "b2d7c4f1-7cc8-4e67-b417-7127f76a8b29"
+      },
+      "3": {
+        "description": "Grande: R$ 30,00",
+        "id": "9e5f8a3a-926b-43f1-a2f3-0339b515bbd3"
+      },
+      "4": {
+        "description": "Família: R$ 35,00",
+        "id": "4d2b0a9e-61bc-42e0-9d5b-d6c4e5fcb3d9"
+      }
+    },
     "delivery_tax": {
       "message_1": "TAXA DE ENTREGA:\n——————————\n🛵 → Centro: R$ 5,00\n🛵 → Avenida Sul: R$ 8,00\n🛵 → Avenida Norte: R$ 10,00\n——————————\n1️⃣ –> FAZER PEDIDO \n3️⃣ → FALAR C/ Atendente"
     }

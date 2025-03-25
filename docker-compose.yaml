@@ -40,6 +40,7 @@ services:
       - ./frontend:/app
     environment:
       - NODE_ENV=production
+      - PORT=9999
     ulimits:
       nproc: 1000000
       nofile:

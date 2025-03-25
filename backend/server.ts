@@ -12,7 +12,7 @@ import { logger } from './src/helpers/logger.js';
 const lastJsonBody: any = [];
 ///////////
 const TIMEOUT = Number(process.env.REQ_TIMEOUT) || 5000;
-const PORT = Number(process.env.REQ_TIMEOUT) || 3005;
+const PORT = Number(process.env.PORT) || 8080;
 
 const app = express();
 const apiRouter = Router();

@@ -7,7 +7,13 @@ export const stageOne = {
     const response: string = await (async () => {
       if (message === '1') {
         storage[id].stage = 2; // stage da escolha dos itens
-        return getMessageDatabase('all_items')?.message_1 || 'Erro ao buscar mensagem do banco de dados';
+
+        const allItems2 = getAllItemsDatabase('all_items');
+        const itemsDescription = Object.values(allItems2)
+          .map((item: any) => item?.description)
+          .join('\n');
+        return itemsDescription || 'Erro ao buscar itens do banco de dados';
+
       }
       else if (message === '2') {
         storage[id].stage = 1; // permanece nesse stage, apenas mostra a taxa de entrega
