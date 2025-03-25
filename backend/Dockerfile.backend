@@ -8,19 +8,23 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instala as dependências
-RUN npm ci --production
+RUN npm install
 
 # Instala o TypeScript globalmente
-RUN npm install -g typescript
+#RUN npm install -g typescript
 
 # Copia o restante dos arquivos
 COPY . .
 
+# Verifica se o arquivo tsconfig.json existe e se está correto
+#RUN ls -al /app/tsconfig.json
+
 # Compila os arquivos TypeScript para JavaScript
-RUN tsc
+#RUN tsc
 
 # Expõe a porta 3005
-EXPOSE 3005
+EXPOSE 8080
 
 # Comando para iniciar o backend (após compilar os arquivos TypeScript)
-CMD ["node", "dist/server.js"]
+# CMD ["node", "dist/server.js"]
+CMD ["node", "server.js"]

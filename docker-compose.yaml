@@ -1,37 +1,24 @@
 version: '3.4'
 
 services:
-  backend:
-    build: ./backend
-    ports:
-      - "3005:3005"
+  app1: &app
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    hostname: app1
+    #ports: # Conferindo o backend do host
+    #  - "8080:8080"
+    expose:
+      - "8080"
     volumes:
       - ./backend:/app
     environment:
       - NODE_ENV=production
-
-  frontend:
-    build: ./frontend
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./frontend:/app
-    environment:
-      - NODE_ENV=production
-
-  app1: &app
-    build: .
-    hostname: app1
-    environment:
-      PINO_LOG_LEVEL: "debug"
-      REQ_TIMEOUT: "2000"
-      NODE_ENV: production
-      CLUSTER: true
-      CLUSTER_WORKERS: 5
-    expose:
-      - "8080"
-    depends_on:
-      - backend
+      - PORT=8080
+      - PINO_LOG_LEVEL=debug
+      - REQ_TIMEOUT=2000
+      - CLUSTER=true
+      - CLUSTER_WORKERS=5
     ulimits:
       nproc: 1000000
       nofile:
@@ -42,19 +29,17 @@ services:
         limits:
           cpus: '0.5'
           memory: '0.6GB'
-  app2:
-    <<: *app
-    hostname: app2
 
-  nginx: # Load Balancer
-    image: nginx:latest
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-    depends_on:
-      - app1
-      - app2
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
     ports:
-      - "9999:9999"
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    environment:
+      - NODE_ENV=production
     ulimits:
       nproc: 1000000
       nofile:
@@ -63,5 +48,20 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.1'
-          memory: '0.3GB'
+          cpus: '0.5'
+          memory: '0.6GB'
+
+  app2:
+    <<: *app
+    hostname: app2
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app1
+      - app2
+    ports:
+      - "9999:9999"
+

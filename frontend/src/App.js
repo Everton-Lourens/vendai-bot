@@ -24,7 +24,7 @@ const App = () => {
 
     dataResponseChatbot.client.message = input;
 
-    fetch('http://localhost:3005/v1/chat', {
+    fetch('http://localhost:9999/v1/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(dataResponseChatbot),
