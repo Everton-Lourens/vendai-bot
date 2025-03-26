@@ -7,10 +7,21 @@ const __filename = fileURLToPath(import.meta.url);
 // Obtém o diretório do arquivo atual
 const __dirname = dirname(__filename);
 const path = resolve(__dirname, '../../local_db/database.json');
+const path_exemple_json = resolve(__dirname, '../../local_db/body.json');
 // Função para ler o banco de dados
 function readDatabase() {
     try {
         const data = fs.readFileSync(path, 'utf8');
+        return JSON.parse(data);
+    }
+    catch (error) {
+        console.error('Erro ao ler o banco de dados:', error);
+        return {};
+    }
+}
+export function readDatabase_exemple() {
+    try {
+        const data = fs.readFileSync(path_exemple_json, 'utf8');
         return JSON.parse(data);
     }
     catch (error) {

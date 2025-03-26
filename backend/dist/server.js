@@ -6,6 +6,7 @@ import process from 'process';
 import { errorHandler, validationFilter } from './middleware/middleware.js';
 import { chatbot } from './api/chatbot/response.js';
 import { logger } from './helpers/logger.js';
+import { readDatabase_exemple } from './db_exemple/local_database.js';
 ////////////
 // apenas para exemplo do body backend
 // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
@@ -37,10 +38,18 @@ apiRouter.get('/', (req, res) => {
 });
 app.get('/', (req, res) => {
     try {
+        var messageAlert = '';
         // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
         // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+        if (lastJsonBody.length === 0) {
+            lastJsonBody.push(readDatabase_exemple() || {});
+            messageAlert = 'Operação realizada com sucesso: Exemplo resposta do Chatbot para o cliente';
+        }
+        else {
+            messageAlert = 'Operação realizada com sucesso: Histórico de respostas do Chatbot para você';
+        }
         res.status(201).json({
-            messageAlert: 'Operação realizada com sucesso',
+            messageAlert,
             data: lastJsonBody
         }).end();
         // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
