@@ -8,7 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 
 // Obtém o diretório do arquivo atual
 const __dirname = dirname(__filename);
-const path = resolve(__dirname, './database.json');
+const path = resolve(__dirname, '../../local_db/database.json');
 
 // Função para ler o banco de dados
 function readDatabase() {

@@ -5,11 +5,12 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const messageListRef = useRef(null);
-  const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 9999) : 8080;
+  const inputRef = useRef(null);
+  const port = 9999;
 
   const [dataResponseChatbot, setDataResponseChatbot] = useState({
     client: {
-      id: '999',
+      id: '999', //id default to test
       stage: 0,
       message: input,
     }
@@ -50,6 +51,7 @@ const App = () => {
       ]);
       apiChatbot();
       setInput('');
+      inputRef.current?.focus(); // Foca novamente no input
     }
   };
 
@@ -71,6 +73,7 @@ const App = () => {
       <div className="input-container">
         <button style={{ marginRight: '10px', backgroundColor: 'gray' }} onClick={sendToJsonBackend}>Backend</button>
         <input
+          ref={inputRef}
           autoFocus
           type="text"
           value={input}
