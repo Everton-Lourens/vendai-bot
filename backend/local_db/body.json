@@ -2,6 +2,7 @@
     "id": "6b06e3d1-778e-45fb-9c75-7c379b2ad47c",
     "stage": 10,
     "message": "1",
+    "response": "1️⃣ → Pequena: R$ 20,00\n——————————\nÓtima escolha!\nVocê será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰",
     "order": {
         "stage": 10,
         "wantsHumanService": false,
@@ -18,6 +19,5 @@
                 "response": "1️⃣ → Pequena: R$ 20,00\n——————————\nÓtima escolha!\nVocê será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
             }
         ]
-    },
-    "response": "1️⃣ → Pequena: R$ 20,00\n——————————\nÓtima escolha!\nVocê será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
+    }
 }

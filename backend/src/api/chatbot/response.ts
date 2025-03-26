@@ -18,8 +18,8 @@ export const chatbot = async (data: {
    client: {
       id: string;
       message: string;
-      order: object | undefined;
       response: string;
+      order: object | undefined;
    };
 }> => {
    try {
@@ -29,7 +29,7 @@ export const chatbot = async (data: {
 
       const currentStage = await getStage({ id, stage });
 
-      const { nextStage, order, response } = await stages[currentStage].stage.exec({
+      const { nextStage, response, order  } = await stages[currentStage].stage.exec({
          id,
          message
       });
@@ -41,8 +41,8 @@ export const chatbot = async (data: {
             id,
             stage: nextStage,
             message,
-            order,
             response,
+            order,
          }
       });
 

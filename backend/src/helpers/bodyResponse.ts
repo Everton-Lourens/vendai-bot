@@ -2,8 +2,8 @@ interface Client {
    id: string;
    stage: number;
    message: string;
-   order: object;
    response: string;
+   order: object;
 }
 
 export function formatApiResponse({

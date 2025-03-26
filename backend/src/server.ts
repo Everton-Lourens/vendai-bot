@@ -63,7 +63,6 @@ app.get('/', (req, res) => {
         res.status(422).end();
     }
 });
-/////////////////////////
 
 apiRouter.post('/', validationFilter, (req, res) => {
     chatbot(req.body).then((response) => {
@@ -79,44 +78,6 @@ apiRouter.post('/', validationFilter, (req, res) => {
     });
 });
 
-
-/*
-apiRouter.get('/:id', (req, res) => {
-    findById(req.params.id).then((queryResult) => {
-        const [result] = queryResult.rows;
-        if (!result) {
-            return res.status(404).end();
-        }
-        res.json(result).end();
-    }).catch(() => {
-        res.status(404).end();
-    });
-});
-*/
-
-/*
-apiRouter.get('/', (req, res) => {
-    if (!req.query['t']) {
-        return res.status(400).end();
-    }
-
-    findByTerm(req.query.t).then((queryResults) => {
-        res.json(queryResults.rows).end();
-    }).catch(() => {
-        res.status(404).end();
-    });
-});
-*/
-/*
-app.get('/contagem-users', (_, res) => {
-    count().then((queryResult) => {
-        const [countResult] = queryResult.rows;
-        res.json(countResult).end();
-    }).catch(() => {
-        res.status(422).end();
-    });
-});
-*/
 
 app.use(errorHandler);
 

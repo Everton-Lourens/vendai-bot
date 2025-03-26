@@ -19,8 +19,8 @@ export const stageThree = {
 
     return {
       nextStage: storage[id].stage,
-      order: storage[id],
-      response
+      response,
+      order: storage[id]
     };
 
   },
