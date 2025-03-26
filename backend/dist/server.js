@@ -28,7 +28,7 @@ app.use('/v1/chat', apiRouter);
 apiRouter.get('/', (req, res) => {
     chatbot({ client: { id: '999', stage: 0, message: 'Olá' } }).then((response) => {
         res.status(201).json({
-            messageAlert: 'Rota Get de teste',
+            messageAlert: 'Operação realizada com sucesso',
             data: response
         }).end();
     }).catch(() => {
@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
         // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
         // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
         res.status(201).json({
-            messageAlert: 'Rota Get de teste',
+            messageAlert: 'Operação realizada com sucesso',
             data: lastJsonBody
         }).end();
         // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND

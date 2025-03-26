@@ -18,7 +18,7 @@ services:
       - PINO_LOG_LEVEL=debug
       - REQ_TIMEOUT=2000
       - CLUSTER=true
-      - CLUSTER_WORKERS=3
+      - CLUSTER_WORKERS=5
     ulimits:
       nproc: 1000000
       nofile:
