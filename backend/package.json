@@ -1,5 +1,5 @@
 {
-  "name": "meganbot",
+  "name": "chatbot-api",
   "version": "1.0.0",
   "description": "API de ChatBot: Autoatendimento para restaurante",
   "type": "module",
