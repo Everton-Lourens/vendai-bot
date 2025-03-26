@@ -1,0 +1,15 @@
+config:
+  target: 'http://localhost:9999'  # URL da sua API
+  phases:
+    - duration: 60  # Teste de 60 segundos
+      arrivalRate: 100  # 20 requisições por segundo
+
+scenarios:
+  - flow:
+      - post:
+          url: '/v1/chat'  # Endpoint que você deseja testar
+          json:
+            client:
+              id: '999'
+              stage: 0
+              message: 'Olá'

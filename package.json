@@ -29,6 +29,11 @@
   "homepage": "https://github.com/Everton-Lourens/Chatbot-API#readme",
   "devDependencies": {
     "concurrently": "^9.1.2",
-    "jest": "^29.7.0"
+    "jest": "^29.7.0",
+    "ts-jest": "^29.3.0",
+    "typescript": "^5.8.2"
+  },
+  "dependencies": {
+    "artillery": "^2.0.22"
   }
 }
