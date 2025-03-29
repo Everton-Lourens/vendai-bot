@@ -6,14 +6,15 @@ export const stageTwo = {
 
     const response: string = await (async () => {
 
-      if (getMessageDatabase('all_items2')[message]) {
-        const newItem = getMessageDatabase('all_items2')[message];
-        storage[id].items.push(newItem?.id); // adiciona o item ao carrinho;
+      if (getMessageDatabase('all_items')[message]) {
+        const newItem = getMessageDatabase('all_items')[message];
+        storage[id].items.push(newItem); // adiciona o item ao carrinho;
 
         const itemDescription = newItem?.description;
 
         // //Por enquanto apenas envia para um atendente, mas da para criar mais coisas ao invés de enviar para atendente de imadiato
         storage[id].stage = 3; // vai para o stage do atendente
+        storage[id].wantsHumanService = true; // vai para o stage do atendente
         return `${itemDescription}\n` +
           '——————————\n' +
           'Ótima escolha!\n' +

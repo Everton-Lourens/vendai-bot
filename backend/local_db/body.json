@@ -7,7 +7,10 @@
         "stage": 10,
         "wantsHumanService": false,
         "items": [
-            "f47c3d29-1f76-4d98-8cd7-7fc5d2d6b245"
+            {
+                "description": "Pequena: R$ 20,00",
+                "id": "f47c3d29-1f76-4d98-8cd7-7fc5d2d6b245"
+            }
         ],
         "address": null,
         "trackRecordResponse": [

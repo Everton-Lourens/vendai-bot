@@ -8,7 +8,7 @@ export const stageOne = {
       if (message === '1') {
         storage[id].stage = 2; // stage da escolha dos itens
 
-        const allItems2 = getAllItemsDatabase('all_items2');
+        const allItems2 = getAllItemsDatabase('all_items');
         const itemsDescription = Object.values(allItems2)
           .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}`)
           .join('\n');
