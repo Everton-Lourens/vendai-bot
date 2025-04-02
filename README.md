@@ -2,40 +2,29 @@
 
 # ChatBot API
 
-## 📂 Estrutura de Pastas
+## 📂 Estrutura do Back-End
 
 ```
 RAIZ/
+│-- nginx.conf
+│-- docker-compose.yaml
 │-- backend/
-│   │-- local_db/
-│   │-- node_modules/
+│   │-- Dockerfile.backend
 │   │-- src/
-│   │   │-- api/
-│   │   │-- db_exemple/
+│   │   │-- server.ts
 │   │   │-- helpers/
 │   │   │-- middleware/
-│   │   │-- server.ts
-│   │-- Dockerfile.backend
-│   │-- package-lock.json
-│   │-- package.json
-│   │-- tsconfig.json
-│-- frontend/
-│   │-- node_modules/
-│   │-- public/
-│   │-- src/
-│   │-- .gitignore
-│   │-- Dockerfile.frontend
-│   │-- package-lock.json
-│   │-- package.json
-│   │-- README.md
-│-- node_modules/
-│-- .dockerignore
-│-- .gitignore
-│-- docker-compose.yaml
-│-- nginx.conf
-│-- package-lock.json
-│-- package.json
-│-- README.md
+│   │   │-- api/
+│   │   │   │-- chatbot/
+│   │   │   │   │-- response.ts
+│   │   │   │   │-- stages.ts
+│   │   │   │   │-- storage.ts
+│   │   │   │   │-- stages/
+│   │   │   │   │   │-- 0.ts
+│   │   │   │   │   │-- 1.ts
+│   │   │   │   │   │-- 2.ts
+│   │   │   │   │   │-- 3.ts
+│   │   │   │   │   │-- index.ts
 ```
 
 # Tópicos do README
