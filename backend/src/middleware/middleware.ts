@@ -5,7 +5,7 @@ import { logger } from '../helpers/logger.js';
 
 export const validateBody = (req: Request): boolean => {
     try {
-        const { client } = req.body;
+        const { client } = req?.body;
         var { id, stage, message } = client;
 
         id === '999' ? id = uuid() : id;  // PENAS PARA TESTES, DEPOIS QUE COLOCAR UUID DOS CLIENTES NÃO SERÁ MAIS NECESASÁRIO

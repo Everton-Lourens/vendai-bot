@@ -1,8 +1,42 @@
 ﻿﻿﻿﻿ChatBot API: Autoatendimento para restaurante
 
 # ChatBot API
-- Back-End (pricipal)
-- Front-End
+
+## 📂 Estrutura de Pastas
+
+```
+RAIZ/
+│-- backend/
+│   │-- local_db/
+│   │-- node_modules/
+│   │-- src/
+│   │   │-- api/
+│   │   │-- db_exemple/
+│   │   │-- helpers/
+│   │   │-- middleware/
+│   │   │-- server.ts
+│   │-- Dockerfile.backend
+│   │-- package-lock.json
+│   │-- package.json
+│   │-- tsconfig.json
+│-- frontend/
+│   │-- node_modules/
+│   │-- public/
+│   │-- src/
+│   │-- .gitignore
+│   │-- Dockerfile.frontend
+│   │-- package-lock.json
+│   │-- package.json
+│   │-- README.md
+│-- node_modules/
+│-- .dockerignore
+│-- .gitignore
+│-- docker-compose.yaml
+│-- nginx.conf
+│-- package-lock.json
+│-- package.json
+│-- README.md
+```
 
 # Tópicos do README
 - *Tecnologias Utilizadas*
