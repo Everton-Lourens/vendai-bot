@@ -1,5 +1,5 @@
-import { logger } from '../../helpers/logger.js';
-import { formatApiResponse } from '../../helpers/bodyResponse.js';
+import { logger } from '../helpers/logger.js';
+import { formatApiResponse } from '../helpers/bodyResponse.js';
 import { stages, getStage } from './stages.js';
 
 interface Client {
