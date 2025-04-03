@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
 import process from 'process';
-import './database/connections/conn_postgres.js';
+import './database/connection.js';
 import { errorHandler, validationFilter } from './middleware/middleware.js';
 import { chatbot } from './chatbot/response.js';
 import { logger } from './helpers/logger.js';
