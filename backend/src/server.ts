@@ -6,7 +6,7 @@ import process from 'process';
 import { errorHandler, validationFilter } from './middleware/middleware.js';
 import { chatbot } from './api/chatbot/response.js';
 import { logger } from './helpers/logger.js';
-import { readDatabase_exemple } from './db_exemple/local_database.js';
+import { readDatabase_exemple } from './database/local_database.js';
 ////////////
 // apenas para exemplo do body backend
 // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND

@@ -1,8 +1,24 @@
-﻿﻿﻿﻿ChatBot API: Autoatendimento para restaurante
+﻿﻿v﻿﻿﻿﻿ChatBot API: Autoatendimento para restaurante
 
 # ChatBot API
 
-## 📂 Estrutura do Back-End
+# Tópicos do README
+- *Tecnologias Utilizadas*
+- *Estrutura de pastas do Back-End*
+- *Visão Geral*
+- *Explicação Detalhada do Back-End*
+- *Como utilizar Localmente*
+- *Como utilizar com Docker*
+
+## Tecnologias Utilizadas
+- **Node.js v20.16.0**
+- **Balanceador de carga: ngnix**
+- **Docker**
+- **Express.js**
+- **React**
+- **TypeScript**
+
+## Estrutura de pastas do Back-End
 
 ```
 RAIZ/
@@ -10,6 +26,8 @@ RAIZ/
 │-- docker-compose.yaml
 │-- backend/
 │   │-- Dockerfile.backend
+│   │-- package.json
+│   │-- tsconfig.json
 │   │-- src/
 │   │   │-- server.ts
 │   │   │-- helpers/
@@ -26,21 +44,6 @@ RAIZ/
 │   │   │   │   │   │-- 3.ts
 │   │   │   │   │   │-- index.ts
 ```
-
-# Tópicos do README
-- *Tecnologias Utilizadas*
-- *Visão Geral*
-- *Explicação Detalhada do Back-End*
-- *Como utilizar Localmente*
-- *Como utilizar com Docker*
-
-## Tecnologias Utilizadas
-- **Node.js v20.16.0**
-- **Balanceador de carga: ngnix**
-- **Docker**
-- **Express.js**
-- **React**
-- **TypeScript**
 
 ## Visão Geral
 - **Descrição do projeto**: Esta API oferece um chatbot de autoatendimento com múltiplas opções, permitindo que os clientes façam pedidos, consultem o cardápio, verifiquem a taxa de entrega ou solicitem atendimento humano, podendo se extender para outras funcionalidades futuras.
