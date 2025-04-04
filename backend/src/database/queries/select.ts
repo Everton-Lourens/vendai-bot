@@ -7,7 +7,7 @@ export async function findById(id: string): Promise<QueryResult> {
         id,
         store,
         name,
-        to_char(created, 'YYYY-MM-DD') as created,
+        to_char(created_at, 'YYYY-MM-DD') as created_at,
         messages
     FROM
         chatbot

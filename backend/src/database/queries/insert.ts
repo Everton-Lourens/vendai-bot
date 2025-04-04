@@ -3,7 +3,7 @@ import { pool } from '../connection.js';
 
 export async function insertChatbot(
     id: string,
-    { store, name, created, messages }: { store: string, name: string, created: Date, messages: string[] }
+    { store, name, created_at, messages }: { store: string, name: string, created_at: Date, messages: string[] }
 ): Promise<QueryResult> {
     const query = `
     INSERT INTO
@@ -11,7 +11,7 @@ export async function insertChatbot(
         id,
         store,
         name,
-        created,
+        created_at,
         messages
      )
     VALUES (
@@ -22,7 +22,7 @@ export async function insertChatbot(
         $5::json
     )
     `;
-    return pool.query(query, [id, store, name, created, JSON.stringify(messages)]);
+    return pool.query(query, [id, store, name, created_at, JSON.stringify(messages)]);
 }
 
 
