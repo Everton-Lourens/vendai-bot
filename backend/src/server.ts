@@ -29,6 +29,30 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use('/v1/chat', apiRouter);
 
+apiRouter.post('/', validationFilter, (req, res) => {
+    try {
+        chatbot(req?.body).then((response) => {
+            ////////////////////////////////
+            lastJsonBody.unshift(response);
+            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+            ////////////////////////////////
+            res.status(201).json({
+                data: response
+            }).end();
+        }).catch(() => {
+            res.status(422).end();
+        });
+    } catch (error) {
+        logger.error('Erro ao enviar resposta do Chatbot:');
+        logger.error(error);
+        res.status(422).json({
+            messageAlert: 'Erro ao enviar resposta do Chatbot',
+            data: error
+        }).end();
+    }
+});
+
+
 /////////////////////////
 // Rota de teste
 apiRouter.get('/', (req, res) => {
@@ -62,29 +86,6 @@ app.get('/', (req, res) => {
     } catch (error) {
         console.error('Erro ao enviar ultimo json response:', error);
         res.status(422).end();
-    }
-});
-
-apiRouter.post('/', validationFilter, (req, res) => {
-    try {
-        chatbot(req?.body).then((response) => {
-            ////////////////////////////////
-            lastJsonBody.unshift(response);
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-            ////////////////////////////////
-            res.status(201).json({
-                data: response
-            }).end();
-        }).catch(() => {
-            res.status(422).end();
-        });
-    } catch (error) {
-        logger.error('Erro ao enviar resposta do Chatbot:');
-        logger.error(error);
-        res.status(422).json({
-            messageAlert: 'Erro ao enviar resposta do Chatbot',
-            data: error
-        }).end();
     }
 });
 
