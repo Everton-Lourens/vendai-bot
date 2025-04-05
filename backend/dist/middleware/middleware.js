@@ -1,20 +1,30 @@
-import { validate, v4 as uuid } from 'uuid';
+import { validate } from 'uuid';
 import { logger } from '../helpers/logger.js';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.development' });
 export const validateBody = (req) => {
     try {
         const { client } = req?.body;
-        var { id, stage, message } = client;
-        id === '999' ? id = uuid() : id; // PENAS PARA TESTES, DEPOIS QUE COLOCAR UUID DOS CLIENTES NÃO SERÁ MAIS NECESASÁRIO
-        req.body.client.id = id;
-        if (!validate(id))
+        const requiredFields = ['id', 'stage', 'message'];
+        const missingFields = requiredFields.filter(field => !String(client[field]));
+        logger.info(missingFields.length);
+        const missingFields2 = requiredFields.filter(field => !client[field]);
+        logger.info(missingFields2.length);
+        if (missingFields.length > 0)
             return false;
-        if (typeof message !== 'string')
-            return false;
-        if (typeof stage !== 'number')
-            return false;
+        const { id } = client;
+        if (process.env.NODE_ENV === 'development' && !!id) {
+            return true; // PENAS PARA TESTES, DEPOIS QUE COLOCAR UUID DOS CLIENTES NÃO SERÁ MAIS NECESASÁRIO
+        }
+        else {
+            if (!validate(id))
+                return false;
+        }
         return true;
     }
     catch (error) {
+        logger.error('Erro de validação');
+        logger.error(error);
         return false;
     }
 };

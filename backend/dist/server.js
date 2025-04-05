@@ -3,7 +3,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
 import process from 'process';
-import './database/connections/conn_postgres.js';
+import './database/connection.js';
 import { errorHandler, validationFilter } from './middleware/middleware.js';
 import { chatbot } from './chatbot/response.js';
 import { logger } from './helpers/logger.js';
@@ -61,17 +61,27 @@ app.get('/', (req, res) => {
     }
 });
 apiRouter.post('/', validationFilter, (req, res) => {
-    chatbot(req.body).then((response) => {
-        ////////////////////////////////
-        lastJsonBody.unshift(response);
-        // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-        ////////////////////////////////
-        res.status(201).json({
-            data: response
+    try {
+        chatbot(req?.body).then((response) => {
+            ////////////////////////////////
+            lastJsonBody.unshift(response);
+            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+            ////////////////////////////////
+            res.status(201).json({
+                data: response
+            }).end();
+        }).catch(() => {
+            res.status(422).end();
+        });
+    }
+    catch (error) {
+        logger.error('Erro ao enviar resposta do Chatbot:');
+        logger.error(error);
+        res.status(422).json({
+            messageAlert: 'Erro ao enviar resposta do Chatbot',
+            data: error
         }).end();
-    }).catch(() => {
-        res.status(422).end();
-    });
+    }
 });
 app.use(errorHandler);
 const numForks = Number(process.env.CLUSTER_WORKERS) || 1;

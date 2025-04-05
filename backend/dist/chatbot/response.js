@@ -3,8 +3,7 @@ import { formatApiResponse } from '../helpers/bodyResponse.js';
 import { stages, getStage } from './stages.js';
 export const chatbot = async (data) => {
     try {
-        const client = data?.client || data;
-        const { id, stage, message } = client;
+        const { id, stage, message } = data?.client || data;
         const currentStage = await getStage({ id, stage });
         const { nextStage, response, order } = await stages[currentStage].stage.exec({
             id,

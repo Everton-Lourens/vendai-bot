@@ -23,23 +23,9 @@ export const chatbot = async (data: {
    };
 }> => {
    try {
-      const client = data?.client || data;
-      
-      if (!client['id'] || !client['stage'] || !client['message']) {
-         const messageResponseError = `id, stage ou message não informados: id: ${!!client['id']}, stage: ${!!client['stage']}, message: ${!!client['message']}.`;
-         logger.error(messageResponseError);
-         const errorResponse = formatApiResponse({
-            status: 422,
-            message: messageResponseError,
-            errorCode: 'CHATBOT_MISSING_PARAMETERS'
-         });
-         return errorResponse;
-      }
-
-      const { id, stage, message } = client;
+      const { id, stage, message } = data?.client || data;
 
       const currentStage = await getStage({ id, stage });
-
       const { nextStage, response, order } = await stages[currentStage].stage.exec({
          id,
          message
