@@ -9,12 +9,10 @@ import { chatbot } from './chatbot/response.js';
 import { logger } from './helpers/logger.js';
 import { readDatabase_exemple } from './database/local_database.js';
 import dotenv from 'dotenv';
+
 dotenv.config({ path: '.env.development' });
-////////////
-// apenas para exemplo do body backend
-// PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+
 const lastJsonBody: any = [];
-///////////
 const TIMEOUT = Number(process.env.REQ_TIMEOUT) || 5000;
 const PORT = process.env.NODE_ENV === 'production' ? (Number(process.env.PORT) || 8080) : 9999;
 
@@ -34,10 +32,9 @@ app.use('/v1/chat', apiRouter);
 apiRouter.post('/', validationFilter, (req, res) => {
     try {
         chatbot(req?.body).then((response) => {
-            ////////////////////////////////
-            lastJsonBody.unshift(response);
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-            ////////////////////////////////
+            if (process.env.NODE_ENV === 'development') {
+                lastJsonBody.unshift(response);
+            }
             res.status(201).json({
                 data: response
             }).end();
