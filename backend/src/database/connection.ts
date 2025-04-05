@@ -36,7 +36,7 @@ pool.once('connect', async () => {
                 FOREIGN KEY (chatbot_id) REFERENCES chatbot(id) ON DELETE CASCADE
             );
 
-            -- Cliente atendido pelo chatbot
+            -- Cliente atendido
             CREATE TABLE IF NOT EXISTS customer (
                 id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
                 chatbot_id uuid NOT NULL,
@@ -44,6 +44,7 @@ pool.once('connect', async () => {
                 email TEXT UNIQUE,
                 address TEXT,
                 phone TEXT CHECK (phone ~ '^\([0-9]{2}\)[0-9]{9}$'), -- formato (00)000000000
+                status TEXT NOT NULL CHECK (status IN ('open', 'in_progress', 'closed')) DEFAULT 'open',
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (chatbot_id) REFERENCES chatbot(id) ON DELETE CASCADE
             );
