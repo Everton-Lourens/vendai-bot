@@ -7,14 +7,11 @@ export const validateBody = (req) => {
         const { client } = req?.body;
         const requiredFields = ['id', 'stage', 'message'];
         const missingFields = requiredFields.filter(field => !String(client[field]));
-        logger.info(missingFields.length);
-        const missingFields2 = requiredFields.filter(field => !client[field]);
-        logger.info(missingFields2.length);
         if (missingFields.length > 0)
             return false;
         const { id } = client;
-        if (process.env.NODE_ENV === 'development' && !!id) {
-            return true; // PENAS PARA TESTES, DEPOIS QUE COLOCAR UUID DOS CLIENTES NÃO SERÁ MAIS NECESASÁRIO
+        if (process.env.NODE_ENV === 'development' && !!id) { // PENAS PARA TESTES
+            return true;
         }
         else {
             if (!validate(id))

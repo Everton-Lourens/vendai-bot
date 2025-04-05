@@ -8,6 +8,8 @@ import { errorHandler, validationFilter } from './middleware/middleware.js';
 import { chatbot } from './chatbot/response.js';
 import { logger } from './helpers/logger.js';
 import { readDatabase_exemple } from './database/local_database.js';
+import dotenv from 'dotenv';
+dotenv.config({ path: '.env.development' });
 ////////////
 // apenas para exemplo do body backend
 // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
@@ -25,41 +27,6 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 app.use('/v1/chat', apiRouter);
-/////////////////////////
-// Rota de teste
-apiRouter.get('/', (req, res) => {
-    chatbot({ client: { id: '999', stage: 0, message: 'Olá' } }).then((response) => {
-        res.status(201).json({
-            messageAlert: 'Operação realizada com sucesso',
-            data: response
-        }).end();
-    }).catch(() => {
-        res.status(422).end();
-    });
-});
-app.get('/', (req, res) => {
-    try {
-        var messageAlert = '';
-        // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-        // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-        if (lastJsonBody.length === 0) {
-            lastJsonBody.push(readDatabase_exemple() || {});
-            messageAlert = 'Operação realizada com sucesso: Exemplo resposta do Chatbot para o cliente';
-        }
-        else {
-            messageAlert = 'Operação realizada com sucesso: Histórico de respostas do Chatbot para você';
-        }
-        res.status(201).json({
-            messageAlert,
-            data: lastJsonBody
-        }).end();
-        // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-    }
-    catch (error) {
-        console.error('Erro ao enviar ultimo json response:', error);
-        res.status(422).end();
-    }
-});
 apiRouter.post('/', validationFilter, (req, res) => {
     try {
         chatbot(req?.body).then((response) => {
@@ -83,6 +50,33 @@ apiRouter.post('/', validationFilter, (req, res) => {
         }).end();
     }
 });
+/////////////////////////
+// Rota de teste
+if (process.env.NODE_ENV !== 'development') {
+    app.get('/', (req, res) => {
+        try {
+            var messageAlert = '';
+            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+            if (lastJsonBody.length === 0) {
+                lastJsonBody.push(readDatabase_exemple() || {});
+                messageAlert = 'Operação realizada com sucesso: Exemplo resposta do Chatbot para o cliente';
+            }
+            else {
+                messageAlert = 'Operação realizada com sucesso: Histórico de respostas do Chatbot para você';
+            }
+            res.status(201).json({
+                messageAlert,
+                data: lastJsonBody
+            }).end();
+            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
+        }
+        catch (error) {
+            console.error('Erro ao enviar ultimo json response:', error);
+            res.status(422).end();
+        }
+    });
+}
 app.use(errorHandler);
 const numForks = Number(process.env.CLUSTER_WORKERS) || 1;
 if (cluster.isPrimary && process.env.CLUSTER === 'true') {
