@@ -17,7 +17,7 @@ export async function findById(id: string): Promise<QueryResult> {
 }
 
 
-export async function getMessages(chatbotId: string): Promise<{ stage: number; message_number: number; content: string }[]> {
+export async function getAllMessages(chatbotId: string): Promise<{ stage: number; message_number: number; content: string }[]> {
     const query = `
     SELECT
         message.stage,

@@ -1,6 +1,6 @@
 import { logger } from '../helpers/logger.js';
 import { formatApiResponse } from '../helpers/bodyResponse.js';
-import { getMessages } from '../database/queries/select.js';
+import { getAllMessages } from '../database/queries/select.js';
 import { stages, getStage } from './stages.js';
 
 interface Client {
@@ -32,7 +32,7 @@ export const chatbot = async (data: {
       var allMessages = data?.client?.allMessages || data?.allMessages || undefined;
 
       if (!allMessages)
-         allMessages = await getMessages(chatbot_id);
+         allMessages = await getAllMessages(chatbot_id);
 
       const currentStage = await getStage({ id, stage });
       const { nextStage, response, order } = await stages[currentStage].stage.exec({
