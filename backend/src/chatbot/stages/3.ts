@@ -6,7 +6,7 @@ export const stageThree = {
   Promise<{ nextStage: number; order: {}; response: string; }> {
 
     const response: string = await (async () => {
-      return getMessageDatabase('attendant_stage')?.message_1;
+      return getMessageDatabase('stage_3')?.message_1;
     })();
 
     // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário

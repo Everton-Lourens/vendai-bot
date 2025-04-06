@@ -6,17 +6,14 @@
       "stage_1": {
         "message_1": "1️⃣ –> FAZER PEDIDO \n3️⃣ → FALAR C/ Atendente"
       },
+      "stage_3": {
+        "message_1": "Você será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
+      },
       "stage_4": {
         "message_1": "✍️ AGORA DIGITE SEU ENDEREÇO\n––> EM APENAS 1 MENSAGEM! <––\n\nPor Exemplo:\n\n( Rua,Número,Bairro,Referência )"
       },
       "stage_5": {
         "message_1": "–>🛑 –FORMA DE PAGAMENTO:\n——————————\n1️⃣ –> Pix\n2️⃣ → Dinheiro\n3️⃣ → Cartão"
-      },
-      "stage_6": {
-        "message_1": "Você será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
-      },
-      "attendant_stage": {
-        "message_1": "Você será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
       },
       "all_items": {
         "1": {
