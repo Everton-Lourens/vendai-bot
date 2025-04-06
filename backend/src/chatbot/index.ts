@@ -29,8 +29,8 @@ export const chatbot = async (data: {
 }> => {
    try {
       const { id, chatbot_id, stage, message } = data?.client || data;
-      // Armazeno as mensagens do chatbot dentro do respose do cliente para evitar armazenar em memória,
-      // não precisar usar cache e não precisar acessar o banco de dados muitas vezes
+      // Armazeno as mensagens do chatbot dentro do respose do cliente para evitar
+      // armazenar em memória, cache ou acessar o banco de dados muitas vezes
       var allMessages = data?.client?.allMessages || data?.allMessages || undefined;
 
       if (!allMessages)
