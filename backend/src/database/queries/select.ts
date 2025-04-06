@@ -19,14 +19,12 @@ export async function findById(id: string): Promise<QueryResult> {
 
 export async function getAllMessages(chatbotId: string): Promise<{ stage: number; message_number: number; content: string }[]> {
     const query = `
-    SELECT
-        message.stage,
-        message.message_number,
-        message.content
-    FROM
-        chatbot_message AS message
-    JOIN
-        chatbot AS bot ON message.chatbot_id = $1;
+        SELECT 
+            stage,
+            message_number,
+            content
+        FROM chatbot_message
+        WHERE chatbot_id = $1;
     `;
     const querySet = await pool.query(query, [chatbotId]);
     return querySet.rows;
