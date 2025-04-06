@@ -11,12 +11,6 @@ export const validateBody = async (req: Request): Promise<boolean> => {
     try {
         const { client } = req?.body;
 
-        if (process.env.NODE_ENV === 'development' && !client['chatbot_id']) { // PENAS PARA TESTES
-            const chatbot_id = await getIdChatbotToDevelopment();
-            req.body.client.chatbot_id = chatbot_id;
-            client.chatbot_id = chatbot_id;
-        }
-
         const requiredFields = ['id', 'stage', 'message', 'chatbot_id'];
         const missingFields = requiredFields.filter(field => !String(client[field]));
 

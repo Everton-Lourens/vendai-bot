@@ -1,20 +1,32 @@
 import { logger } from '../helpers/logger.js';
 import { formatApiResponse } from '../helpers/bodyResponse.js';
-import { getAllMessages } from '../database/queries/select.js';
 import { stages, getStage } from './stages.js';
+import { getAllCachedMessages } from './messages/index.js';
+
+interface Message {
+   stage: number;
+   message_number: number;
+   content: string;
+}
 
 interface Client {
    id: string;
    chatbot_id: string;
    stage: number;
    message: string;
-   allMessages: object | undefined;
+   allMessages: Message[] | undefined;
    [key: string]: any; // Optional: To allow additional properties
 }
 
+type AllMessages = {
+   stage: number,
+   message_number: number,
+   content: string
+};
+
 export const chatbot = async (data: {
    client: Client;
-   allMessages?: object | undefined; // Add allMessages to the data type
+   allMessages?: AllMessages[];
 }): Promise<{
    status: number;
    message: string;
@@ -24,23 +36,23 @@ export const chatbot = async (data: {
       message: string;
       response: string;
       order: object | undefined;
-      allMessages: object | undefined;
+      allMessages: AllMessages[];
    };
 }> => {
    try {
       const { id, chatbot_id, stage, message } = data?.client || data;
       // Armazeno as mensagens do chatbot dentro do respose do cliente para evitar
       // armazenar em memória, cache ou acessar o banco de dados muitas vezes
-      var allMessages = data?.client?.allMessages || data?.allMessages || undefined;
+      var allMessages = data?.client?.allMessages || data?.allMessages || [];
 
-      if (!allMessages)
-         allMessages = await getAllMessages(chatbot_id); // Acessando o banco de dados para pegar as mensagens do chatbot
+      if (allMessages?.length === 0)
+         allMessages = await getAllCachedMessages(chatbot_id);
 
       const currentStage = await getStage({ id, stage });
       const { nextStage, response, order } = await stages[currentStage].stage.exec({
          id,
          message,
-         allMessages
+         chatbot_id
       });
 
       const successResponse = formatApiResponse({

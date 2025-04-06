@@ -1,6 +1,7 @@
 import pg from 'pg';
 import { logger } from '../helpers/logger.js';
-const URL = process.env.DB_URL || 'postgres://postgres:12345678@localhost:5432/postgres';
+//const URL = process.env.DB_URL || 'postgres://postgres:12345678@localhost:5432/postgres';
+const URL = process.env.DB_URL || 'postgres://postgres:12345678@localhost:5432/chat';
 export const pool = new pg.Pool({
     connectionString: URL,
     max: (Number(process.env.DB_POOL) || 200),

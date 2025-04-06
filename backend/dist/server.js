@@ -5,16 +5,13 @@ import cluster from 'cluster';
 import process from 'process';
 import './database/connection.js';
 import { errorHandler, validationFilter } from './middleware/middleware.js';
-import { chatbot } from './chatbot/response.js';
+import { chatbot } from './chatbot/index.js';
 import { logger } from './helpers/logger.js';
 import { readDatabase_exemple } from './database/local_database.js';
 import dotenv from 'dotenv';
+import { getIdChatbotToDevelopment } from './database/queries/select.js';
 dotenv.config({ path: '.env.development' });
-////////////
-// apenas para exemplo do body backend
-// PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
 const lastJsonBody = [];
-///////////
 const TIMEOUT = Number(process.env.REQ_TIMEOUT) || 5000;
 const PORT = process.env.NODE_ENV === 'production' ? (Number(process.env.PORT) || 8080) : 9999;
 const app = express();
@@ -27,13 +24,16 @@ app.use(cors({
 }));
 app.use(bodyParser.json());
 app.use('/v1/chat', apiRouter);
-apiRouter.post('/', validationFilter, (req, res) => {
+apiRouter.post('/', validationFilter, async (req, res) => {
     try {
+        if (process.env.NODE_ENV === 'development' && !req?.body?.client?.chatbot_id) { // PEGA O ID DO CHATBOT PENAS PARA TESTES
+            const chatbot_id = await getIdChatbotToDevelopment();
+            req.body.client.chatbot_id = chatbot_id?.id;
+        }
         chatbot(req?.body).then((response) => {
-            ////////////////////////////////
-            lastJsonBody.unshift(response);
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-            ////////////////////////////////
+            if (process.env.NODE_ENV === 'development') {
+                lastJsonBody.unshift(response);
+            }
             res.status(201).json({
                 data: response
             }).end();
@@ -52,12 +52,10 @@ apiRouter.post('/', validationFilter, (req, res) => {
 });
 /////////////////////////
 // Rota de teste
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV === 'development') {
     app.get('/', (req, res) => {
         try {
             var messageAlert = '';
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
             if (lastJsonBody.length === 0) {
                 lastJsonBody.push(readDatabase_exemple() || {});
                 messageAlert = 'Operação realizada com sucesso: Exemplo resposta do Chatbot para o cliente';
@@ -69,7 +67,6 @@ if (process.env.NODE_ENV !== 'development') {
                 messageAlert,
                 data: lastJsonBody
             }).end();
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
         }
         catch (error) {
             console.error('Erro ao enviar ultimo json response:', error);

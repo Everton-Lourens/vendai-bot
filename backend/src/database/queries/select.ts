@@ -24,7 +24,8 @@ export async function getAllMessages(chatbotId: string): Promise<{ stage: number
             message_number,
             content
         FROM chatbot_message
-        WHERE chatbot_id = $1;
+        WHERE chatbot_id = $1
+        ORDER BY stage, message_number;
     `;
     const querySet = await pool.query(query, [chatbotId]);
     return querySet.rows;

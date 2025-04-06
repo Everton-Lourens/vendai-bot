@@ -9,6 +9,7 @@ import { chatbot } from './chatbot/index.js';
 import { logger } from './helpers/logger.js';
 import { readDatabase_exemple } from './database/local_database.js';
 import dotenv from 'dotenv';
+import { getIdChatbotToDevelopment } from './database/queries/select.js';
 
 dotenv.config({ path: '.env.development' });
 
@@ -29,8 +30,13 @@ app.use(cors({
 app.use(bodyParser.json());
 app.use('/v1/chat', apiRouter);
 
-apiRouter.post('/', validationFilter, (req, res) => {
+apiRouter.post('/', validationFilter, async (req, res) => {
     try {
+        if (process.env.NODE_ENV === 'development' && !req?.body?.client?.chatbot_id) { // PEGA O ID DO CHATBOT PENAS PARA TESTES
+            const chatbot_id = await getIdChatbotToDevelopment();
+            req.body.client.chatbot_id = chatbot_id?.id;
+        }
+
         chatbot(req?.body).then((response) => {
             if (process.env.NODE_ENV === 'development') {
                 lastJsonBody.unshift(response);

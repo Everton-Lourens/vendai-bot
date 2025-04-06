@@ -1,7 +1,8 @@
 import { storage } from '../storage.js';
 import { getMessageDatabase, getAllItemsDatabase } from '../../database/local_database.js';
 export const stageOne = {
-    async exec({ id, message }) {
+    async exec({ id, message, chatbot_id }) {
+        //allMessages = allMessages || await getMessageDatabase('stage_0') || 'Erro ao buscar mensagem do banco de dados';
         const response = await (async () => {
             if (message === '1') {
                 storage[id].stage = 2; // stage da escolha dos itens

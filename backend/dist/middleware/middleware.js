@@ -2,10 +2,10 @@ import { validate } from 'uuid';
 import { logger } from '../helpers/logger.js';
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.development' });
-export const validateBody = (req) => {
+export const validateBody = async (req) => {
     try {
         const { client } = req?.body;
-        const requiredFields = ['id', 'stage', 'message'];
+        const requiredFields = ['id', 'stage', 'message', 'chatbot_id'];
         const missingFields = requiredFields.filter(field => !String(client[field]));
         if (missingFields.length > 0)
             return false;
