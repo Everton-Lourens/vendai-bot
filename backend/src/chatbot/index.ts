@@ -29,10 +29,12 @@ export const chatbot = async (data: {
 }> => {
    try {
       const { id, chatbot_id, stage, message } = data?.client || data;
+      // Armazeno as mensagens do chatbot dentro do respose do cliente para evitar armazenar em memória,
+      // não precisar usar cache e não precisar acessar o banco de dados muitas vezes
       var allMessages = data?.client?.allMessages || data?.allMessages || undefined;
 
       if (!allMessages)
-         allMessages = await getAllMessages(chatbot_id);
+         allMessages = await getAllMessages(chatbot_id); // Acessando o banco de dados para pegar as mensagens do chatbot
 
       const currentStage = await getStage({ id, stage });
       const { nextStage, response, order } = await stages[currentStage].stage.exec({
