@@ -58,20 +58,16 @@ if (process.env.NODE_ENV === 'development') {
     app.get('/', (req, res) => {
         try {
             var messageAlert = '';
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
             if (lastJsonBody.length === 0) {
                 lastJsonBody.push(readDatabase_exemple() || {});
                 messageAlert = 'Operação realizada com sucesso: Exemplo resposta do Chatbot para o cliente';
             } else {
                 messageAlert = 'Operação realizada com sucesso: Histórico de respostas do Chatbot para você';
             }
-
             res.status(201).json({
                 messageAlert,
                 data: lastJsonBody
             }).end();
-            // PESSIMAS PRÁTICAS: SALVANDO EM MEMÓRIA APENAS PARA EXEMPIFICAR O BODY DO BACKEND
         } catch (error) {
             console.error('Erro ao enviar ultimo json response:', error);
             res.status(422).end();

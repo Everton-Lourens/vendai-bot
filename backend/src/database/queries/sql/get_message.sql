@@ -1,7 +1,5 @@
 -- Pegando as mensagens de um chatbot especifico
 SELECT 
-    message.id,
-    message.chatbot_id,
     message.stage,
     message.message_number,
     message.content

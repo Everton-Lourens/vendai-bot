@@ -2,15 +2,22 @@ import { Request, Response, NextFunction } from 'express';
 import _ from 'lodash';
 import { validate, v4 as uuid } from 'uuid';
 import { logger } from '../helpers/logger.js';
+import { getIdChatbotToDevelopment } from '../database/queries/select.js';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.development' });
 
-export const validateBody = (req: Request): boolean => {
+export const validateBody = async (req: Request): Promise<boolean> => {
     try {
         const { client } = req?.body;
 
-        const requiredFields = ['id', 'stage', 'message'];
+        if (process.env.NODE_ENV === 'development' && !client['chatbot_id']) { // PENAS PARA TESTES
+            const chatbot_id = await getIdChatbotToDevelopment();
+            req.body.client.chatbot_id = chatbot_id;
+            client.chatbot_id = chatbot_id;
+        }
+
+        const requiredFields = ['id', 'stage', 'message', 'chatbot_id'];
         const missingFields = requiredFields.filter(field => !String(client[field]));
 
         if (missingFields.length > 0) return false;

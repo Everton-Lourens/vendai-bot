@@ -1,9 +1,11 @@
 interface Client {
    id: string;
+   chatbot_id: string;
    stage: number;
    message: string;
    response: string;
    order: object;
+   allMessages: object;
 }
 
 export function formatApiResponse({
