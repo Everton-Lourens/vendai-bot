@@ -5,7 +5,7 @@ import cluster from 'cluster';
 import process from 'process';
 import './database/connection.js';
 import { errorHandler, validationFilter } from './middleware/middleware.js';
-import { chatbot } from './chatbot/response.js';
+import { chatbot } from './chatbot/index.js';
 import { logger } from './helpers/logger.js';
 import { readDatabase_exemple } from './database/local_database.js';
 import dotenv from 'dotenv';
