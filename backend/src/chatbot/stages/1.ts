@@ -2,7 +2,8 @@ import { storage } from '../storage.js';
 import { getMessageDatabase, getAllItemsDatabase } from '../../database/local_database.js';
 
 export const stageOne = {
-  async exec({ id, message }: { id: string, message: string }): Promise<{ nextStage: number; order: {}; response: string }> {
+  async exec({ id, message, allMessages }: { id: string, message: string, allMessages: object }):
+  Promise<{ nextStage: number; order: {}; response: string; }> {
 
     const response: string = await (async () => {
       if (message === '1') {

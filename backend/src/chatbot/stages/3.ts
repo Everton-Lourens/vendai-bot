@@ -2,7 +2,8 @@ import { storage } from '../storage.js';
 import { getMessageDatabase } from '../../database/local_database.js';
 
 export const stageThree = {
-  async exec({ id, message }: { id: string, message: string }): Promise<{ nextStage: number; order: {}; response: string }> {
+  async exec({ id, message, allMessages }: { id: string, message: string, allMessages: object }):
+  Promise<{ nextStage: number; order: {}; response: string; }> {
 
     const response: string = await (async () => {
       return getMessageDatabase('attendant_stage')?.message_1;

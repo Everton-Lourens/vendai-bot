@@ -39,7 +39,8 @@ export const chatbot = async (data: {
       const currentStage = await getStage({ id, stage });
       const { nextStage, response, order } = await stages[currentStage].stage.exec({
          id,
-         message
+         message,
+         allMessages
       });
 
       const successResponse = formatApiResponse({
