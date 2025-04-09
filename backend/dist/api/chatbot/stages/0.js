@@ -3,7 +3,7 @@ import { getMessageDatabase } from '../../../database/local_database.js';
 export const initialStage = {
     async exec({ id, message }) {
         storage[id].stage = 1;
-        const response = getMessageDatabase('stage_0')?.message_1 || 'Erro ao buscar mensagem do banco de dados';
+        const response = getMessageDatabase('stage_0')?.message_number_1;
         // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário
         storage[id].trackRecordResponse.push({
             id,

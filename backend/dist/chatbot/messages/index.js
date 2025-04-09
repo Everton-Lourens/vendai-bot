@@ -8,11 +8,10 @@ const clearTimer = () => {
     }
 };
 const setTimer = () => {
-    console.log('@@@@@@@@@@@@@@@@ BANCO DE DADOS');
     clearTimer();
     timer = setTimeout(() => {
         Object.keys(messagesCache).forEach(key => delete messagesCache[key]);
-    }, 5 * 60 * 1000);
+    }, 1 * 60 * 1000); // Armazenar as mensagens durante 1 minuto
 };
 export const getOneCachedMessage = async ({ chatbot_id, stage, message_number }) => {
     const cacheKey = `${stage}_${message_number}`;
@@ -23,9 +22,6 @@ export const getOneCachedMessage = async ({ chatbot_id, stage, message_number })
         });
         setTimer();
     }
-    else {
-        console.log('@@@@@@@@@@@@@@@@ CACHE');
-    }
     return messagesCache[cacheKey]?.content || '';
 };
 export const getAllCachedMessages = async (chatbotId) => {
@@ -35,9 +31,6 @@ export const getAllCachedMessages = async (chatbotId) => {
             messagesCache[`${message.stage}_${message.message_number}`] = message;
         });
         setTimer();
-    }
-    else {
-        console.log('@@@@@@@@@@@@@@@@ CACHE');
     }
     return Object.values(messagesCache);
 };

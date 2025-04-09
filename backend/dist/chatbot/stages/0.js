@@ -3,12 +3,20 @@ import { getMessageDatabase } from '../../database/local_database.js';
 import { getOneCachedMessage } from '../messages/index.js';
 export const initialStage = {
     async exec({ id, message, chatbot_id }) {
-        const firstMessage = await getOneCachedMessage({
-            chatbot_id,
-            stage: 0,
-            message_number: 1
-        });
-        const response = firstMessage + 'FUNCIONOU' || getMessageDatabase('stage_0') || 'Erro ao buscar mensagem do banco de dados';
+        const firstMessage = await (async () => {
+            try {
+                return getMessageDatabase('stage_0')?.message_number_1;
+                return await getOneCachedMessage({
+                    chatbot_id,
+                    stage: 0,
+                    message_number: 1
+                });
+            }
+            catch (error) {
+            }
+        })();
+        // Pega do banco de dados Postgres ou do cache
+        const response = firstMessage;
         // envia para o stage 1
         storage[id].stage = 1;
         // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário

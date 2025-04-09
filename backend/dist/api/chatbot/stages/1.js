@@ -13,12 +13,12 @@ export const stageOne = {
             }
             else if (message === '2') {
                 storage[id].stage = 1; // permanece nesse stage, apenas mostra a taxa de entrega
-                return getMessageDatabase('delivery_tax')?.message_1 || 'Erro ao buscar mensagem do banco de dados';
+                return getMessageDatabase('delivery_tax')?.message_number_1;
             }
             else if (message === '3') {
                 storage[id].wantsHumanService = true;
                 storage[id].stage = 3; // vai para o stage do atendente
-                return getMessageDatabase('attendant_stage')?.message_1 || 'Erro ao buscar mensagem do banco de dados';
+                return getMessageDatabase('attendant_stage')?.message_number_1;
             }
             else {
                 return 'Digite uma opção válida, por favor. 🙋‍♀️';

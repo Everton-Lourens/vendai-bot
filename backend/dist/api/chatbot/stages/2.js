@@ -13,7 +13,7 @@ export const stageTwo = {
                 return `${itemDescription}\n` +
                     '——————————\n' +
                     'Ótima escolha!\n' +
-                    getMessageDatabase('attendant_stage')?.message_1;
+                    getMessageDatabase('attendant_stage')?.message_number_1;
                 //////////////////////
             }
             else {

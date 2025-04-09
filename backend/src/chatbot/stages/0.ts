@@ -6,13 +6,20 @@ export const initialStage = {
   async exec({ id, message, chatbot_id }: { id: string, message: string, chatbot_id: string }):
     Promise<{ nextStage: number; response: string; order: {}; }> {
 
-    const firstMessage = await getOneCachedMessage({
-      chatbot_id,
-      stage: 0,
-      message_number: 1
-    });
+    const firstMessage = await (async () => {
+      try {
+        return await getOneCachedMessage({
+          chatbot_id,
+          stage: 0,
+          message_number: 1
+        });
+      } catch (error) {
+        return getMessageDatabase('stage_0')?.message_number_1;
+      }
+    })();
 
-    const response = firstMessage || getMessageDatabase('stage_0') || 'Erro ao buscar mensagem do banco de dados';
+    // Pega do banco de dados Postgres ou do cache
+    const response = firstMessage;
 
     // envia para o stage 1
     storage[id].stage = 1;

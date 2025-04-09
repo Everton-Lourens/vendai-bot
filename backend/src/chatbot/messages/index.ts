@@ -14,7 +14,7 @@ const setTimer = () => {
     clearTimer();
     timer = setTimeout(() => {
         Object.keys(messagesCache).forEach(key => delete messagesCache[key]);
-    }, 1 * 60 * 1000); // 1 minuto para armazenar as mensagens
+    }, 1 * 60 * 1000); // Armazenar as mensagens durante 1 minuto
 };
 
 export const getOneCachedMessage = async ({ chatbot_id, stage, message_number }: { chatbot_id: string, stage: number, message_number: number }): Promise<string> => {

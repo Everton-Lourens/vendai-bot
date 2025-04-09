@@ -2,7 +2,7 @@ import { storage } from '../storage.js';
 import { getMessageDatabase } from '../../database/local_database.js';
 export const stageTwo = {
     async exec({ id, message, chatbot_id }) {
-        //allMessages = allMessages || await getMessageDatabase('stage_0') || 'Erro ao buscar mensagem do banco de dados';
+        //allMessages = allMessages || await getMessageDatabase('stage_0');
         const response = await (async () => {
             if (getMessageDatabase('all_items')[message]) {
                 const newItem = getMessageDatabase('all_items')[message];
@@ -14,7 +14,7 @@ export const stageTwo = {
                 return `${itemDescription}\n` +
                     '——————————\n' +
                     'Ótima escolha!\n' +
-                    getMessageDatabase('attendant_stage')?.message_1;
+                    getMessageDatabase('attendant_stage')?.message_number_1;
                 //////////////////////
             }
             else {

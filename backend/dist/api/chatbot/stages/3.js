@@ -3,7 +3,7 @@ import { getMessageDatabase } from '../../../database/local_database.js';
 export const stageThree = {
     async exec({ id, message }) {
         const response = await (async () => {
-            return getMessageDatabase('attendant_stage')?.message_1;
+            return getMessageDatabase('attendant_stage')?.message_number_1;
         })();
         // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário
         storage[id].trackRecordResponse.push({

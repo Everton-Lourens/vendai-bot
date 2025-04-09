@@ -11,9 +11,9 @@ export const stageThree = {
   async exec({ id, message, chatbot_id }: { id: string, message: string, chatbot_id: string }):
   Promise<{ nextStage: number; order: {}; response: string; }> {
 
-    //allMessages = allMessages || await getMessageDatabase('stage_0') || 'Erro ao buscar mensagem do banco de dados';
+    //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
-      return getMessageDatabase('stage_3')?.message_1;
+      return getMessageDatabase('stage_3')?.message_number_1;
     })();
 
     // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário
