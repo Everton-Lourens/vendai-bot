@@ -1,12 +1,16 @@
 import { storage } from '../storage.js';
 import { getMessageDatabase } from '../../database/local_database.js';
+import { getOneCachedItem } from '../cache/index.js';
 
 export const stageTwo = {
   async exec({ id, message, chatbot_id }: { id: string, message: string, chatbot_id: string }):
-  Promise<{ nextStage: number; order: {}; response: string; }> {
+    Promise<{ nextStage: number; order: {}; response: string; }> {
 
     //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
+
+      const teste = await getOneCachedItem(chatbot_id, message);
+      console.log(teste);
 
       if (getMessageDatabase('all_items')[message]) {
         const newItem = getMessageDatabase('all_items')[message];

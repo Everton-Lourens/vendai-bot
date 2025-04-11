@@ -1,9 +1,12 @@
 import { storage } from '../storage.js';
 import { getMessageDatabase } from '../../database/local_database.js';
+import { getOneCachedItem } from '../cache/index.js';
 export const stageTwo = {
     async exec({ id, message, chatbot_id }) {
         //allMessages = allMessages || await getMessageDatabase('stage_0');
         const response = await (async () => {
+            const teste = await getOneCachedItem(chatbot_id, message);
+            console.log(teste);
             if (getMessageDatabase('all_items')[message]) {
                 const newItem = getMessageDatabase('all_items')[message];
                 storage[id].items.push(newItem); // adiciona o item ao carrinho;

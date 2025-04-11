@@ -48,7 +48,7 @@ export async function getAllMessages(chatbotId: string): Promise<{ stage: number
     }
 }
 
-export async function getAllItems(chatbotId: string): Promise<{ stage: number; message_number: number; content: string }[]> {
+export async function getAllItems(chatbotId: string): Promise<{ id: string; name: string; description: string; price: number; }[]> {
     try {
         const query = `
             SELECT 

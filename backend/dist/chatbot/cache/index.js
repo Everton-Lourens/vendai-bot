@@ -44,3 +44,15 @@ export const getAllCachedItems = async (chatbot_id) => {
     }
     return itemsCache[chatbot_id];
 };
+export const getOneCachedItem = async (chatbot_id, item_number) => {
+    if (!itemsCache[chatbot_id]) {
+        const allItems = await getAllItems(chatbot_id);
+        itemsCache[chatbot_id] = allItems;
+        setTimer();
+    }
+    const index = parseInt(item_number, 10) - 1;
+    const items = itemsCache[chatbot_id];
+    if (isNaN(index) || index < 0 || index >= items?.length)
+        return null;
+    return items[index];
+};
