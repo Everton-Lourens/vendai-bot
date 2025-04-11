@@ -9,26 +9,42 @@ export const stageTwo = {
     //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
 
-      const teste = await getOneCachedItem(chatbot_id, message);
-      console.log(teste);
-
-      if (getMessageDatabase('all_items')[message]) {
-        const newItem = getMessageDatabase('all_items')[message];
-        storage[id].items.push(newItem); // adiciona o item ao carrinho;
-
-        const itemDescription = newItem?.description;
-
-        // //Por enquanto apenas envia para um atendente, mas da para criar mais coisas ao invés de enviar para atendente de imadiato
+      try {
+        const getNewItem = await getOneCachedItem(chatbot_id, message);
+        if (getNewItem === null)
+          return 'Digite uma opção válida, por favor. 🙋‍♀️';
+        const itemName = getNewItem?.name;
+        const itemDescription = getNewItem?.description;
+        const itemPrice = getNewItem?.price;
+        storage[id].items.push(getNewItem); // adiciona o item ao carrinho;
         storage[id].stage = 3; // vai para o stage do atendente
         storage[id].wantsHumanService = true; // vai para o stage do atendente
-        return `${itemDescription}\n` +
+        return 'Ótima escolha!' + '\n' +
           '——————————\n' +
-          'Ótima escolha!\n' +
-          getMessageDatabase('attendant_stage')?.message_number_1;
-        //////////////////////
-      }
-      else {
-        return 'Digite uma opção válida, por favor. 🙋‍♀️';
+          `Item: ${itemName}\n` +
+          `Descrição: ${itemDescription}\n` +
+          `Preço: R$${itemPrice}\n` +
+          '——————————';
+
+      } catch (error) {
+        if (getMessageDatabase('all_items')[message]) {
+          const newItem = getMessageDatabase('all_items')[message];
+          storage[id].items.push(newItem); // adiciona o item ao carrinho;
+
+          const itemDescription = newItem?.description;
+
+          // //Por enquanto apenas envia para um atendente, mas da para criar mais coisas ao invés de enviar para atendente de imadiato
+          storage[id].stage = 3; // vai para o stage do atendente
+          storage[id].wantsHumanService = true; // vai para o stage do atendente
+          return `${itemDescription}\n` +
+            '——————————\n' +
+            'Ótima escolha!\n' +
+            getMessageDatabase('attendant_stage')?.message_number_1;
+          //////////////////////
+        }
+        else {
+          return 'Digite uma opção válida, por favor. 🙋‍♀️';
+        }
       }
     })();
 
