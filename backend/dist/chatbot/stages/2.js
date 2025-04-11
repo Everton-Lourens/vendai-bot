@@ -19,7 +19,7 @@ export const stageTwo = {
                     '——————————\n' +
                     `Item: ${itemName}\n` +
                     `Descrição: ${itemDescription}\n` +
-                    `R$${itemPrice}\n` +
+                    `Preço: R$${itemPrice}\n` +
                     '——————————';
             }
             catch (error) {
@@ -30,9 +30,10 @@ export const stageTwo = {
                     // //Por enquanto apenas envia para um atendente, mas da para criar mais coisas ao invés de enviar para atendente de imadiato
                     storage[id].stage = 3; // vai para o stage do atendente
                     storage[id].wantsHumanService = true; // vai para o stage do atendente
-                    return `${itemDescription}\n` +
+                    return 'Ótima escolha!\n' +
                         '——————————\n' +
-                        'Ótima escolha!\n' +
+                        `${itemDescription}\n` +
+                        '——————————\n' +
                         getMessageDatabase('attendant_stage')?.message_number_1;
                     //////////////////////
                 }

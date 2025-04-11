@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from 'express';
 import _ from 'lodash';
 import { validate, v4 as uuid } from 'uuid';
 import { logger } from '../helpers/logger.js';
-import { getIdChatbotToDevelopment } from '../database/queries/select.js';
 
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.development' });

@@ -13,12 +13,15 @@ export const stageTwo = {
         const getNewItem = await getOneCachedItem(chatbot_id, message);
         if (getNewItem === null)
           return 'Digite uma opção válida, por favor. 🙋‍♀️';
+
         const itemName = getNewItem?.name;
         const itemDescription = getNewItem?.description;
         const itemPrice = getNewItem?.price;
+
         storage[id].items.push(getNewItem); // adiciona o item ao carrinho;
         storage[id].stage = 3; // vai para o stage do atendente
         storage[id].wantsHumanService = true; // vai para o stage do atendente
+
         return 'Ótima escolha!' + '\n' +
           '——————————\n' +
           `Item: ${itemName}\n` +
@@ -36,9 +39,10 @@ export const stageTwo = {
           // //Por enquanto apenas envia para um atendente, mas da para criar mais coisas ao invés de enviar para atendente de imadiato
           storage[id].stage = 3; // vai para o stage do atendente
           storage[id].wantsHumanService = true; // vai para o stage do atendente
-          return `${itemDescription}\n` +
+          return 'Ótima escolha!\n' +
             '——————————\n' +
-            'Ótima escolha!\n' +
+            `${itemDescription}\n` +
+            '——————————\n' +
             getMessageDatabase('attendant_stage')?.message_number_1;
           //////////////////////
         }
