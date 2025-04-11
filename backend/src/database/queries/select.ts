@@ -1,26 +1,29 @@
 import { QueryResult } from 'pg';
 import { pool } from '../connection.js';
 
-export async function findById(id: string): Promise<QueryResult> {
+export async function findChatbotById(id: string): Promise<QueryResult> {
     try {
         const query = `
-    SELECT
-        id,
-        store,
-        name,
-        to_char(created_at, 'YYYY-MM-DD') as created_at,
-        messages
-    FROM
-        chatbot
-    WHERE "id" = $1;
-    `
-        return pool.query(query, [id]);
+            SELECT
+                id,
+                store,
+                name,
+                to_char(created_at, 'YYYY-MM-DD') as created_at
+            FROM
+                chatbot
+            WHERE id = $1;
+        `
+        const findByQuery = await pool.query(query, [id]);
+        if (findByQuery.rows.length > 0) {
+            return findByQuery;
+        } else {
+            throw new Error('No messages found');
+        }
     } catch (error) {
-        console.error('Error in findById:', error);
+        console.error('Error in findChatbotById:', error);
         throw error;
     }
 }
-
 
 export async function getAllMessages(chatbotId: string): Promise<{ stage: number; message_number: number; content: string }[]> {
     try {
@@ -34,13 +37,40 @@ export async function getAllMessages(chatbotId: string): Promise<{ stage: number
             ORDER BY stage, message_number;
         `;
         const querySet = await pool.query(query, [chatbotId]);
-        return querySet.rows;
+        if (querySet.rows.length > 0) {
+            return querySet.rows;
+        } else {
+            throw new Error('No messages found');
+        }
     } catch (error) {
         console.error('Error in getAllMessages:', error);
         throw error;
     }
 }
 
+export async function getAllItems(chatbotId: string): Promise<{ stage: number; message_number: number; content: string }[]> {
+    try {
+        const query = `
+            SELECT 
+				id,
+                name,
+                description,
+                price
+            FROM item
+            WHERE chatbot_id = $1
+            ORDER BY price;
+        `;
+        const querySet = await pool.query(query, [chatbotId]);
+        if (querySet.rows.length > 0) {
+            return querySet.rows;
+        } else {
+            throw new Error('No messages found');
+        }
+    } catch (error) {
+        console.error('Error in getAllMessages:', error);
+        throw error;
+    }
+}
 
 export async function getIdChatbotToDevelopment(): Promise<{ id: string }> {
     try {
@@ -52,7 +82,6 @@ export async function getIdChatbotToDevelopment(): Promise<{ id: string }> {
             const [{ id }] = querySet1.rows;
             return { id };
         }
-
         const query2 = `
             INSERT INTO chatbot (store, name)
             VALUES ('loja_exemplo', 'nome_exemplo')

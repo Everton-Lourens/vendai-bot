@@ -49,9 +49,11 @@ pool.once('connect', async () => {
             -- Produto/Item disponível para compra
             CREATE TABLE IF NOT EXISTS item (
                 id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+                chatbot_id uuid NOT NULL,
                 name TEXT NOT NULL,
                 description TEXT,
-                price DECIMAL(10,2) NOT NULL
+                price DECIMAL(10,2) NOT NULL,
+                FOREIGN KEY (chatbot_id) REFERENCES chatbot(id) ON DELETE CASCADE
             );
 
             -- Tabela intermediária entre cliente e item

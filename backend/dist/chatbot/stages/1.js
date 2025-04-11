@@ -1,13 +1,21 @@
 import { storage } from '../storage.js';
 import { getMessageDatabase, getAllItemsDatabase } from '../../database/local_database.js';
+import { getAllCachedItems } from '../cache/index.js';
 export const stageOne = {
     async exec({ id, message, chatbot_id }) {
         //allMessages = allMessages || await getMessageDatabase('stage_0');
         const response = await (async () => {
             if (message === '1') {
                 storage[id].stage = 2; // stage da escolha dos itens
-                const allItems2 = getAllItemsDatabase('all_items');
-                const itemsDescription = Object.values(allItems2)
+                const allItems = await (async () => {
+                    try {
+                        return await getAllCachedItems(chatbot_id);
+                    }
+                    catch (error) {
+                        return getAllItemsDatabase('all_items');
+                    }
+                })();
+                const itemsDescription = Object.values(allItems)
                     .map((item, index) => `${numberEmoji(index)} → ${item?.description}`)
                     .join('\n');
                 return itemsDescription || 'Erro ao buscar itens do banco de dados';

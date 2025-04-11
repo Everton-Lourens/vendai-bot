@@ -34,6 +34,7 @@ const App = () => {
       .then((data) => {
         const { client } = data?.data;
         setDataResponseChatbot({ client });
+        console.log(data?.data?.client?.response?.replace(/\n/g, "<br>"));
         setTimeout(() => {
           data?.data?.client?.response && setMessages((prevMessages) => [...prevMessages, { text: data?.data?.client?.response, sender: "bot" }]);
         }, 1000);
@@ -66,7 +67,7 @@ const App = () => {
           <div
             key={index}
             className={message.sender === 'user' ? 'message user' : 'message bot'}
-            dangerouslySetInnerHTML={{ __html: message?.text?.replace(/\n/g, "<br>") }}
+            dangerouslySetInnerHTML={{ __html: message?.text?.replace(/\n/g, "<br>").replace("\n", "<br>") }}
           ></div>
         ))}
       </div>

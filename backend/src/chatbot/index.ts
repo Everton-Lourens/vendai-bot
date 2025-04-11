@@ -1,7 +1,7 @@
 import { logger } from '../helpers/logger.js';
 import { formatApiResponse } from '../helpers/bodyResponse.js';
 import { stages, getStage } from './stages.js';
-import { getAllCachedMessages } from './messages/index.js';
+import { getAllCachedMessages } from './cache/index.js';
 
 interface Message {
    stage: number;

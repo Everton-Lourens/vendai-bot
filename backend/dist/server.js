@@ -26,7 +26,7 @@ app.use(bodyParser.json());
 app.use('/v1/chat', apiRouter);
 apiRouter.post('/', validationFilter, async (req, res) => {
     try {
-        if (process.env.NODE_ENV === 'development' && !req?.body?.client?.chatbot_id) { // PEGA O ID DO CHATBOT PENAS PARA TESTES
+        if (process.env.NODE_ENV === 'development' && !req?.body?.client?.chatbot_id) { // PEGA O ID PENAS PARA TESTES
             const chatbot_id = await getIdChatbotToDevelopment();
             req.body.client.chatbot_id = chatbot_id?.id;
         }
@@ -42,10 +42,10 @@ apiRouter.post('/', validationFilter, async (req, res) => {
         });
     }
     catch (error) {
-        logger.error('Erro ao enviar resposta do Chatbot:');
+        logger.error('Erro ao enviar resposta:');
         logger.error(error);
         res.status(422).json({
-            messageAlert: 'Erro ao enviar resposta do Chatbot',
+            messageAlert: 'Erro ao enviar resposta',
             data: error
         }).end();
     }
@@ -58,10 +58,10 @@ if (process.env.NODE_ENV === 'development') {
             var messageAlert = '';
             if (lastJsonBody.length === 0) {
                 lastJsonBody.push(readDatabase_exemple() || {});
-                messageAlert = 'Operação realizada com sucesso: Exemplo resposta do Chatbot para o cliente';
+                messageAlert = 'Operação realizada com sucesso: Exemplo resposta para o cliente';
             }
             else {
-                messageAlert = 'Operação realizada com sucesso: Histórico de respostas do Chatbot para você';
+                messageAlert = 'Operação realizada com sucesso: Histórico de respostas para você';
             }
             res.status(201).json({
                 messageAlert,

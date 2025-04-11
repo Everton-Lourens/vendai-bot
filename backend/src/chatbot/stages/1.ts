@@ -1,17 +1,25 @@
 import { storage } from '../storage.js';
 import { getMessageDatabase, getAllItemsDatabase } from '../../database/local_database.js';
+import { getAllCachedItems, getOneCachedMessage } from '../cache/index.js';
 
 export const stageOne = {
   async exec({ id, message, chatbot_id }: { id: string, message: string, chatbot_id: string }):
-  Promise<{ nextStage: number; order: {}; response: string; }> {
+    Promise<{ nextStage: number; order: {}; response: string; }> {
 
     //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
       if (message === '1') {
         storage[id].stage = 2; // stage da escolha dos itens
 
-        const allItems2 = getAllItemsDatabase('all_items');
-        const itemsDescription = Object.values(allItems2)
+        const allItems = await (async () => {
+          try {
+            return await getAllCachedItems(chatbot_id);
+          } catch (error) {
+            return getAllItemsDatabase('all_items');
+          }
+        })();
+
+        const itemsDescription: string = Object.values(allItems)
           .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}`)
           .join('\n');
         return itemsDescription || 'Erro ao buscar itens do banco de dados';
@@ -52,11 +60,11 @@ export const stageOne = {
 
 function numberEmoji(number: number) {
   const blueEmojis = [
-      "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
+    "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
   ];
 
   if (number < 0 || number > 9) {
-      return number;
+    return number;
   }
 
   return blueEmojis[number];

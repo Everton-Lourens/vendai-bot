@@ -1,11 +1,10 @@
 import { storage } from '../storage.js';
 import { getMessageDatabase } from '../../database/local_database.js';
-import { getOneCachedMessage } from '../messages/index.js';
+import { getOneCachedMessage } from '../cache/index.js';
 export const initialStage = {
     async exec({ id, message, chatbot_id }) {
-        const firstMessage = await (async () => {
+        const welcomeMessage = await (async () => {
             try {
-                return getMessageDatabase('stage_0')?.message_number_1;
                 return await getOneCachedMessage({
                     chatbot_id,
                     stage: 0,
@@ -13,10 +12,11 @@ export const initialStage = {
                 });
             }
             catch (error) {
+                return getMessageDatabase('stage_0')?.message_number_1;
             }
         })();
         // Pega do banco de dados Postgres ou do cache
-        const response = firstMessage;
+        const response = welcomeMessage.replace(/\\n/g, '\n');
         // envia para o stage 1
         storage[id].stage = 1;
         // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário
@@ -34,3 +34,12 @@ export const initialStage = {
         };
     },
 };
+function numberEmoji(number) {
+    const blueEmojis = [
+        "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
+    ];
+    if (number < 0 || number > 9) {
+        return number;
+    }
+    return blueEmojis[number];
+}
