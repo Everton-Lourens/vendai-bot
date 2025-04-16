@@ -27,7 +27,8 @@ export const stageTwo = {
           `Item: ${itemName}\n` +
           `Descrição: ${itemDescription}\n` +
           `Preço: R$${itemPrice}\n` +
-          '——————————';
+          '——————————\n\n' +
+          getMessageDatabase('attendant_stage')?.message_number_1;
 
       } catch (error) {
         if (getMessageDatabase('all_items')[message]) {
@@ -42,7 +43,7 @@ export const stageTwo = {
           return 'Ótima escolha!\n' +
             '——————————\n' +
             `${itemDescription}\n` +
-            '——————————\n' +
+            '——————————\n\n' +
             getMessageDatabase('attendant_stage')?.message_number_1;
           //////////////////////
         }

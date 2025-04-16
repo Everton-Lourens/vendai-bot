@@ -43,6 +43,9 @@
       },
       "delivery_tax": {
         "message_number_1": "TAXA DE ENTREGA:\n——————————\n🛵 → Centro: R$ 5,00\n🛵 → Avenida Sul: R$ 8,00\n🛵 → Avenida Norte: R$ 10,00\n——————————\n1️⃣ –> FAZER PEDIDO \n3️⃣ → FALAR C/ Atendente"
+      },
+      "attendant_stage": {
+        "message_number_1": "Você será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
       }
     }
   }

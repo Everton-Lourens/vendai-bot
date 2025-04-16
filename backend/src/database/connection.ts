@@ -102,24 +102,29 @@ pool.once('connect', async () => {
                     `);
 
     await pool.query(`
-                        WITH inserted_chatbot AS (
-                            INSERT INTO chatbot (store, name) VALUES
-                            ('loja_exemplo', 'MeganBot')
-                            RETURNING id
-                        ),
-                        inserted_items AS (
-                            INSERT INTO item (chatbot_id, name, description, price)
-                            SELECT id, 'Item 1', 'Primeiro item', '10.00'
-                            FROM inserted_chatbot
-                            RETURNING id
-                        )
-                        INSERT INTO chatbot_message (chatbot_id, stage, message_number, content)
-                        VALUES (
-                            (SELECT id FROM inserted_chatbot),
-                            1,
-                            1,
-                            'Bem-vindo, sou a MeganBot!'
-                        );
+                        DO $$
+                        BEGIN
+                            IF NOT EXISTS (SELECT 1 FROM chatbot WHERE store = 'loja_exemplo') THEN
+                                WITH inserted_chatbot AS (
+                                    INSERT INTO chatbot (store, name) VALUES
+                                    ('loja_exemplo', 'MeganBot')
+                                    RETURNING id
+                                ),
+                                inserted_items AS (
+                                    INSERT INTO item (chatbot_id, name, description, price)
+                                    SELECT id, 'Item 1', 'Primeiro item', '10.00'
+                                    FROM inserted_chatbot
+                                    RETURNING id
+                                )
+                                INSERT INTO chatbot_message (chatbot_id, stage, message_number, content)
+                                VALUES (
+                                    (SELECT id FROM inserted_chatbot),
+                                    1,
+                                    1,
+                                    'Bem-vindo, sou a MeganBot!'
+                                );
+                            END IF;
+                        END $$;
                     `);
 });
 
@@ -155,4 +160,5 @@ if (process.env.SLOW_QUERY_ALERT === 'true') {
         }
     })
 }
+
 
