@@ -1,9 +1,3 @@
-interface Message {
-   stage: number;
-   message_number: number;
-   content: string;
-}
-
 interface Client {
    id: string;
    chatbot_id: string;
@@ -11,7 +5,6 @@ interface Client {
    message: string;
    response: string;
    order: object;
-   allMessages: Message[]; // Agora usa a interface Message
 }
 
 

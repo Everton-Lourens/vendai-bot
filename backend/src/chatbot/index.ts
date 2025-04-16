@@ -3,30 +3,16 @@ import { formatApiResponse } from '../helpers/bodyResponse.js';
 import { stages, getStage } from './stages.js';
 import { getAllCachedMessages } from './cache/index.js';
 
-interface Message {
-   stage: number;
-   message_number: number;
-   content: string;
-}
-
 interface Client {
    id: string;
    chatbot_id: string;
    stage: number;
    message: string;
-   allMessages: Message[] | undefined;
    [key: string]: any; // Optional: To allow additional properties
 }
 
-type AllMessages = {
-   stage: number,
-   message_number: number,
-   content: string
-};
-
 export const chatbot = async (data: {
    client: Client;
-   allMessages?: AllMessages[];
 }): Promise<{
    status: number;
    message: string;
@@ -36,17 +22,10 @@ export const chatbot = async (data: {
       message: string;
       response: string;
       order: object | undefined;
-      allMessages: AllMessages[];
    };
 }> => {
    try {
       const { id, chatbot_id, stage, message } = data?.client || data;
-      // Armazeno as mensagens do chatbot dentro do respose do cliente para evitar
-      // armazenar em memória, cache ou acessar o banco de dados muitas vezes
-      var allMessages = data?.client?.allMessages || data?.allMessages || [];
-
-      if (allMessages?.length === 0)
-         allMessages = await getAllCachedMessages(chatbot_id);
 
       const currentStage = await getStage({ id, stage });
       const { nextStage, response, order } = await stages[currentStage].stage.exec({
@@ -64,8 +43,7 @@ export const chatbot = async (data: {
             stage: nextStage,
             message,
             response,
-            order,
-            allMessages
+            order
          }
       });
 
