@@ -1,6 +1,6 @@
 import { storage } from '../storage.js';
 import { getMessageDatabase, getAllItemsDatabase } from '../../database/local_database.js';
-import { getAllCachedItems, getOneCachedMessage } from '../cache/index.js';
+import { getAllCachedItems } from '../cache/index.js';
 
 export const stageOne = {
   async exec({ id, message, chatbot_id }: { id: string, message: string, chatbot_id: string }):
@@ -24,17 +24,14 @@ export const stageOne = {
           .join('\n');
         return itemsDescription || 'Erro ao buscar itens do banco de dados';
 
-      }
-      else if (message === '2') {
+      } else if (message === '2') {
         storage[id].stage = 1; // permanece nesse stage, apenas mostra a taxa de entrega
         return getMessageDatabase('delivery_tax')?.message_number_1;
-      }
-      else if (message === '3') {
+      } else if (message === '3') {
         storage[id].wantsHumanService = true;
         storage[id].stage = 3; // vai para o stage do atendente
         return getMessageDatabase('attendant_stage')?.message_number_1;
-      }
-      else {
+      } else {
         return 'Digite uma opção válida, por favor. 🙋‍♀️';
       }
     })();

@@ -18,7 +18,7 @@ export const initialStage = {
       }
     })();
 
-    // Pega do banco de dados Postgres ou do cache
+    // Para evitar o erro de \n estar com "\\n" no banco de dados
     const response = welcomeMessage.replace(/\\n/g, '\n');
 
     // envia para o stage 1
