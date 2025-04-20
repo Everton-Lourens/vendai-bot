@@ -42,7 +42,7 @@ export const stageTwo = {
           storage[id].wantsHumanService = true; // vai para o stage do atendente
           return 'Ótima escolha!\n' +
             '——————————\n' +
-            `${itemDescription}\n` +
+            `${itemDescription}, R$${newItem?.price},00\n` +
             '——————————\n\n' +
             getMessageDatabase('attendant_stage')?.message_number_1;
           //////////////////////

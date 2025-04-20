@@ -20,7 +20,7 @@ export const stageOne = {
         })();
 
         const itemsDescription: string = Object.values(allItems)
-          .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}, R$${item?.price}`)
+          .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`)
           .join('\n');
         return itemsDescription || 'Erro ao buscar itens do banco de dados';
 
