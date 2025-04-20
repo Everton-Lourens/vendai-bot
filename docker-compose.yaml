@@ -13,12 +13,14 @@ services:
     volumes:
       - ./backend:/app
     environment:
-      - NODE_ENV=production
-      - PORT=8080
-      - PINO_LOG_LEVEL=debug
-      - REQ_TIMEOUT=2000
-      - CLUSTER=true
-      - CLUSTER_WORKERS=5
+      DB_URL: "postgres://postgres:12345678@postgres:5432/postgres"
+      DB_POOL: 35
+      NODE_ENV: production
+      PORT: 8080
+      PINO_LOG_LEVEL: debug
+      REQ_TIMEOUT: 2000
+      CLUSTER: true
+      CLUSTER_WORKERS: 5
     ulimits:
       nproc: 1000000
       nofile:
@@ -66,3 +68,23 @@ services:
     ports:
       - "9999:9999"
 
+  postgres:
+    image: postgres
+    command: postgres -c 'max_connections=450' -c 'log_error_verbosity=terse'
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 12345678
+    ports:
+      - 5432:5432
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    deploy:
+      resources:
+        limits:
+          cpus: '0.4'
+          memory: '1.5GB'

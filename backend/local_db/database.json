@@ -17,25 +17,25 @@
       },
       "all_items": {
         "1": {
-          "description": "Pequena: R$ 20,00",
+          "description": "Pequena",
           "id": "f47c3d29-1f76-4d98-8cd7-7fc5d2d6b245",
           "name": "Pequena",
           "price": 20.00
         },
         "2": {
-          "description": "Média: R$ 25,00",
+          "description": "Média",
           "id": "b2d7c4f1-7cc8-4e67-b417-7127f76a8b29",
           "name": "Média",
           "price": 25.00
         },
         "3": {
-          "description": "Grande: R$ 30,00",
+          "description": "Grande",
           "id": "9e5f8a3a-926b-43f1-a2f3-0339b515bbd3",
           "name": "Grande",
           "price": 30.00
         },
         "4": {
-          "description": "Família: R$ 35,00",
+          "description": "Família",
           "id": "4d2b0a9e-61bc-42e0-9d5b-d6c4e5fcb3d9",
           "name": "Família",
           "price": 35.00
