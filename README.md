@@ -83,7 +83,7 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 
 ```bash
 git clone https://github.com/Everton-Lourens/chatbot-api.git
-cd chatbot-api/backend
+cd chatbot-api
 docker-compose up --build -d
 ```
 
