@@ -43,7 +43,7 @@ export async function getAllMessages(chatbotId: string): Promise<{ stage: number
             throw new Error('No messages found');
         }
     } catch (error) {
-        console.error('Error in getAllMessages:', error);
+        //console.error('Error in getAllMessages:', error);
         throw error;
     }
 }
@@ -67,7 +67,7 @@ export async function getAllItems(chatbotId: string): Promise<{ id: string; name
             throw new Error('No messages found');
         }
     } catch (error) {
-        console.error('Error in getAllMessages:', error);
+        //console.error('Error in getAllMessages:', error);
         throw error;
     }
 }
