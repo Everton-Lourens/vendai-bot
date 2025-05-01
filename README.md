@@ -12,11 +12,11 @@
 
 ## Tecnologias Utilizadas
 - **Node.js v20.16.0**
+- **TypeScript**
 - **Balanceador de carga: ngnix**
 - **Docker**
 - **Express.js**
 - **React**
-- **TypeScript**
 
 ## Estrutura de pastas do Back-End
 
