@@ -7,8 +7,8 @@
 - *Estrutura de pastas do Back-End*
 - *Visão Geral*
 - *Explicação Detalhada do Back-End*
-- *Como utilizar Localmente*
 - *Como utilizar com Docker*
+- *Como utilizar Localmente*
 
 ## Tecnologias Utilizadas
 - **Node.js v20.16.0**
@@ -79,16 +79,6 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 
 - **Descrição**: Este endpoint envia uma resposta do ChatBot em formato JSON. Para garantir que a conversa siga corretamente, você precisa reenviar o objeto `{ client }` a cada requisição.
 
-## Como utilizar Localmente
-- **Descrição**: Instale as dependências "`npm run setup`" e utilize "`npm run start`" para iniciar o Front-End *(localhost:3000)* e o Back-End *(localhost:9999)* ao mesmo tempo com a lib de desenvolvimento "`concurrently`".
-
-```bash
-git clone https://github.com/Everton-Lourens/chatbot-api.git
-cd chatbot-api
-npm run setup
-npm run start
-```
-
 ## Como utilizar com Docker
 
 ***OBSERVAÇÃO:*** **Antes de usar o docker, certifique-se de entrar na pasta do backend e usar o comando `"npx tsc"` para criar os arquivos em formato `.js` na pasta `/dist`, depois volte e use o comando `"docker-compose up --build -d"` na raiz do projeto.**
@@ -100,6 +90,16 @@ npm install
 npx tsc
 cd ..
 docker-compose up --build -d
+```
+
+## Como utilizar Localmente
+- **Descrição**: Instale as dependências "`npm run setup`" e utilize "`npm run start`" para iniciar o Front-End *(localhost:3000)* e o Back-End *(localhost:9999)* ao mesmo tempo com a lib de desenvolvimento "`concurrently`".
+
+```bash
+git clone https://github.com/Everton-Lourens/chatbot-api.git
+cd chatbot-api
+npm run setup
+npm run start
 ```
 
 #### Fluxo de uso:
