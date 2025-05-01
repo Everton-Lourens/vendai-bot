@@ -1,4 +1,4 @@
-﻿﻿v﻿﻿﻿﻿ChatBot API: Autoatendimento para restaurante
+﻿﻿ChatBot API: Autoatendimento para restaurante
 
 # ChatBot API
 
