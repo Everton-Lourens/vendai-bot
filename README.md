@@ -81,8 +81,6 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 
 ## Como utilizar com Docker
 
-***OBSERVAÇÃO:*** **Antes de usar o docker, certifique-se de entrar na pasta do backend e usar o comando `"npx tsc"` para criar os arquivos em formato `.js` na pasta `/dist`, depois volte e use o comando `"docker-compose up --build -d"` na raiz do projeto.**
-
 ```bash
 git clone https://github.com/Everton-Lourens/chatbot-api.git
 cd chatbot-api/backend
