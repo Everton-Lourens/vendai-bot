@@ -37,7 +37,7 @@ Cada instância (duas nesse caso) opera com um **cluster de 5 workers**, totaliz
 - O balanceador de carga Nginx recebe a requisição do cliente e decide para qual instância do servidor vai enviar.
 - A instância repassa a requisição para um worker disponível no cluster (neste caso, 10 workers/processos).
 - O sistema operacional distribui as requisições entre os workers de forma balanceada.
-- Se um worker falhar, o master cria um novo automaticamente.
+- Se um worker falhar, o processo principal cria um novo automaticamente.
 
 ### **É possível adicionar, mas não foi utilizado**:
 Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para melhorar o desempenho e reduzir ainda mais o custo da requisição.
