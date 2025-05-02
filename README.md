@@ -1,4 +1,4 @@
-﻿﻿ChatBot API: Autoatendimento para restaurante
+﻿﻿ChatBot API para Restaurantes: Backend Flexível para Integração com Qualquer Plataforma.
 
 # ChatBot API
 
