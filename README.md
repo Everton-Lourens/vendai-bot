@@ -20,7 +20,7 @@ Backend Flexível para Integração com Qualquer Plataforma.
 - **React**
 - **Next.js**
 
-## Estrutura de pastas do Back-End
+## Estrutura de Pastas do Back-End
 
 ```
 RAIZ/
