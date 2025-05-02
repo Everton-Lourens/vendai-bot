@@ -7,7 +7,7 @@ export async function getRefreshToken(): Promise<string | null> {
 
   if (token) return JSON.parse(token)
 
-  const tokenCookie = cookies().get(REFRESH_TOKEN_KEY)
+  const tokenCookie = (await cookies()).get(REFRESH_TOKEN_KEY)
   if (tokenCookie) return tokenCookie.value
 
   return null

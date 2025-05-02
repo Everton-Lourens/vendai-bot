@@ -11,10 +11,8 @@ interface IRequest {
 }
 
 export async function saveLocalUserService({ userData }: IRequest) {
-  cookies().set({
-    name: USER_KEY,
-    value: JSON.stringify(userData),
-  })
+  const cookieStore = await cookies()
+  cookieStore.set(USER_KEY, JSON.stringify(userData)) // Ensure you are using a compatible cookie library or method
 
   globalThis?.localStorage?.setItem(USER_KEY, JSON.stringify(userData))
 }

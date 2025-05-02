@@ -1,7 +1,7 @@
 'use client'
 import { ReactNode, createContext, useState } from 'react'
-import { AlertConfirm } from '@/components/layout/AlertConfirm/index'
-import { AlertNotify } from '@/components/layout/AlertNotify/index'
+import { AlertConfirm } from '@/components/partials/alert-confirm/index'
+import { AlertNotify } from '@/components/partials/alert-notify/index'
 import { IAlertConfirm } from '@/models/interfaces/i-alert-confirm'
 import { IAlertNotify } from '@/models/interfaces/i-alert-notify'
 

@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation'
-import { getLocalUserService } from '../getLocalUser/GetLocalUserService'
+import { getLocalUserService } from '../get-local-user/get-local-user-service'
 
 export async function verifyUserSessionService() {
   const user = await getLocalUserService()

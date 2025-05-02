@@ -16,7 +16,14 @@ pool.on('error', connect);
 pool.once('connect', async () => {
     logger.info(`database.js: Connected  to db ${URL}`);
     await pool.query(`
-                        CREATE EXTENSION IF NOT EXISTS pg_trgm;
+                        DO $$
+                        BEGIN
+                            PERFORM pg_advisory_lock(123456);
+                            IF NOT EXISTS (SELECT 1 FROM pg_extension WHERE extname = 'pg_trgm') THEN
+                                CREATE EXTENSION pg_trgm;
+                            END IF;
+                            PERFORM pg_advisory_unlock(123456);
+                        END$$;
 
                         -- Chatbot
                         CREATE TABLE IF NOT EXISTS chatbot (

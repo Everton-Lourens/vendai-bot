@@ -1,4 +1,4 @@
-import { IHttpClientProvider } from '@/providers/HttpClientProvider/IHttpClientProvider'
+import { IHttpClientProvider } from '@/providers/http-client-provider/i-http-client-provider'
 
 interface IRequest {
   email: string
