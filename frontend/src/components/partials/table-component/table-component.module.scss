@@ -1,0 +1,45 @@
+@import "../../../styles/colors.scss";
+
+.table {
+  width: 100%;
+
+  border-collapse: collapse;
+  text-align: left;
+
+  transition: opacity 0.2s;
+
+  thead {
+    tr {
+      border-bottom: 1px solid $gray-color-100;
+
+      th {
+        padding: 0.6rem 1.1rem;
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      &:not(:last-child) {
+        border-bottom: 1px solid $gray-color-100;
+      }
+
+      td {
+        padding: 0.6rem 1.1rem;
+      }
+    }
+  }
+}
+
+.emptyCell {
+  text-align: center;
+  p {
+    margin-top: 2rem;
+  }
+}
+
+@media(max-width: 850px) {
+  .table {
+    display: none;
+  }
+}

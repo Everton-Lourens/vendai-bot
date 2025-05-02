@@ -1,0 +1,71 @@
+@import "@/styles/colors";
+
+.menuContainer {
+  background: $blue-color-700;
+  box-shadow: 0px -2px 8px rgba(0 0 0 / 0.2);
+
+  padding: 0.6rem 1.5rem;
+
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+
+  .returnSysLink {
+    background: none;
+    border: none;
+
+    .homeIcon {
+      color: $gray-color-100;
+      font-size: 1.2rem;
+
+      cursor: pointer;
+      transition: filter 0.2s;
+
+      &:hover {
+        filter: brightness(0.8);
+      }
+    }
+  }
+
+  nav {
+    ul {
+      list-style-type: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 35px;
+
+      li {
+        cursor: pointer;
+        transition: filter 0.2s;
+
+        &:not(.menuActive):hover {
+          filter: brightness(0.6);
+        }
+        .icon {
+          color: $gray-color-100;
+
+          font-size: 1.2rem;
+        }
+        &.menuActive {
+          .icon {
+            color: $brown-color-100;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 850px) {
+  .menuContainer {
+    display: flex;
+  }
+}

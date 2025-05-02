@@ -6,3 +6,6 @@ Dockerfile
 .git
 .gitignore
 .env
+.vscode
+dist
+.next
