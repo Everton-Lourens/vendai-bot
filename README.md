@@ -5,9 +5,9 @@ Backend Flexível para Integração com Qualquer Plataforma.
 
 # Tópicos do README
 - *Tecnologias Utilizadas*
-- *Estrutura de pastas do Back-End*
 - *Visão Geral*
 - *Explicação Detalhada do Back-End*
+- *Estrutura de pastas do Back-End*
 - *Como utilizar com Docker*
 - *Como utilizar Localmente*
 
@@ -19,33 +19,6 @@ Backend Flexível para Integração com Qualquer Plataforma.
 - **Express.js**
 - **React**
 - **Next.js**
-
-## Estrutura de Pastas do Back-End
-
-```
-RAIZ/
-│-- nginx.conf
-│-- docker-compose.yaml
-│-- backend/
-│   │-- Dockerfile.backend
-│   │-- package.json
-│   │-- tsconfig.json
-│   │-- src/
-│   │   │-- server.ts
-│   │   │-- helpers/
-│   │   │-- middleware/
-│   │   │-- api/
-│   │   │   │-- chatbot/
-│   │   │   │   │-- response.ts
-│   │   │   │   │-- stages.ts
-│   │   │   │   │-- storage.ts
-│   │   │   │   │-- stages/
-│   │   │   │   │   │-- 0.ts
-│   │   │   │   │   │-- 1.ts
-│   │   │   │   │   │-- 2.ts
-│   │   │   │   │   │-- 3.ts
-│   │   │   │   │   │-- index.ts
-```
 
 ## Visão Geral
 - **Descrição do Projeto**: Esta API oferece um chatbot de autoatendimento com múltiplas opções, permitindo que os clientes façam pedidos, consultem o cardápio, verifiquem a taxa de entrega ou solicitem atendimento humano, podendo se extender para outras funcionalidades futuras.
@@ -80,6 +53,33 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 **Localmente**: `POST - http://localhost:9999/v1/chat`
 
 - **Descrição**: Este endpoint envia uma resposta do ChatBot em formato JSON. Para garantir que a conversa siga corretamente, você precisa reenviar o objeto `{ client }` a cada requisição.
+
+## Estrutura de Pastas do Back-End
+
+```
+RAIZ/
+│-- nginx.conf
+│-- docker-compose.yaml
+│-- backend/
+│   │-- Dockerfile.backend
+│   │-- package.json
+│   │-- tsconfig.json
+│   │-- src/
+│   │   │-- server.ts
+│   │   │-- helpers/
+│   │   │-- middleware/
+│   │   │-- api/
+│   │   │   │-- chatbot/
+│   │   │   │   │-- response.ts
+│   │   │   │   │-- stages.ts
+│   │   │   │   │-- storage.ts
+│   │   │   │   │-- stages/
+│   │   │   │   │   │-- 0.ts
+│   │   │   │   │   │-- 1.ts
+│   │   │   │   │   │-- 2.ts
+│   │   │   │   │   │-- 3.ts
+│   │   │   │   │   │-- index.ts
+```
 
 ## Como utilizar com Docker
 
