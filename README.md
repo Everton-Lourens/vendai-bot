@@ -1,4 +1,5 @@
-﻿﻿ChatBot API para Restaurantes: Backend Flexível para Integração com Qualquer Plataforma.
+﻿﻿ChatBot API para Restaurantes:
+Backend Flexível para Integração com Qualquer Plataforma.
 
 # ChatBot API
 
