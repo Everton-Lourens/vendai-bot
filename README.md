@@ -48,17 +48,17 @@ RAIZ/
 ```
 
 ## Visão Geral
-- **Descrição do projeto**: Esta API oferece um chatbot de autoatendimento com múltiplas opções, permitindo que os clientes façam pedidos, consultem o cardápio, verifiquem a taxa de entrega ou solicitem atendimento humano, podendo se extender para outras funcionalidades futuras.
+- **Descrição do Projeto**: Esta API oferece um chatbot de autoatendimento com múltiplas opções, permitindo que os clientes façam pedidos, consultem o cardápio, verifiquem a taxa de entrega ou solicitem atendimento humano, podendo se extender para outras funcionalidades futuras.
 
 ## Explicação Detalhada do Back-End
 
-### **Balanceador de carga**:
+### **Balanceador de Carga**:
 O Back-End utiliza o **Nginx** como balanceador de carga para distribuir as requisições entre *duas (ou mais) instâncias do servidor*.
 
 ### **Cluster**:
 Cada instância opera com um **cluster de 5 workers**, totalizando *10 processos ativos*, **evitando sobrecarga no servidor** caso tenha uma alta demanda de requisições, podendo aumentar ou diminuir os workers conforme demanda.
 
-### **Fluxo de requisições no Nginx e no Cluster**:  
+### **Fluxo de Requisições no Nginx e no Cluster**:  
 - O processo principal (master) cria múltiplos workers (processos filhos).
 - Cada worker escuta as mesmas conexões, como se fosse uma cópia do servidor.
 - O balanceador de carga Nginx recebe a requisição do cliente e decide para qual instância do servidor vai enviar.
