@@ -29,7 +29,7 @@ Backend Flexível para Integração com Qualquer Plataforma.
 O Back-End utiliza o **Nginx** como balanceador de carga para distribuir as requisições entre *duas (ou mais) instâncias do servidor*.
 
 ### **Cluster**:
-Cada instância opera com um **cluster de 5 workers**, totalizando *10 processos ativos*, **evitando sobrecarga no servidor** caso tenha uma alta demanda de requisições, podendo aumentar ou diminuir os workers conforme demanda.
+Cada instância (duas nesse caso) opera com um **cluster de 5 workers**, totalizando *10 processos ativos*, **evitando sobrecarga no servidor** caso tenha uma alta demanda de requisições, podendo aumentar ou diminuir os workers conforme demanda.
 
 ### **Fluxo de Requisições no Nginx e no Cluster**:  
 - O processo principal (master) cria múltiplos workers (processos filhos).
