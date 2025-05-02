@@ -21,7 +21,7 @@ Backend Flexível para Integração com Qualquer Plataforma.
 - **Next.js**
 
 ## Visão Geral
-- **Descrição do Projeto**: Esta API oferece um chatbot de autoatendimento com múltiplas opções, permitindo que os clientes façam pedidos, consultem o cardápio, verifiquem a taxa de entrega ou solicitem atendimento humano, podendo se extender para outras funcionalidades futuras.
+- **Descrição do Projeto**: Esta API oferece um chatbot de autoatendimento para qualquer plataforma de mensagens (Whatsapp, Telegram etc), permitindo que os clientes interajam e façam pedidos, consultem o cardápio, verifiquem a taxa de entrega ou solicitem atendimento humano, podendo se extender para outras funcionalidades futuras.
 
 ## Explicação Detalhada do Back-End
 
