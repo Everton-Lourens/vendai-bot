@@ -18,6 +18,7 @@ Backend Flexível para Integração com Qualquer Plataforma.
 - **Docker**
 - **Express.js**
 - **React**
+- **Next.js**
 
 ## Estrutura de pastas do Back-End
 
