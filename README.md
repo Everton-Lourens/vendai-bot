@@ -52,8 +52,6 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 
 **Localmente**: `POST - http://localhost:9999/v1/chat`
 
-- **Descrição**: Este endpoint envia uma resposta do ChatBot em formato JSON. Para garantir que a conversa siga corretamente, você precisa reenviar o objeto `{ client }` a cada requisição.
-
 ## Estrutura de Pastas do Back-End
 
 ```
