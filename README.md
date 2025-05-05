@@ -14,7 +14,7 @@ Backend Flexível para Integração com Qualquer Plataforma.
 ## Tecnologias Utilizadas
 - **Node.js v20.16.0**
 - **TypeScript**
-- **Balanceador de carga: ngnix**
+- **Balanceador de carga: ngnix & cluster**
 - **Docker**
 - **Express.js**
 - **React**
@@ -26,7 +26,7 @@ Backend Flexível para Integração com Qualquer Plataforma.
 ## Explicação Detalhada do Back-End
 
 ### **Balanceador de Carga**:
-O Back-End utiliza o **Nginx** como balanceador de carga para distribuir as requisições entre *duas (ou mais) instâncias do servidor*.
+O Back-End utiliza o **Nginx** e o **cluster** como balanceador de carga para distribuir as requisições entre *duas (ou mais) instâncias do servidor*.
 
 ### **Cluster**:
 Cada instância (duas nesse caso) opera com um **cluster de 5 workers**, totalizando *10 processos ativos*, **evitando sobrecarga no servidor** caso tenha uma alta demanda de requisições, podendo aumentar ou diminuir os workers conforme demanda.
