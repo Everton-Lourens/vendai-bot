@@ -1,7 +1,7 @@
 ﻿﻿ChatBot API para Autoatendimento:
 Backend flexível para integração com qualquer plataforma.
 
-# ChatBot API
+# ChatBot API para alta demanda de requisições
 
 # Tópicos do README
 - *Tecnologias Utilizadas*
