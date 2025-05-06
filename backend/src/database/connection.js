@@ -1,23 +1,62 @@
 import pg from 'pg';
 import { logger } from '../helpers/logger.js';
-//const URL = process.env.DB_URL || 'postgres://postgres:12345678@localhost:5432/postgres';
 const URL = process.env.DB_URL || 'postgres://postgres:12345678@localhost:5432/chat';
 export const pool = new pg.Pool({
     connectionString: URL,
-    max: (Number(process.env.DB_POOL) || 200),
+    max: Number(process.env.DB_POOL) || 200,
     idleTimeoutMillis: 0,
     connectionTimeoutMillis: 10000
 });
-pool.on('error', connect);
+pool.on('error', (err) => {
+    logger.error('database.js: Pool error', err);
+});
+// 🔧 Essa função deve ser chamada apenas pelo processo primário
+export async function migrateIfNeeded() {
+    logger.info(`database.js: Running migration on ${URL}`);
+    const client = await pool.connect();
+    try {
+        await client.query(`
+            -- CREATE EXTENSION IF NOT EXISTS pg_trgm;
+
+            -- Chatbot
+            CREATE TABLE IF NOT EXISTS chatbot (
+                id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+                store TEXT NOT NULL,
+                name TEXT NOT NULL,
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+            );
+
+            -- Mensagens por estágio do chatbot
+            CREATE TABLE IF NOT EXISTS chatbot_message (
+                id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+                chatbot_id uuid NOT NULL,
+                stage INT NOT NULL,
+                message_number INT NOT NULL,
+                content TEXT NOT NULL,
+                created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (chatbot_id) REFERENCES chatbot(id) ON DELETE CASCADE
+            );
+        `);
+        logger.info('database.js: Migration completed.');
+    }
+    catch (err) {
+        logger.error('database.js: Migration error', err);
+        throw err;
+    }
+    finally {
+        client.release();
+    }
+}
+/*
 pool.once('connect', async () => {
     logger.info(`database.js: Connected  to db ${URL}`);
     await pool.query(`
-                        CREATE EXTENSION IF NOT EXISTS pg_trgm;
+                        -- CREATE EXTENSION IF NOT EXISTS pg_trgm;
 
                         -- Chatbot
                         CREATE TABLE IF NOT EXISTS chatbot (
                             id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
-                            store TEXT UNIQUE NOT NULL, -- nome da loja
+                            store TEXT NOT NULL, -- nome da loja (tornar UNIQUE)
                             name TEXT NOT NULL,         -- nome do chatbot
                             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
                         );
@@ -38,7 +77,7 @@ pool.once('connect', async () => {
                             id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
                             chatbot_id uuid NOT NULL,
                             name TEXT NOT NULL,
-                            email TEXT UNIQUE,
+                            email TEXT, -- email do cliente (tornar UNIQUE)
                             address TEXT,
                             phone TEXT CHECK (phone ~ '^\([0-9]{2}\)[0-9]{9}$'), -- formato (00)000000000
                             status TEXT NOT NULL CHECK (status IN ('open', 'in_progress', 'closed')) DEFAULT 'open',
@@ -70,7 +109,7 @@ pool.once('connect', async () => {
                         CREATE TABLE IF NOT EXISTS support_agent (
                             id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
                             name TEXT NOT NULL,
-                            email TEXT UNIQUE NOT NULL,
+                            email TEXT NOT NULL, -- email do agente (tornar UNIQUE)
                             phone TEXT CHECK (phone ~ '^\([0-9]{2}\)[0-9]{9}$') -- formato (00)000000000
                         );
 
@@ -96,6 +135,8 @@ pool.once('connect', async () => {
                             FOREIGN KEY (ticket_id) REFERENCES support_ticket(id) ON DELETE CASCADE
                         );
                     `);
+
+                    /*
     await pool.query(`
                         DO $$
                         BEGIN
@@ -121,7 +162,10 @@ pool.once('connect', async () => {
                             END IF;
                         END $$;
                     `);
+                    */
+/*
 });
+*/
 async function connect() {
     try {
         logger.info(`Connecting to db ${URL}`);
