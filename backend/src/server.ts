@@ -3,13 +3,14 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
 import process from 'process';
-import './database/connection.js';
 import { errorHandler, validationFilter } from './middleware/middleware.js';
 import { chatbot } from './chatbot/index.js';
 import { logger } from './helpers/logger.js';
 import { readDatabase_exemple } from './database/local_database.js';
 import dotenv from 'dotenv';
 import { getIdChatbotToDevelopment } from './database/queries/select.js';
+import { migrateIfNeeded } from './database/connection.js';
+//import './database/connection.js';
 
 dotenv.config({ path: '.env.development' });
 
@@ -88,6 +89,7 @@ const numForks = Number(process.env.CLUSTER_WORKERS) || 1;
 
 if (cluster.isPrimary && process.env.CLUSTER === 'true') {
     logger.info(`index.js: Primary ${process.pid} is running`);
+    migrateIfNeeded();
 
     for (let i = 0; i < numForks; i++) {
         cluster.fork();
