@@ -1,8 +1,8 @@
 import { useRouter } from 'next/router'
 import { useContext, useState } from 'react'
-import { UserContext } from '../../../../contexts/user-context'
+import { UserContext } from '../../../../contexts/userContext'
 import { IPosition } from '../interfaces/IPosition'
-//import { usersService } from '../../../../services/usersService'
+import { usersService } from '../../../../services/usersService'
 
 type Props = {
   position: IPosition
@@ -35,7 +35,7 @@ export function useUserOptions({ position }: Props) {
   }
 
   function handleLogout() {
-    //usersService.deleteToken()
+    usersService.deleteToken()
     router.push('/login')
   }
 
