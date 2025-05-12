@@ -1,3 +1,3 @@
-import { DayjsDateProvider } from './dayjs-date-provider'
+import { DayjsDateProvider } from './DayjsDateProvider'
 
 export const dateProvider = DayjsDateProvider.getInstance()

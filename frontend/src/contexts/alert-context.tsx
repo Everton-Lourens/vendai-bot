@@ -1,40 +1,37 @@
-'use client'
 import { ReactNode, createContext, useState } from 'react'
-import { AlertConfirm } from '@/components/partials/alert-confirm/index'
-import { AlertNotify } from '@/components/partials/alert-notify/index'
-import { IAlertConfirm } from '@/models/interfaces/i-alert-confirm'
-import { IAlertNotify } from '@/models/interfaces/i-alert-notify'
+import { AlertDialogConfirm } from '../components/_ui/AlertDialogConfirm'
+import { AlertNotify } from '../components/_ui/AlertNotify'
+import { ALERT_NOTIFY_TYPE } from '../models/enums/AlertNotifyType'
+import { IAlertDialogConfirm } from '../models/interfaces/IAlertDialogConfirm'
+import { IAlertNotify } from '../models/interfaces/IAlertNotify'
 
-interface AlertContextComponentProps {
+interface Props {
   children: ReactNode
 }
 
-interface AlertContextInterface {
-  alertConfirmConfigs: IAlertConfirm
-  setAlertConfirmConfigs: (alertConfigs: IAlertConfirm) => void
+interface IAlertContext {
+  alertDialogConfirmConfigs: IAlertDialogConfirm
+  setAlertDialogConfirmConfigs: (configs: IAlertDialogConfirm) => void
   alertNotifyConfigs: IAlertNotify
-  setAlertNotifyConfigs: (notifyConfigs: IAlertNotify) => void
+  setAlertNotifyConfigs: (configs: IAlertNotify) => void
 }
 
-export const AlertContext = createContext({} as AlertContextInterface)
+export const AlertContext = createContext({} as IAlertContext)
 
-export function AlertContextComponent({
-  children,
-}: AlertContextComponentProps) {
-  const [alertConfirmConfigs, setAlertConfirmConfigs] = useState<IAlertConfirm>(
-    {
+export function AlertContextComponent({ children }: Props) {
+  const [alertDialogConfirmConfigs, setAlertDialogConfirmConfigs] =
+    useState<IAlertDialogConfirm>({
       open: false,
       title: '',
       text: '',
-      handleClose: onCloseAlertConfirm,
-      onClickAgree: async () => undefined,
-    },
-  )
+      handleClose: onCloseAlertDialogConfirm,
+      onClickAgree: () => undefined,
+    })
 
   const [alertNotifyConfigs, setAlertNotifyConfigs] = useState<IAlertNotify>({
     open: false,
     text: '',
-    type: 'success',
+    type: ALERT_NOTIFY_TYPE.SUCCESS,
     handleClose: onCloseNotify,
   })
 
@@ -43,31 +40,31 @@ export function AlertContextComponent({
       ...alertNotifyConfigs,
       open: false,
       text: '',
-      type: 'success',
+      type: ALERT_NOTIFY_TYPE.SUCCESS,
     })
   }
 
-  function onCloseAlertConfirm() {
-    setAlertConfirmConfigs({
-      ...alertConfirmConfigs,
+  function onCloseAlertDialogConfirm() {
+    setAlertDialogConfirmConfigs({
+      ...alertDialogConfirmConfigs,
       open: false,
       title: '',
       text: '',
-      onClickAgree: async () => undefined,
+      onClickAgree: () => undefined,
     })
   }
 
   return (
     <AlertContext.Provider
       value={{
-        alertConfirmConfigs,
-        setAlertConfirmConfigs,
+        alertDialogConfirmConfigs,
+        setAlertDialogConfirmConfigs,
         alertNotifyConfigs,
         setAlertNotifyConfigs,
       }}
     >
       {children}
-      <AlertConfirm />
+      <AlertDialogConfirm />
       <AlertNotify />
     </AlertContext.Provider>
   )
