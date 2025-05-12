@@ -5,7 +5,7 @@ import { usersService } from '../../../../services/usersService'
 import { ILoginData, loginSchema } from '../interfaces/ILoginData'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { AlertContext } from '../../../../contexts/alert-context'
+import { AlertContext } from '../../../../contexts/alertContext'
 import { useContext } from 'react'
 
 export function useFormAuth() {

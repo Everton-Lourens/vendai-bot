@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import style from './alert-confirm.module.scss'
 import { Modal } from '@mui/material'
-import { AlertContext } from '@/contexts/alert-context'
+import { AlertContext } from '@/contexts/alertContext'
 
 export function AlertConfirm() {
   const { alertConfirmConfigs } = useContext(AlertContext)

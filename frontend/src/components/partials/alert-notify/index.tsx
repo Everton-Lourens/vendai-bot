@@ -1,5 +1,5 @@
 import { useContext, useEffect } from 'react'
-import { AlertContext } from '@/contexts/alert-context'
+import { AlertContext } from '@/contexts/alertContext'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faCheck,

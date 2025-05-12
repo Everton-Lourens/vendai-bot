@@ -1,13 +1,11 @@
-@import "../../../styles/colors.scss";
+@import "../../../styles/colors";
 
 .loginContainer {
   width: 80%;
   max-width: 400px;
-
   display: flex;
   flex-direction: column;
   text-align: center;
-
   border-radius: 20px;
   padding: 2rem;
   animation: appear 0.2s;
@@ -27,23 +25,19 @@
     input {
       background: $gray-color-700;
       color: $gray-color-200;
-
       border-radius: 20px;
     }
 
     button {
       font-size: 0.875rem;
       font-weight: 500;
-
-      background: var(--primary-color);
+      background: #2196f3;
       color: white;
-
       border: none;
       border-radius: 20px;
-      padding: 1.4rem 0px;
+      padding: 1.4rem 0;
       margin-top: 5px;
       line-height: 1;
-
       cursor: pointer;
       transition: filter 0.2s;
 
@@ -58,6 +52,7 @@
       }
     }
   }
+
   a {
     text-align: center;
     margin-top: 25px;

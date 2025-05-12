@@ -1,15 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { HttpStatusCode } from '@/models/enums/http-status-code'
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
+import axios, { Axios, AxiosError, AxiosResponse } from 'axios'
+import { IHttpClientProvider } from './IHttpClientProvider'
+import { usersService } from '../../services/usersService'
+import { HTTP_STATUS_CODE } from '../../models/enums/HttpStatusCode'
+import { httpClientProvider } from '.'
 
-export class AxiosHttpClientProvider {
-  private httpInstance: AxiosInstance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-    timeout: 10000,
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
+export class AxiosHttpClientProvider implements IHttpClientProvider {
+  private httpIntance: Axios = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   })
 
   private static _instance = new AxiosHttpClientProvider()
@@ -22,9 +19,9 @@ export class AxiosHttpClientProvider {
     }
     AxiosHttpClientProvider._instance = this
 
-    this.httpInstance.interceptors.request.use(
-      async (config: any) => {
-        const token = null // TODO: await getTokenService()
+    this.httpIntance.interceptors.request.use(
+      (config: any) => {
+        const token = usersService.getToken()
 
         return {
           ...config,
@@ -39,31 +36,34 @@ export class AxiosHttpClientProvider {
       },
     )
 
-    this.httpInstance.interceptors.response.use(
+    this.httpIntance.interceptors.response.use(
       (config: AxiosResponse) => config,
       async (error: AxiosError) => {
         const tokenExpired =
-          error?.response?.status === HttpStatusCode.unauthorized
+          error?.response?.status === HTTP_STATUS_CODE.UNAUTHORIZED
 
         if (tokenExpired) {
           try {
-            // TODO: Implement get refresh token logic
+            const refreshToken = usersService.getRefreshToken()
 
-            // const refreshToken = null // await getRefreshToken()
+            const { data } = await usersService.updateRefreshTokenService(
+              refreshToken,
+              httpClientProvider,
+            )
 
-            // const { data } = await updateRefreshTokenService(
-            //   refreshToken,
-            //   httpClientProvider,
-            // )
+            if (!data.token || !data.refreshToken) {
+              throw new Error('Refresh token não identificado')
+            }
 
-            // saveTokenService(data.token)
-            // saveRefreshToken(data.refreshToken)
+            usersService.saveToken(data.token)
+            usersService.saveRefreshToken(data.refreshToken)
 
             return Promise.resolve()
           } catch (errorRefreshToken) {
-            // deleteTokenService()
-            // deleteRefreshTokenService()
-            // deleteLocalUserService()
+            usersService.deleteToken()
+            usersService.deleteRefreshToken()
+            usersService.deleteLocalUser()
+
             return Promise.reject(errorRefreshToken)
           }
         }
@@ -81,7 +81,7 @@ export class AxiosHttpClientProvider {
     let axiosResponse: AxiosResponse
 
     try {
-      axiosResponse = await this.httpInstance.post(url, body, options)
+      axiosResponse = await this.httpIntance.post(url, body, options)
     } catch (error) {
       const _error = error as AxiosError<{ message: string }>
       throw new Error(_error?.response?.data?.message)
@@ -97,7 +97,7 @@ export class AxiosHttpClientProvider {
     let axiosResponse: AxiosResponse
 
     try {
-      axiosResponse = await this.httpInstance.put(url, body, options)
+      axiosResponse = await this.httpIntance.put(url, body, options)
     } catch (error) {
       const _error = error as AxiosError<{ message: string }>
       throw new Error(_error?.response?.data?.message)
@@ -113,7 +113,7 @@ export class AxiosHttpClientProvider {
     let axiosResponse: AxiosResponse
 
     try {
-      axiosResponse = await this.httpInstance.get(url, options)
+      axiosResponse = await this.httpIntance.get(url, options)
     } catch (error) {
       const _error = error as AxiosError<{ message: string }>
       throw new Error(_error?.response?.data?.message)
@@ -129,7 +129,7 @@ export class AxiosHttpClientProvider {
     let axiosResponse: AxiosResponse
 
     try {
-      axiosResponse = await this.httpInstance.patch(url, body, options)
+      axiosResponse = await this.httpIntance.patch(url, body, options)
     } catch (error) {
       const _error = error as AxiosError<{ message: string }>
       throw new Error(_error?.response?.data?.message)
@@ -145,7 +145,7 @@ export class AxiosHttpClientProvider {
     let axiosResponse: AxiosResponse
 
     try {
-      axiosResponse = await this.httpInstance.delete(url, options)
+      axiosResponse = await this.httpIntance.delete(url, options)
     } catch (error) {
       const _error = error as AxiosError<{ message: string }>
       throw new Error(_error?.response?.data?.message)

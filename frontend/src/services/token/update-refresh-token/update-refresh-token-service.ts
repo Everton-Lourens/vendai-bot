@@ -1,4 +1,4 @@
-import { IHttpClientProvider } from '@/providers/http-client-provider/i-http-client-provider'
+import { IHttpClientProvider } from '@/providers/HttpClientProvider/IHttpClientProvider'
 
 export async function updateRefreshTokenService(
   token: string | null,

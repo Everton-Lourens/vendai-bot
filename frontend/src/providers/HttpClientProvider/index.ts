@@ -1,3 +1,3 @@
-import { AxiosHttpClientProvider } from './axios-http-client-provider'
+import { AxiosHttpClientProvider } from './AxiosHttpClientProvider'
 
 export const httpClientProvider = AxiosHttpClientProvider.getInstance()
