@@ -20,6 +20,7 @@
     "@mui/material": "^7.0.1",
     "@mui/x-charts": "^7.28.0",
     "axios": "^1.8.4",
+    "chatbot-api": "file:..",
     "dayjs": "^1.11.13",
     "eslint": "^8.57.1",
     "eslint-config-next": "^15.2.4",
