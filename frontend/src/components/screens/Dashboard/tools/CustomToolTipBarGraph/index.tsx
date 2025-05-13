@@ -11,7 +11,7 @@ export function CustomTooltipBarGraph({ payload }: Props) {
   return (
     <div className={style.tooltipContainer}>
       <b>{data?.payload?.label || '--'}</b>
-      <p>{format.formatarReal(data?.payload.Valor || 0)}</p>
+      <p>{format.formatToReal(data?.payload.Valor || 0)}</p>
     </div>
   )
 }

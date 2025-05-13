@@ -12,7 +12,7 @@ export function CustomTooltipPizzaGraph({ payload }: Props) {
     <div className={style.tooltipContainer}>
       <b>{data?.name || '--'}</b>
       <p>{data?.payload.amount || 0}x</p>
-      <p>{format.formatarReal(data?.payload.value || 0)}</p>
+      <p>{format.formatToReal(data?.payload.value || 0)}</p>
     </div>
   )
 }

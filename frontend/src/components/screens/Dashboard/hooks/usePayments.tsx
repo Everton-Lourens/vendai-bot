@@ -34,8 +34,8 @@ export function usePayments() {
   function formatPaymentsToGraph(payments: IPaymentType[]) {
     return payments?.map((payment) => {
       return {
-        label: format.formatarFormaDePagamento(payment.type),
-        formatedData: format.formatarReal(payment.value || 0),
+        label: format.formatPaymentType(payment.type),
+        formatedData: format.formatToReal(payment.value || 0),
         Valor: payment.value || 0,
       }
     })

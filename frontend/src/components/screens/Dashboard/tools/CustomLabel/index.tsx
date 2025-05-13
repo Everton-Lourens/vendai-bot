@@ -6,7 +6,7 @@ export function CustomLabel({
   width,
   fill,
   value,
-  formatarReal = false,
+  formatToReal = false,
 }: any) {
   return (
     <text
@@ -21,7 +21,7 @@ export function CustomLabel({
       dominantBaseline="middle"
       fill={fill}
     >
-      {formatarReal ? format.formatarReal(value) : value}
+      {formatToReal ? format.formatToReal(value) : value}
     </text>
   )
 }

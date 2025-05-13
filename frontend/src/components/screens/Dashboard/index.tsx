@@ -71,7 +71,7 @@ export function Dashboard() {
 
             <Card
               title="Vendas aprovadas"
-              value={format.formatarReal(totalSales?.totalValueApproved || 0)}
+              value={format.formatToReal(totalSales?.totalValueApproved || 0)}
               icon={
                 <FontAwesomeIcon className={style.icon} icon={faDollarSign} />
               }
@@ -81,7 +81,7 @@ export function Dashboard() {
 
             <Card
               title="Vendas canceladas"
-              value={format.formatarReal(totalSales.totalValueCanceled || 0)}
+              value={format.formatToReal(totalSales.totalValueCanceled || 0)}
               icon={<FontAwesomeIcon className={style.icon} icon={faCancel} />}
               route="vendas"
               query={{ status: 'canceled' }}
@@ -94,7 +94,7 @@ export function Dashboard() {
               title="Contas de entrada"
               className="inCard"
               icon={<FontAwesomeIcon className={style.icon} icon={faArrowUp} />}
-              value={format.formatarReal(totalAccounts.inTotalValue || 0)}
+              value={format.formatToReal(totalAccounts.inTotalValue || 0)}
               route="contas"
               query={{
                 accountType: 'in',
@@ -106,7 +106,7 @@ export function Dashboard() {
               icon={
                 <FontAwesomeIcon className={style.icon} icon={faArrowDown} />
               }
-              value={format.formatarReal(totalAccounts.outTotalValue || 0)}
+              value={format.formatToReal(totalAccounts.outTotalValue || 0)}
               route="contas"
               query={{
                 accountType: 'out',
@@ -118,7 +118,7 @@ export function Dashboard() {
               icon={
                 <FontAwesomeIcon className={style.icon} icon={faDollarSign} />
               }
-              value={format.formatarReal(
+              value={format.formatToReal(
                 totalAccounts.inTotalValue - totalAccounts.outTotalValue || 0,
               )}
               route="contas"
@@ -222,7 +222,7 @@ export function Dashboard() {
                       content={
                         <CustomLabel
                           usarLabel={true}
-                          formatarReal={true}
+                          formatToReal={true}
                           position="top"
                           fill="#e2e2e2"
                         />
