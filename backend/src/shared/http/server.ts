@@ -43,7 +43,7 @@ const numForks = Number(process.env.CLUSTER_WORKERS) || 1;
 
 if (cluster.isPrimary && process.env.CLUSTER === 'true') {
   logger.info(`index.js: Primary ${process.pid} is running`);
-  migrateIfNeeded();
+  migrateIfNeeded(); // Run migrations if needed (postgres run only once in primary process)
 
   for (let i = 0; i < numForks; i++) {
     cluster.fork();
