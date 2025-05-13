@@ -1,4 +1,4 @@
-import { getAllMessages, getAllItems } from "../../database/queries/select.js";
+import { getAllMessages, getAllItems } from "../../database/postgres/queries/select.js";
 
 const messagesCache: { [key: string]: { stage: number; message_number: number; content: string } } = {};
 const itemsCache: { [key: string]: { id: string; name: string; description: string; price: number }[] } = {};

@@ -3,13 +3,12 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
 import process from 'process';
-import { errorHandler, validationFilter } from './middleware/middleware.js';
+import { errorHandler, validationFilter } from './middlewares/middleware.js';
 import { chatbot } from './chatbot/index.js';
 import { logger } from './helpers/logger.js';
-import { readDatabase_exemple } from './database/local_database.js';
 import dotenv from 'dotenv';
-import { getIdChatbotToDevelopment } from './database/queries/select.js';
-import { migrateIfNeeded } from './database/connection.js';
+import { getIdChatbotToDevelopment } from './database/postgres/queries/select.js';
+import { migrateIfNeeded } from './database/postgres/connection.js';
 //import './database/connection.js';
 
 dotenv.config({ path: '.env.development' });
@@ -66,7 +65,6 @@ if (process.env.NODE_ENV === 'development') {
         try {
             var messageAlert = '';
             if (lastJsonBody.length === 0) {
-                lastJsonBody.push(readDatabase_exemple() || {});
                 messageAlert = 'Operação realizada com sucesso: Exemplo resposta para o cliente';
             } else {
                 messageAlert = 'Operação realizada com sucesso: Histórico de respostas para você';
