@@ -1,9 +1,9 @@
 import mongoose from 'mongoose'
 
-const MONGO_USERNAME = 'lourens'
-const MONGO_PASSWORD = 'u72E1K8bxPcVgFhM'
-const mongoURL = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@clusterreactnative0.ct2fmit.mongodb.net/?retryWrites=true&w=majority`
-// //mongodb+srv://lourens:YIJjK4Ztbgh7zSUN@cluster0.9fvjdnu.mongodb.net/?retryWrites=true&w=majority
+const MONGO_USERNAME = 'lourens';
+const MONGO_PASSWORD = 'u72E1K8bxPcVgFhM';
+const mongoURL = `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@cluster0.5klkiuy.mongodb.net/?retryWrites=true&w=majority`;
+
 mongoose.connect(mongoURL)
 mongoose.connection
   .on(
