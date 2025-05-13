@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import { ALERT_NOTIFY_TYPE } from '../../../../models/enums/AlertNotifyType'
-import { ISale } from '../../../../models/interfaces/ISale'
+import { IMessage } from '../../../../models/interfaces/IMessage'
 import { httpClientProvider } from '../../../../providers/HttpClientProvider'
-import { salesService } from '../../../../services/salesService'
+import { messageService } from '../../../../services/MessageService'
 import { useContext } from 'react'
 import { AlertContext } from '../../../../contexts/alertContext'
 
-export function useCancelSale() {
+export function useCancelMessage() {
   const router = useRouter()
 
   const {
@@ -16,15 +16,15 @@ export function useCancelSale() {
     setAlertNotifyConfigs,
   } = useContext(AlertContext)
 
-  function handleCancelSale(sale: ISale) {
+  function handleCancelMessage(message: IMessage) {
     setAlertDialogConfirmConfigs({
       ...alertDialogConfirmConfigs,
       open: true,
       title: 'Alerta de confirmação',
       text: 'Deseja realmente cancelar esta venda?',
       onClickAgree: () => {
-        salesService
-          .cancel({ idSale: sale?._id }, httpClientProvider)
+        messageService
+          .cancel({ idMessage: message?._id }, httpClientProvider)
           .then(() => {
             setAlertNotifyConfigs({
               ...alertNotifyConfigs,
@@ -50,6 +50,6 @@ export function useCancelSale() {
   }
 
   return {
-    handleCancelSale,
+    handleCancelMessage,
   }
 }

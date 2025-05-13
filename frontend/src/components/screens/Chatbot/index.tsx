@@ -1,30 +1,30 @@
 import { HeaderPage } from '../../_ui/HeaderPage'
-import { ModalCreateNewSale } from './ModalCreateNewSale'
+import { ModalCreateNewMessages } from './ModalCreateNewMessage'
 import { TableComponent } from '../../_ui/TableComponent'
 import { IColumn } from '../../../models/interfaces/IColumn'
 import { useColumns } from './hooks/useColumns'
 import { FilterDate } from '../../_ui/FilterDate'
-import style from './Sales.module.scss'
+import style from './Chatbot.module.scss'
 import { ListMobile } from '../../_ui/ListMobile'
 import { useFieldsMobile } from './hooks/useFieldsMobile'
-import { useSaleList } from '../../../hooks/useSaleList'
-import { useCancelSale } from './hooks/useCancelSale'
-import { useEditSale } from './hooks/useEditSale'
+import { useMessageList } from '../../../hooks/useMessageList'
+import { useCancelMessage } from './hooks/useCancelMessage'
+import { useEditmessage } from './hooks/useEditMessage'
 
-export function Sales() {
-  const { handleCancelSale } = useCancelSale()
-  const { sales, loadingSales } = useSaleList({ otherFilters: null })
+export function Message() {
+  const { handleCancelMessage } = useCancelMessage()
+  const { messages, loadingMessages } = useMessageList({ otherFilters: null })
   const {
     formModalOpened,
-    handleEditSale,
-    saleToEditData,
+    handleEditmessage,
+    messageToEditData,
     setFormModalOpened,
-    setSaleToEditData,
-  } = useEditSale()
+    setMessageToEditData,
+  } = useEditMessage()
 
   const columns: IColumn[] = useColumns({
-    handleEditSale,
-    handleCancelSale,
+    handleEditMessage,
+    handleCancelMessage,
   })
 
   const fieldsMobile = useFieldsMobile()
@@ -35,36 +35,36 @@ export function Sales() {
         onClickFunction={() => {
           setFormModalOpened(true)
         }}
-        buttonText="Nova venda"
+        buttonText="Nova Mensagem"
         InputFilter={<FilterDate />}
       />
 
       <div className={style.viewDesktop}>
         <TableComponent
-          emptyText="Nenhuma venda encontrada"
-          loading={loadingSales}
+          emptyText="Nenhuma mensagem encontrada"
+          loading={loadingMessages}
           columns={columns}
-          rows={sales}
+          rows={messages}
         />
       </div>
 
       <div className={style.viewMobile}>
         <ListMobile
-          emptyText="Nenhuma venda encontrada"
-          loading={loadingSales}
+          emptyText="Nenhuma mensagem encontrada"
+          loading={loadingMessages}
           collapseItems={columns}
           itemFields={fieldsMobile}
-          items={sales}
+          items={messages}
         />
       </div>
 
       {formModalOpened && (
-        <ModalCreateNewSale
+        <ModalCreateNewMessage
           open={formModalOpened}
-          saleToEditData={saleToEditData}
+          messageToEditData={messageToEditData}
           handleClose={() => {
             setFormModalOpened(false)
-            setSaleToEditData(null)
+            setmessageToEditData(null)
           }}
         />
       )}
