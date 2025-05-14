@@ -4,7 +4,7 @@ import { CreateNewMessageService } from '../useCases/Message/CreateNewMessage/Cr
 import { UpdateNewMessageService } from '../useCases/Message/UpdateMessage/UpdateMessageService.service'
 import { DeleteMessageService } from '../useCases/Message/DeleteMessage/DeleteMessageService.service'
 import { ListMessageService } from '../useCases/Message/ListMessages/ListMessageService.service'
-import { ListDefaultMessageService } from '../useCases/Message/ListDefaultMessages/ListDefaultMessageService.service'
+import { ListDefaultMessageService } from '../useCases/Message/ListDefaultMessages/ListDefaultMessagesService.service'
 
 export class MessageController {
   async listMessages(req: Request, res: Response): Promise<Response> {
@@ -12,14 +12,14 @@ export class MessageController {
     const { userId } = req.user
 
     const listMessageService = container.resolve(ListMessageService)
-    const products = await listMessageService.execute({
+    const messages = await listMessageService.execute({
       searchString,
       userId,
     })
 
     return res.status(200).json({
       success: true,
-      items: products,
+      items: messages,
       message: 'Busca de mensagens concluída com sucesso',
     })
   }
@@ -31,21 +31,21 @@ export class MessageController {
       ListDefaultMessageService,
     )
 
-    const products = await listDefaultMessageService.execute({
+    const messages = await listDefaultMessageService.execute({
       userId,
     })
 
     return res.status(200).json({
       success: true,
-      items: products,
+      items: messages,
       message: 'Busca de mensagens concluída com sucesso',
     })
   }
 
   async createNewMessage(req: Request, res: Response): Promise<Response> {
     const { text, stage, isDefault, userInfo } = req.body
-
     const createNewMessageService = container.resolve(CreateNewMessageService)
+
     const newMessage = await createNewMessageService.execute({
       text,
       stage,
@@ -67,7 +67,7 @@ export class MessageController {
     const updatedMessage = await updateNewMessageService.execute({
       text,
       idMessage,
-    
+
       stage,
       isDefault,
     })

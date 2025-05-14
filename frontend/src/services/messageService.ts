@@ -44,7 +44,6 @@ export const messageService = {
       isDefault,
       userInfo: this.userInfo,
     }
-
     return httpClientProvider.post('/mensagens', {
       ...body,
     })

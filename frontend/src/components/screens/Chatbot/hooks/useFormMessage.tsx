@@ -39,7 +39,6 @@ export function useFormMessage({ handleClose, messageDataToEdit }: Props) {
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
 
   function onCreateNewMessage(newMessage: INewMessage) {
-    console.log(newMessage)
     messageService
       .create({ ...newMessage }, httpClientProvider)
       .then(() => {

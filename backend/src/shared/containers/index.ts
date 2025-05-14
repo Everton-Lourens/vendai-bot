@@ -1,5 +1,6 @@
 import './Account'
 import './Sale'
+import './Message'
 import './Product'
 import './User'
 import './Supplier'
