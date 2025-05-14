@@ -8,23 +8,23 @@ import style from './Chatbot.module.scss'
 import { ListMobile } from '../../_ui/ListMobile'
 import { useFieldsMobile } from './hooks/useFieldsMobile'
 import { useMessageList } from '../../../hooks/useMessageList'
-import { useDeleteMessage } from './hooks/useDeleteMessage'
+import { useCancelMessage } from './hooks/useCancelMessage'
 import { useEditMessage } from './hooks/useEditMessage'
 
 export function Chatbot() {
-  const { loadingMessages, messages } = useMessageList({ otherFilters: null })
-  const { handleDeleteMessage } = useDeleteMessage()
+  const { handleCancelMessage } = useCancelMessage()
+  const { messages, loadingMessages } = useMessageList({ otherFilters: null })
   const {
     formModalOpened,
     handleEditMessage,
-    messageDataToEdit,
+    messageToEditData,
     setFormModalOpened,
-    setMessageDataToEdit,
+    setMessageToEditData,
   } = useEditMessage()
 
   const columns: IColumn[] = useColumns({
     handleEditMessage,
-    handleDeleteMessage,
+    handleCancelMessage,
   })
 
   const fieldsMobile = useFieldsMobile()
@@ -35,36 +35,36 @@ export function Chatbot() {
         onClickFunction={() => {
           setFormModalOpened(true)
         }}
-        buttonText="Nova mensagem"
+        buttonText="Nova Mensagem"
         InputFilter={<FilterByName />}
       />
 
       <div className={style.viewDesktop}>
         <TableComponent
+          emptyText="Nenhuma mensagem encontrada"
           loading={loadingMessages}
           columns={columns}
           rows={messages}
-          emptyText="Nenhuma mensagem cadastrada"
         />
       </div>
 
       <div className={style.viewMobile}>
         <ListMobile
+          emptyText="Nenhuma mensagem encontrada"
+          loading={loadingMessages}
           collapseItems={columns}
           itemFields={fieldsMobile}
           items={messages}
-          loading={loadingMessages}
-          emptyText="Nenhuma mensagem cadastrada"
         />
       </div>
 
       {formModalOpened && (
         <ModalCreateNewMessage
-          messageDataToEdit={messageDataToEdit}
           open={formModalOpened}
+          messageToEditData={messageToEditData}
           handleClose={() => {
             setFormModalOpened(false)
-            setMessageDataToEdit(null)
+            setMessageToEditData(null)
           }}
         />
       )}

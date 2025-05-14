@@ -4,31 +4,31 @@ import {
   CellFunctionParams,
 } from '../../../../models/interfaces/IColumn'
 import { format } from '../../../../utils/format'
-import { ISale } from '../../../../models/interfaces/ISale'
-import style from '../Sales.module.scss'
+import { IMessage } from '../../../../models/interfaces/IMessage'
+import style from '../Chatbot.module.scss'
 import { faCancel, faPen } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface UseColumnsParams {
-  handleCancelSale: (sale: ISale) => void
-  handleEditSale: (sale: ISale) => void
+  handleCancelMessage: (message: IMessage) => void
+  handleEditMessage: (message: IMessage) => void
 }
 
 export function useColumns({
-  handleEditSale,
-  handleCancelSale,
+  handleEditMessage,
+  handleCancelMessage,
 }: UseColumnsParams): IColumn[] {
   const actions = [
     {
       icon: <FontAwesomeIcon className={style.icon} icon={faPen} />,
       title: 'Editar venda',
-      onClickFunction: handleEditSale,
+      onClickFunction: handleEditMessage,
       className: style.editButton,
     },
     {
       icon: <FontAwesomeIcon className={style.icon} icon={faCancel} />,
       title: 'Cancelar venda',
-      onClickFunction: handleCancelSale,
+      onClickFunction: handleCancelMessage,
       className: style.cancelButton,
     },
   ]
@@ -37,7 +37,7 @@ export function useColumns({
     {
       headerName: 'Nº da venda',
       field: 'code',
-      valueFormatter: (params: CellFunctionParams<ISale>) => params.value,
+      valueFormatter: (params: CellFunctionParams<IMessage>) => params.value,
       cellClass: ({ data: { status } }) => {
         if (status === 'canceled') return style.canceledText
       },
@@ -45,7 +45,7 @@ export function useColumns({
     {
       headerName: 'Cliente',
       field: 'client',
-      valueFormatter: ({ data: { client } }: CellFunctionParams<ISale>) =>
+      valueFormatter: ({ data: { client } }: CellFunctionParams<IMessage>) =>
         client?.name || '--',
       cellClass: ({ data: { status } }) => {
         if (status === 'canceled') return style.canceledText
@@ -54,7 +54,7 @@ export function useColumns({
     {
       headerName: 'Data da venda',
       field: 'date',
-      valueFormatter: (params: CellFunctionParams<ISale>) =>
+      valueFormatter: (params: CellFunctionParams<IMessage>) =>
         dayjs(params.value).format('DD/MM/YYYY - HH:mm'),
       cellClass: ({ data: { status } }) => {
         if (status === 'canceled') return style.canceledText
@@ -63,7 +63,7 @@ export function useColumns({
     {
       headerName: 'Forma de pagamento',
       field: 'paymentType',
-      valueFormatter: (params: CellFunctionParams<ISale>) =>
+      valueFormatter: (params: CellFunctionParams<IMessage>) =>
         format.formatPaymentType(params.value),
       cellClass: ({ data: { status } }) => {
         if (status === 'canceled') return style.canceledText
@@ -72,7 +72,7 @@ export function useColumns({
     {
       headerName: 'Valor total',
       field: 'totalValue',
-      valueFormatter: (params: CellFunctionParams<ISale>) =>
+      valueFormatter: (params: CellFunctionParams<IMessage>) =>
         format.formatToReal(params.value),
       cellClass: ({ data: { status } }) => {
         if (status === 'canceled') return style.canceledText
@@ -82,7 +82,7 @@ export function useColumns({
       headerName: '',
       field: 'acoes',
       type: 'actions',
-      cellRenderer: (params: CellFunctionParams<ISale>) => {
+      cellRenderer: (params: CellFunctionParams<IMessage>) => {
         return (
           <div className={style.actionsContainer}>
             {actions.map(({ icon, ...action }) => {

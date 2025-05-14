@@ -76,7 +76,7 @@ export function useColumns({
       headerName: 'Valor',
       field: 'value',
       valueFormatter: (params: CellFunctionParams<IAccount>) =>
-        format.formatarReal(params.value || 0),
+        format.formatToReal(params.value || 0),
     },
     {
       headerName: '',

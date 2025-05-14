@@ -1,22 +1,10 @@
 import { z } from 'zod'
 
-const prodSchema = z.object({
-  name: z.string(),
-  amount: z.number().min(1, 'A quantidade deve ser maior que 0').optional(),
-  value: z.number().min(1, 'O valor deve ser maior que 0'),
-  _id: z.string(),
+export const newMessageSchema = z.object({
+  _id: z.string().optional(),
+  text: z.string().min(1, 'Nome não informado'),
+  stage: z.number().min(1, 'Insira uma quantidade maior do que zero'),
+  isDefault: z.boolean(),
 })
 
-export const newSaleSchema = z
-  .object({
-    clientId: z.string().nullable(),
-    paymentType: z.string().min(1, 'Forma de pagamento não selecionada'),
-    products: z.array(prodSchema),
-    totalValue: z.number(),
-  })
-  .refine(({ products }) => products.length !== 0, {
-    message: 'Nenhum produto selecionado',
-    path: ['products'],
-  })
-
-export type INewSale = z.infer<typeof newSaleSchema>
+export type INewMessage = z.infer<typeof newMessageSchema>

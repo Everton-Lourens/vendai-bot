@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 import { format } from '../../../../utils/format'
-import style from '../Sales.module.scss'
+import style from '../Chatbot.module.scss'
 
 export function useFieldsMobile() {
   return [

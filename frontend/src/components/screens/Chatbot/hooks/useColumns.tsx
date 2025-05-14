@@ -1,102 +1,73 @@
-import dayjs from 'dayjs'
 import {
   IColumn,
   CellFunctionParams,
 } from '../../../../models/interfaces/IColumn'
-import { format } from '../../../../utils/format'
-import { ISale } from '../../../../models/interfaces/ISale'
-import style from '../Sales.module.scss'
-import { faCancel, faPen } from '@fortawesome/free-solid-svg-icons'
+import style from '../Chatbot.module.scss'
+import { IMessage } from '../../../../models/interfaces/IMessage'
+import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface UseColumnsParams {
-  handleCancelSale: (sale: ISale) => void
-  handleEditSale: (sale: ISale) => void
+  handleEditMessage: (message: IMessage) => void
+  handleDeleteMessage: (message: IMessage) => void
 }
 
 export function useColumns({
-  handleEditSale,
-  handleCancelSale,
+  handleEditMessage,
+  handleDeleteMessage,
 }: UseColumnsParams): IColumn[] {
   const actions = [
     {
       icon: <FontAwesomeIcon className={style.icon} icon={faPen} />,
-      title: 'Editar venda',
-      onClickFunction: handleEditSale,
+      title: 'Editar',
+      onClickFunction: handleEditMessage,
       className: style.editButton,
     },
     {
-      icon: <FontAwesomeIcon className={style.icon} icon={faCancel} />,
-      title: 'Cancelar venda',
-      onClickFunction: handleCancelSale,
-      className: style.cancelButton,
+      icon: <FontAwesomeIcon className={style.icon} icon={faTrash} />,
+      title: 'Excluir',
+      onClickFunction: handleDeleteMessage,
+      className: style.deleteButton,
     },
   ]
 
   return [
     {
-      headerName: 'Nº da venda',
+      headerName: 'Código',
       field: 'code',
-      valueFormatter: (params: CellFunctionParams<ISale>) => params.value,
-      cellClass: ({ data: { status } }) => {
-        if (status === 'canceled') return style.canceledText
-      },
+      valueFormatter: (params: CellFunctionParams<IMessage>) =>
+        params.value || '--',
     },
     {
-      headerName: 'Cliente',
-      field: 'client',
-      valueFormatter: ({ data: { client } }: CellFunctionParams<ISale>) =>
-        client?.name || '--',
-      cellClass: ({ data: { status } }) => {
-        if (status === 'canceled') return style.canceledText
-      },
+      headerName: 'Texto da mensagem',
+      field: 'text',
+      valueFormatter: (params: CellFunctionParams<IMessage>) =>
+        params.value || '--',
     },
     {
-      headerName: 'Data da venda',
-      field: 'date',
-      valueFormatter: (params: CellFunctionParams<ISale>) =>
-        dayjs(params.value).format('DD/MM/YYYY - HH:mm'),
-      cellClass: ({ data: { status } }) => {
-        if (status === 'canceled') return style.canceledText
-      },
-    },
-    {
-      headerName: 'Forma de pagamento',
-      field: 'paymentType',
-      valueFormatter: (params: CellFunctionParams<ISale>) =>
-        format.formatarFormaDePagamento(params.value),
-      cellClass: ({ data: { status } }) => {
-        if (status === 'canceled') return style.canceledText
-      },
-    },
-    {
-      headerName: 'Valor total',
-      field: 'totalValue',
-      valueFormatter: (params: CellFunctionParams<ISale>) =>
-        format.formatarReal(params.value),
-      cellClass: ({ data: { status } }) => {
-        if (status === 'canceled') return style.canceledText
-      },
+      headerName: 'Estágio',
+      field: 'stage',
+      valueFormatter: (params: CellFunctionParams<IMessage>) =>
+        params.value || 0,
     },
     {
       headerName: '',
       field: 'acoes',
       type: 'actions',
-      cellRenderer: (params: CellFunctionParams<ISale>) => {
+      cellRenderer: (params: CellFunctionParams<IMessage>) => {
         return (
           <div className={style.actionsContainer}>
-            {actions.map(({ icon, ...action }) => {
+            {actions.map((action) => {
               return (
                 <button
-                  className={action.className}
                   key={action.title}
                   type="button"
-                  disabled={params?.data?.status === 'canceled'}
+                  className={action.className}
                   onClick={() => {
                     action?.onClickFunction?.(params.data)
                   }}
                 >
-                  {icon && icon}
+                  {action.icon && action.icon}
                 </button>
               )
             })}

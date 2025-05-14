@@ -2,11 +2,11 @@ import { useRouter } from 'next/router'
 import { ALERT_NOTIFY_TYPE } from '../../../../models/enums/AlertNotifyType'
 import { IMessage } from '../../../../models/interfaces/IMessage'
 import { httpClientProvider } from '../../../../providers/HttpClientProvider'
-import { messageService } from '../../../../services/MessageService'
-import { useContext } from 'react'
+import { messageService } from '../../../../services/messageService'
 import { AlertContext } from '../../../../contexts/alertContext'
+import { useContext } from 'react'
 
-export function useCancelMessage() {
+export function useDeleteMessage() {
   const router = useRouter()
 
   const {
@@ -16,40 +16,39 @@ export function useCancelMessage() {
     setAlertNotifyConfigs,
   } = useContext(AlertContext)
 
-  function handleCancelMessage(message: IMessage) {
+  function handleDeleteMessage(message: IMessage) {
     setAlertDialogConfirmConfigs({
       ...alertDialogConfirmConfigs,
       open: true,
       title: 'Alerta de confirmação',
-      text: 'Deseja realmente cancelar esta venda?',
+      text: 'Deseja realmente excluir esta mensagem??',
       onClickAgree: () => {
         messageService
-          .cancel({ idMessage: message?._id }, httpClientProvider)
+          .delete({ idMessage: message?._id }, httpClientProvider)
           .then(() => {
             setAlertNotifyConfigs({
               ...alertNotifyConfigs,
               open: true,
               type: ALERT_NOTIFY_TYPE.SUCCESS,
-              text: 'Venda cancelada com sucesso',
+              text: 'Mensagem excluída com sucesso',
             })
             router.push({
               pathname: router.route,
               query: router.query,
             })
           })
-          .catch((err) => {
+          .catch((err: any) => {
             setAlertNotifyConfigs({
               ...alertNotifyConfigs,
               open: true,
               type: ALERT_NOTIFY_TYPE.ERROR,
-              text: `Erro ao tentar cancelar a venda (${err?.message})`,
+              text: `Erro ao tentar excluir a mensagem - ${err?.message}`,
             })
           })
       },
     })
   }
-
   return {
-    handleCancelMessage,
+    handleDeleteMessage,
   }
 }

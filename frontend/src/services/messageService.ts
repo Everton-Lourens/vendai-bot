@@ -1,73 +1,79 @@
-import dayjs from 'dayjs'
-import { usersService } from './usersService'
-import utc from 'dayjs/plugin/utc'
-import { IHttpClientProvider } from '../providers/HttpClientProvider/IHttpClientProvider'
 import {
   CreateMessageDTO,
   DeleteMessageDTO,
   GetAllMessagesDTO,
   UpdateMessageDTO,
 } from '../dtos/MessageDTOS'
-dayjs.extend(utc)
+import { IHttpClientProvider } from './../providers/HttpClientProvider/IHttpClientProvider'
+import { usersService } from './usersService'
 
 export const messageService = {
   userInfo: usersService.getUserInfo(),
 
   getAll(
-    { filters: { startDate, endDate, status } }: GetAllMessagesDTO,
+    { filters }: GetAllMessagesDTO,
     httpClientProvider: IHttpClientProvider,
   ) {
     const params = {
-      ...(status ? { status } : {}),
-      ...(startDate
-        ? { startDate }
-        : { startDate: dayjs.utc().startOf('month').toISOString() }),
-      ...(endDate
-        ? { endDate }
-        : { endDate: dayjs.utc().endOf('month').toISOString() }),
+      ...filters,
       userId: this.userInfo?._id,
     }
 
-    return httpClientProvider.get('/message/', {
+    return httpClientProvider.get('/mensagens/', {
+      params,
+    })
+  },
+
+  getDefaultMessages(httpClientProvider: IHttpClientProvider) {
+    const params = {
+      userId: this.userInfo?._id,
+    }
+
+    return httpClientProvider.get('/mensagens/padroes/', {
       params,
     })
   },
 
   create(
-    { newMessageData, totalValue }: CreateMessageDTO,
+    { text, stage, isDefault }: CreateMessageDTO,
     httpClientProvider: IHttpClientProvider,
   ) {
     const body = {
-      ...newMessageData,
-      totalValue,
+      stage,
+      text,
+      isDefault,
       userInfo: this.userInfo,
     }
 
-    return httpClientProvider.post('/message', {
+    return httpClientProvider.post('/mensagens', {
       ...body,
     })
   },
 
   update(
-    { messageData, totalValue }: UpdateMessageDTO,
+    { _id, text, stage, isDefault }: UpdateMessageDTO,
     httpClientProvider: IHttpClientProvider,
   ) {
     const body = {
-      ...messageData,
-      totalValue,
+      _id,
+      text,
+      stage,
+      isDefault,
     }
 
-    return httpClientProvider.put('/message', {
+    return httpClientProvider.put('/mensagens/', {
       ...body,
     })
   },
 
-  cancel(
+  delete(
     { idMessage }: DeleteMessageDTO,
     httpClientProvider: IHttpClientProvider,
   ) {
-    return httpClientProvider.put(`/message/cancelar/`, {
-      _id: idMessage,
+    return httpClientProvider.delete(`/mensagens/`, {
+      params: {
+        idMessage,
+      },
     })
   },
 }

@@ -32,7 +32,7 @@
       height: 20px;
     }
 
-    &.deleteButton {
+    &.cancelButton {
       color: $red-color-500;
     }
     &.editButton {
@@ -45,7 +45,12 @@
   display: none;
 }
 
-@media (max-width: 815px) {
+.canceledText {
+  color: $red-color-500 !important;
+  text-decoration: line-through;
+}
+
+@media (max-width: 884px) {
   .viewMobile {
     display: flex;
   }
@@ -63,7 +68,7 @@
       border-radius: 20px;
       padding: 0.8rem;
       
-      &.deleteButton {
+      &.cancelButton {
         color: white;
         background: $red-color-500;
         &::after {

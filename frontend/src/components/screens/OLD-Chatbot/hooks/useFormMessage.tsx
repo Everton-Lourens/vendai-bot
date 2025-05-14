@@ -1,8 +1,8 @@
 import { useForm } from 'react-hook-form'
-import { ISale } from '../../../../models/interfaces/ISale'
+import { IMessage } from '../../../../models/interfaces/IMessage'
 import { httpClientProvider } from '../../../../providers/HttpClientProvider'
-import { salesService } from '../../../../services/salesService'
-import { INewSale, newSaleSchema } from '../interfaces/INewSale'
+import { messageService } from '../../../../services/messageService'
+import { INewMessage, newMessageSchema } from '../interfaces/INewMessage'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ALERT_NOTIFY_TYPE } from '../../../../models/enums/AlertNotifyType'
 import { useRouter } from 'next/router'
@@ -13,12 +13,12 @@ import { IProduct } from '../../../../models/interfaces/IProduct'
 
 type Props = {
   handleClose: () => void
-  saleToEditData: ISale | null
+  messageToEditData: IMessage | null
   productsList: IProduct[]
 }
-export function useFormSale({
+export function useFormMessage({
   handleClose,
-  saleToEditData,
+  messageToEditData,
   productsList,
 }: Props) {
   const router = useRouter()
@@ -32,25 +32,25 @@ export function useFormSale({
     watch,
     setValue,
     formState: { errors, isSubmitting },
-  } = useForm<INewSale>({
-    defaultValues: saleToEditData || {
+  } = useForm<INewMessage>({
+    defaultValues: messageToEditData || {
       clientId: null,
       paymentType: undefined,
       products: [],
       totalValue: 0,
     },
-    resolver: zodResolver(newSaleSchema),
+    resolver: zodResolver(newMessageSchema),
   })
 
-  async function onCreateNewSale(newSale: INewSale) {
-    await salesService
-      .create({ newSaleData: newSale, totalValue }, httpClientProvider)
+  async function onCreateNewMessage(newMessage: INewMessage) {
+    await messageService
+      .create({ newMessageData: newMessage, totalValue }, httpClientProvider)
       .then(() => {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           type: ALERT_NOTIFY_TYPE.SUCCESS,
           open: true,
-          text: 'Venda realizada com sucesso',
+          text: 'Mensagem configurada com sucesso',
         })
 
         reset()
@@ -67,22 +67,22 @@ export function useFormSale({
           ...alertNotifyConfigs,
           type: ALERT_NOTIFY_TYPE.ERROR,
           open: true,
-          text: `Erro ao tentar realizar venda - ${err?.message}`,
+          text: `Erro ao tentar configurar messagem - ${err?.message}`,
         })
 
         console.error(err)
       })
   }
 
-  async function onEditSale(sale: INewSale) {
-    await salesService
-      .update({ saleData: sale, totalValue }, httpClientProvider)
+  async function onEditMessage(message: INewMessage) {
+    await messageService
+      .update({ messageData: message, totalValue }, httpClientProvider)
       .then(() => {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
           type: ALERT_NOTIFY_TYPE.SUCCESS,
           open: true,
-          text: 'Venda atualizada com sucesso',
+          text: 'Messagem atualizada com sucesso',
         })
 
         reset()
@@ -99,7 +99,7 @@ export function useFormSale({
           ...alertNotifyConfigs,
           type: ALERT_NOTIFY_TYPE.ERROR,
           open: true,
-          text: 'Erro ao tentar atualizar venda' + err?.message,
+          text: 'Erro ao tentar atualizar a messagem' + err?.message,
         })
         console.log('[ERROR]: ', err?.message)
       })
@@ -160,7 +160,7 @@ export function useFormSale({
   }, [errors.products])
 
   useEffect(() => {
-    if (!saleToEditData)
+    if (!messageToEditData)
       productsService
         .getDefaultProducts(httpClientProvider)
         .then(({ data: { items } }) => {
@@ -176,13 +176,13 @@ export function useFormSale({
           setValue('products', defaultProductsList)
         })
         .catch((err) => {
-          console.log('ERRO AO BUSCAR PRODUTO PADRÃO, ' + err?.message)
+          console.log('ERRO AO BUSCAR MESSAGEM PADRÃO, ' + err?.message)
         })
-  }, [saleToEditData])
+  }, [messageToEditData])
 
   return {
-    onEditSale,
-    onCreateNewSale,
+    onEditMessage,
+    onCreateNewMessage,
     register,
     handleSubmit,
     setValue,

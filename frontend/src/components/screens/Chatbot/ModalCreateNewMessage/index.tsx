@@ -1,176 +1,113 @@
 import { ModalLayout } from '../../../_ui/ModalLayout'
-import style from './ModalCreateNewSale.module.scss'
+import style from './ModalCreateNewMessage.module.scss'
 import { CustomTextField } from '../../../_ui/CustomTextField'
-import { Autocomplete, MenuItem } from '@mui/material'
-import { paymentTypeList } from '../../../../models/constants/PaymentTypeList'
-import { format } from '../../../../utils/format'
+import { Checkbox, FormControlLabel, Popover, Typography } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { ISale } from '../../../../models/interfaces/ISale'
-import { useClientList } from '../../../../hooks/useClientList'
-import { useFormSale } from '../hooks/useFormSale'
-import { useProductList } from '../../../../hooks/useProductList'
+import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { IMessage } from '../../../../models/interfaces/IMessage'
+import { useFormMessage } from '../hooks/useFormMessage'
 
 interface Props {
-  saleToEditData: ISale | null
+  messageDataToEdit: IMessage | null
   open: boolean
   handleClose: () => void
 }
 
-export function ModalCreateNewSale({
+export function ModalCreateNewMessage({
   open,
   handleClose,
-  saleToEditData,
+  messageDataToEdit,
 }: Props) {
-  const { products: productsList } = useProductList()
-  const { clients: clientsList } = useClientList()
-
   const {
-    errors,
-    handleSubmit,
-    isSubmitting,
-    onCreateNewSale,
-    onEditSale,
-    products,
+    onCreateNewMessage,
+    onEditMessage,
     register,
+    handleSubmit,
     setValue,
-    totalValue,
-    handleAddNewProduct,
-    handleChangeProduct,
-    handleRemoveProduct,
-  } = useFormSale({
+    errors,
+    isSubmitting,
+    isDefault,
+    anchorEl,
+    setAnchorEl,
+  } = useFormMessage({
     handleClose,
-    saleToEditData,
-    productsList,
+    messageDataToEdit,
   })
 
   return (
     <ModalLayout
       open={open}
       handleClose={handleClose}
-      onSubmit={handleSubmit(saleToEditData ? onEditSale : onCreateNewSale)}
-      title={saleToEditData ? 'Editar venda' : 'Realizar nova venda'}
-      submitButtonText={saleToEditData ? 'Atualizar' : 'Finalizar'}
+      onSubmit={handleSubmit(
+        messageDataToEdit ? onEditMessage : onCreateNewMessage,
+      )}
+      title="Cadastro de mensagens"
+      submitButtonText="Cadastrar"
       loading={isSubmitting}
     >
-      <div className={style.content}>
-        <section className={style.sectionContainer}>
-          <h3>Informações da venda</h3>
-          <div className={style.fieldsContainer}>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={clientsList}
-              noOptionsText="Nenhum cliente encontrado"
-              loadingText="Buscando clientes..."
-              onChange={(event, value) => {
-                setValue('clientId', value?._id || null)
-              }}
-              getOptionLabel={(client) => client.name}
-              renderInput={(params) => (
-                <CustomTextField
-                  {...params}
-                  size="small"
-                  className={style.input}
-                  label="Cliente"
-                  type="text"
-                  placeholder="Digite o nome do cliente"
-                />
-              )}
-            />
+      <div className={style.fieldsContainer}>
+        <CustomTextField
+          size="small"
+          label="Texto *"
+          type="text"
+          placeholder="Digite o texto da mensagem"
+          {...register('text', { required: true })}
+          error={!!errors?.text}
+          helperText={errors.text && errors?.text?.message}
+        />
 
-            <CustomTextField
-              size="small"
-              className={style.input}
-              label="Forma de pagamento *"
-              select
-              placeholder="Escolha a forma de pagamento"
-              {...register('paymentType')}
-              error={!!errors.paymentType}
-              helperText={errors.paymentType && errors.paymentType.message}
-            >
-              {paymentTypeList.map(({ text, value }) => {
-                return (
-                  <MenuItem key={value} value={value}>
-                    {text || '--'}
-                  </MenuItem>
-                )
-              })}
-            </CustomTextField>
+        <CustomTextField
+          size="small"
+          label="Estágio *"
+          type="number"
+          placeholder="Estágios de 1 a 3"
+          {...register('stage', { required: true, valueAsNumber: true })}
+          error={!!errors.stage}
+          helperText={errors.stage && errors?.stage?.message}
+        />
 
-            <CustomTextField
-              size="small"
-              className={style.input}
-              label="Produtos"
-              select
-              placeholder="Selecione um produto"
-              onChange={handleAddNewProduct}
-            >
-              {productsList.map(({ _id, name }) => {
-                return (
-                  <MenuItem key={_id} value={_id}>
-                    {name || '--'}
-                  </MenuItem>
-                )
-              })}
-            </CustomTextField>
-          </div>
-        </section>
-        <section className={style.sectionContainer}>
-          <div className={style.headerProductsList}>
-            <h3>Produtos</h3>
-            {products.length > 0 && (
-              <span>{format.formatarReal(totalValue || 0)}</span>
-            )}
-          </div>
-          {products.length > 0 ? (
-            <ul className={style.listProducts}>
-              {products.map((product, index) => {
-                return (
-                  <li key={product?._id}>
-                    <span>{product?.name}</span>
-                    <CustomTextField
-                      className={style.inputProduct}
-                      label="Quantidade"
-                      size="small"
-                      InputLabelProps={{ shrink: true }}
-                      value={product?.amount}
-                      name="amount"
-                      type="number"
-                      onChange={(event) => {
-                        handleChangeProduct(event, index)
-                      }}
-                    />
-                    <CustomTextField
-                      className={style.inputProduct}
-                      label="Valor"
-                      type="number"
-                      size="small"
-                      InputLabelProps={{ shrink: true }}
-                      value={product?.value}
-                      name="value"
-                      onChange={(event) => {
-                        handleChangeProduct(event, index)
-                      }}
-                    />
+        <div className={style.labelDefaultMessage}>
+          <FormControlLabel
+            onChange={(event: any) => {
+              setValue('isDefault', event.target.checked)
+            }}
+            control={
+              <Checkbox
+                checked={isDefault}
+                sx={{
+                  '&.Mui-checked': { color: '#ff6600' },
+                }}
+              />
+            }
+            label="Tornar esta mensagem padrão"
+          />
 
-                    <FontAwesomeIcon
-                      onClick={() => {
-                        handleRemoveProduct(product?._id)
-                      }}
-                      className={style.removeProductIcon}
-                      icon={faTrash}
-                    />
-                  </li>
-                )
-              })}
-            </ul>
-          ) : (
-            <div>
-              <span>Nenhum produto selecionado</span>
-            </div>
-          )}
-        </section>
+          <FontAwesomeIcon
+            icon={faInfoCircle}
+            className={style.infoIcon}
+            onClick={(event) => {
+              setAnchorEl(event.currentTarget)
+            }}
+          />
+
+          <Popover
+            id="simple-popover"
+            open={!!anchorEl}
+            anchorEl={anchorEl}
+            onClose={() => {
+              setAnchorEl(null)
+            }}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <Typography sx={{ p: 2 }} className={style.popover}>
+              Ao definir uma mensagem como padrão, ela será selecionado
+              automaticamente como a primeira mensagem do Chatbot.
+            </Typography>
+          </Popover>
+        </div>
       </div>
     </ModalLayout>
   )

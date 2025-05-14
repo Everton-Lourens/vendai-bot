@@ -1,21 +1,18 @@
-import { STATUS_MESSAGE } from '../models/enums/MessageStatus'
-
 export interface GetAllMessagesDTO {
-  filters: {
-    status?: STATUS_MESSAGE
-    startDate?: string | Date
-    endDate?: string | Date
-  }
+  filters: any
 }
 
 export interface CreateMessageDTO {
-  newMessageData: any
-  totalValue: number
+  text: string
+  stage: number
+  isDefault: boolean
 }
 
 export interface UpdateMessageDTO {
-  messageData: any
-  totalValue: number
+  _id: string
+  text: string
+  stage: number
+  isDefault: boolean
 }
 
 export interface DeleteMessageDTO {

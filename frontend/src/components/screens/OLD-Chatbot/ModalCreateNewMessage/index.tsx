@@ -1,26 +1,26 @@
 import { ModalLayout } from '../../../_ui/ModalLayout'
-import style from './ModalCreateNewSale.module.scss'
+import style from './ModalCreateNewChatbot.module.scss'
 import { CustomTextField } from '../../../_ui/CustomTextField'
 import { Autocomplete, MenuItem } from '@mui/material'
 import { paymentTypeList } from '../../../../models/constants/PaymentTypeList'
 import { format } from '../../../../utils/format'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash } from '@fortawesome/free-solid-svg-icons'
-import { ISale } from '../../../../models/interfaces/ISale'
+import { IMessage } from '../../../../models/interfaces/IMessage'
 import { useClientList } from '../../../../hooks/useClientList'
-import { useFormSale } from '../hooks/useFormSale'
+import { useFormMessage } from '../hooks/useFormMessage'
 import { useProductList } from '../../../../hooks/useProductList'
 
 interface Props {
-  saleToEditData: ISale | null
+  messageToEditData: IMessage | null
   open: boolean
   handleClose: () => void
 }
 
-export function ModalCreateNewSale({
+export function ModalCreateNewMessage({
   open,
   handleClose,
-  saleToEditData,
+  messageToEditData,
 }: Props) {
   const { products: productsList } = useProductList()
   const { clients: clientsList } = useClientList()
@@ -29,8 +29,8 @@ export function ModalCreateNewSale({
     errors,
     handleSubmit,
     isSubmitting,
-    onCreateNewSale,
-    onEditSale,
+    onCreateNewMessage,
+    onEditMessage,
     products,
     register,
     setValue,
@@ -38,9 +38,9 @@ export function ModalCreateNewSale({
     handleAddNewProduct,
     handleChangeProduct,
     handleRemoveProduct,
-  } = useFormSale({
+  } = useFormMessage({
     handleClose,
-    saleToEditData,
+    messageToEditData,
     productsList,
   })
 
@@ -48,14 +48,16 @@ export function ModalCreateNewSale({
     <ModalLayout
       open={open}
       handleClose={handleClose}
-      onSubmit={handleSubmit(saleToEditData ? onEditSale : onCreateNewSale)}
-      title={saleToEditData ? 'Editar venda' : 'Realizar nova venda'}
-      submitButtonText={saleToEditData ? 'Atualizar' : 'Finalizar'}
+      onSubmit={handleSubmit(
+        messageToEditData ? onEditMessage : onCreateNewMessage,
+      )}
+      title={messageToEditData ? 'Editar mensagem' : 'Criar nova mensagem'}
+      submitButtonText={messageToEditData ? 'Atualizar' : 'Finalizar'}
       loading={isSubmitting}
     >
       <div className={style.content}>
         <section className={style.sectionContainer}>
-          <h3>Informações da venda</h3>
+          <h3>Informações da mensagem</h3>
           <div className={style.fieldsContainer}>
             <Autocomplete
               disablePortal
@@ -101,9 +103,9 @@ export function ModalCreateNewSale({
             <CustomTextField
               size="small"
               className={style.input}
-              label="Produtos"
+              label="Mensagens"
               select
-              placeholder="Selecione um produto"
+              placeholder="Selecione uma mensagem"
               onChange={handleAddNewProduct}
             >
               {productsList.map(({ _id, name }) => {
@@ -118,7 +120,7 @@ export function ModalCreateNewSale({
         </section>
         <section className={style.sectionContainer}>
           <div className={style.headerProductsList}>
-            <h3>Produtos</h3>
+            <h3>Mensagens</h3>
             {products.length > 0 && (
               <span>{format.formatToReal(totalValue || 0)}</span>
             )}
@@ -167,7 +169,7 @@ export function ModalCreateNewSale({
             </ul>
           ) : (
             <div>
-              <span>Nenhum produto selecionado</span>
+              <span>Nenhuma mensagem selecionada</span>
             </div>
           )}
         </section>

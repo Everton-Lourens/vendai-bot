@@ -14,7 +14,7 @@ export function useFieldsMobile() {
       headerName: 'Valor',
       field: 'value',
       valueFormatter: (params: CellFunctionParams<IProduct>) =>
-        format.formatarReal(params.value || 0),
+        format.formatToReal(params.value || 0),
     },
   ]
 }
