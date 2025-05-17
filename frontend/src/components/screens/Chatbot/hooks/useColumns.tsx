@@ -36,7 +36,7 @@ export function useColumns({
       headerName: 'Estágio',
       field: 'stage',
       valueFormatter: (params: CellFunctionParams<IMessage>) =>
-        params.value || '--',
+        Number(params.value) + 1 || '--',
     },
     {
       headerName: 'Texto da mensagem',

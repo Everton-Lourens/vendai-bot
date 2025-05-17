@@ -13,12 +13,17 @@ export function HeaderPage({
   buttonText,
   onClickFunction,
   InputFilter = <></>,
-}: Props) {
+  disabled = false,
+}: Props & { disabled?: boolean }) {
   return (
     <header className={style.headerContainer}>
       <div className={style.filters}>{InputFilter && InputFilter}</div>
       <div className={style.buttonsContainer}>
-        <button className={style.createNewButton} onClick={onClickFunction}>
+        <button
+          className={style.createNewButton}
+          onClick={onClickFunction}
+          disabled={disabled}
+        >
           <FontAwesomeIcon className={style.icon} icon={faPlus} />
           {buttonText || 'Cadastrar'}
         </button>

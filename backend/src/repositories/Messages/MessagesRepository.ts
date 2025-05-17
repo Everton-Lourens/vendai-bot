@@ -7,7 +7,7 @@ import {
   UpdateParams,
 } from './IMessagesRepository'
 
-import allDefaultMessages from '../../config/defaultMessages/0-1'
+import allDefaultMessages from '../../config/defaultMessages/defaultMessages'
 
 export class MessagesRepository implements IMessagesRepository {
   model: Model<Message> = MessageModel

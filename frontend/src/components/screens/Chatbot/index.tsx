@@ -36,6 +36,7 @@ export function Chatbot() {
           setFormModalOpened(true)
         }}
         buttonText="Nova mensagem"
+        disabled={true}
         InputFilter={<FilterByName />}
       />
 
