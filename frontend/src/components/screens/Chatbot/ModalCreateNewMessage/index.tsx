@@ -42,7 +42,7 @@ export function ModalCreateNewMessage({
         messageDataToEdit ? onEditMessage : onCreateNewMessage,
       )}
       title="Cadastro de mensagens"
-      submitButtonText="Cadastrar"
+      submitButtonText="Confirmar"
       loading={isSubmitting}
     >
       <div className={style.fieldsContainer}>

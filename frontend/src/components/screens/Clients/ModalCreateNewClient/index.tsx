@@ -35,7 +35,7 @@ export function ModalCreateNewClient({
         clientDataToEdit ? onEditClient : onCreateNewClient,
       )}
       title="Cadastro de cliente"
-      submitButtonText="Cadastrar"
+      submitButtonText="Confirmar"
       loading={isSubmitting}
       customStyle={{ width: '500px' }}
     >

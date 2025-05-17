@@ -40,7 +40,7 @@ export function ModalCreateNewAccount({
         accountDataToEdit ? onEditAccount : onCreateNewAccount,
       )}
       title="Cadastro de conta"
-      submitButtonText="Cadastrar"
+      submitButtonText="Confirmar"
       loading={isSubmitting}
       customStyle={{ width: '500px' }}
     >

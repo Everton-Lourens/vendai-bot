@@ -35,7 +35,7 @@ export function ModalCreateNewSupplier({
         supplierDataToEdit ? onEditSupplier : onCreateNewSupplier,
       )}
       title="Cadastro de fornecedor"
-      submitButtonText="Cadastrar"
+      submitButtonText="Confirmar"
       loading={isSubmitting}
       customStyle={{ width: '500px' }}
     >

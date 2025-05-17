@@ -42,7 +42,7 @@ export function ModalCreateNewProduct({
         productDataToEdit ? onEditProduct : onCreateNewProduct,
       )}
       title="Cadastro de produto"
-      submitButtonText="Cadastrar"
+      submitButtonText="Confirmar"
       loading={isSubmitting}
     >
       <div className={style.fieldsContainer}>
