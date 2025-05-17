@@ -26,18 +26,21 @@ export class MessagesRepository implements IMessagesRepository {
     return await MessageModel.find(query).lean()
   }
 
-  async createDefault({ userId }: { userId: string }): Promise<Message[]> {
-    const formatted = allDefaultMessages.map(({ stage, position, text }) => ({
-      stage,
-      position,
-      text,
-      isDefault: (stage === 0 && position === 1 ? true : false),
-      user: userId,
-    }));
+async createDefault({ userId }: { userId: string }): Promise<Message[]> {
+  const sortedMessages = allDefaultMessages
+    .slice()
+    .sort((a, b) => a.stage - b.stage)
 
-    return await this.model.create(formatted);
-  }
+  const formatted = sortedMessages.map(({ stage, position, text }) => ({
+    stage,
+    position,
+    text,
+    isDefault: stage === 0 && position === 1,
+    user: userId,
+  }));
 
+  return await this.model.create(formatted)
+}
 
   async create({
     isDefault,

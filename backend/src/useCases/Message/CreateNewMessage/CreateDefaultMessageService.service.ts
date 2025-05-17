@@ -20,12 +20,13 @@ export class CreateDefaultMessageService {
     userId,
   }: IRequest): Promise<Message[]> {
 
-    new AppError('Usuário não encontrado, entre em contato com o suporte')
+    if (!userId)
+      throw new AppError('Nenhum usuário foi informado')
 
     const defaultMessages = this.messagesRepository.createDefault({
       userId,
     })
-    console.log(defaultMessages)
+
     return defaultMessages
   }
 }
