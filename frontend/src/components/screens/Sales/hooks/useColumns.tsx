@@ -36,7 +36,7 @@ export function useColumns({
   return [
     {
       headerName: 'Nº da venda',
-      field: 'code',
+      field: 'stage',
       valueFormatter: (params: CellFunctionParams<ISale>) => params.value,
       cellClass: ({ data: { status } }) => {
         if (status === 'canceled') return style.canceledText

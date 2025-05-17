@@ -6,7 +6,7 @@ export interface IMessage {
   _id: string
   date: Date
   position: number
-  code: number
+  stage: number
   client: IClient
   status: string
   products: IProduct[]

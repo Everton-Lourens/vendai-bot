@@ -67,7 +67,7 @@ export function ModalCreateNewMessage({
         />
 
         <Typography sx={{ p: 2 }} className={style.popover}>
-          Estágio: {messageDataToEdit ? messageDataToEdit?.code : '--'}
+          Estágio: {messageDataToEdit ? messageDataToEdit?.stage : '--'}
         </Typography>
 
         <div className={style.labelDefaultMessage}>
