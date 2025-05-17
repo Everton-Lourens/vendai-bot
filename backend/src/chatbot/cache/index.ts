@@ -1,6 +1,6 @@
 import { getAllMessages, getAllItems } from "../../database/postgres/queries/select.js";
 
-const messagesCache: { [key: string]: { stage: number; message_number: number; content: string } } = {};
+const messagesCache: { [key: string]: { stage: number; position: number; content: string } } = {};
 const itemsCache: { [key: string]: { id: string; name: string; description: string; price: number }[] } = {};
 let timer: NodeJS.Timeout | null = null;
 
@@ -19,23 +19,23 @@ const setTimer = () => {
     }, 1 * 60 * 1000); // Armazenar as mensagens e itens durante 1 minuto
 };
 
-export const getOneCachedMessage = async ({ chatbot_id, stage, message_number }: { chatbot_id: string, stage: number, message_number: number }): Promise<string> => {
-    const cacheKey = `${stage}_${message_number}`;
+export const getOneCachedMessage = async ({ chatbot_id, stage, position }: { chatbot_id: string, stage: number, position: number }): Promise<string> => {
+    const cacheKey = `${stage}_${position}`;
     if (!messagesCache[cacheKey]) {
         const allMessages = await getAllMessages(chatbot_id);
         allMessages.forEach(message => {
-            messagesCache[`${message.stage}_${message.message_number}`] = message;
+            messagesCache[`${message.stage}_${message.position}`] = message;
         });
         setTimer();
     }
     return messagesCache[cacheKey]?.content || '';
 };
 
-export const getAllCachedMessages = async (chatbot_id: string): Promise<{ stage: number; message_number: number; content: string }[]> => {
+export const getAllCachedMessages = async (chatbot_id: string): Promise<{ stage: number; position: number; content: string }[]> => {
     if (Object.keys(messagesCache).length === 0) {
         const allMessages = await getAllMessages(chatbot_id);
         allMessages.forEach(message => {
-            messagesCache[`${message.stage}_${message.message_number}`] = message;
+            messagesCache[`${message.stage}_${message.position}`] = message;
         });
         setTimer();
     }

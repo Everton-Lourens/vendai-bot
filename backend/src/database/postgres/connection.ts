@@ -35,7 +35,7 @@ export async function migrateIfNeeded() {
                 id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
                 chatbot_id uuid NOT NULL,
                 stage INT NOT NULL,
-                message_number INT NOT NULL,
+                position INT NOT NULL,
                 content TEXT NOT NULL,
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (chatbot_id) REFERENCES chatbot(id) ON DELETE CASCADE
@@ -69,7 +69,7 @@ pool.once('connect', async () => {
                             id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
                             chatbot_id uuid NOT NULL,
                             stage INT NOT NULL,              -- etapa que a mensagem pertence
-                            message_number INT NOT NULL,     -- número da mensagem dentro da etapa
+                            position INT NOT NULL,     -- número da mensagem dentro da etapa
                             content TEXT NOT NULL,           -- conteúdo da mensagem
                             created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                             FOREIGN KEY (chatbot_id) REFERENCES chatbot(id) ON DELETE CASCADE
@@ -155,7 +155,7 @@ pool.once('connect', async () => {
                                     FROM inserted_chatbot
                                     RETURNING id
                                 )
-                                INSERT INTO chatbot_message (chatbot_id, stage, message_number, content)
+                                INSERT INTO chatbot_message (chatbot_id, stage, position, content)
                                 VALUES (
                                     (SELECT id FROM inserted_chatbot),
                                     1,

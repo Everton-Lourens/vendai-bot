@@ -11,10 +11,10 @@ export const initialStage = {
         return await getOneCachedMessage({
           chatbot_id,
           stage: 0,
-          message_number: 1
+          position: 1
         });
       } catch (error) {
-        return getMessageDatabase('stage_0')?.message_number_1;
+        return getMessageDatabase('stage_0')?.position_1;
       }
     })();
 

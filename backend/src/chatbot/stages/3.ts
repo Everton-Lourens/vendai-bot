@@ -3,7 +3,7 @@ import { getMessageDatabase } from '../../database/local_database.js';
 
 type AllMessages = {
   stage: number,
-  message_number: number,
+  position: number,
   content: string
 };
 
@@ -13,7 +13,7 @@ export const stageThree = {
 
     //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
-      return getMessageDatabase('stage_3')?.message_number_1;
+      return getMessageDatabase('stage_3')?.position_1;
     })();
 
     // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário

@@ -25,16 +25,16 @@ export async function findChatbotById(id: string): Promise<QueryResult> {
     }
 }
 
-export async function getAllMessages(chatbotId: string): Promise<{ stage: number; message_number: number; content: string }[]> {
+export async function getAllMessages(chatbotId: string): Promise<{ stage: number; position: number; content: string }[]> {
     try {
         const query = `
             SELECT 
                 stage,
-                message_number,
+                position,
                 content
             FROM chatbot_message
             WHERE chatbot_id = $1
-            ORDER BY stage, message_number;
+            ORDER BY stage, position;
         `;
         const querySet = await pool.query(query, [chatbotId]);
         if (querySet.rows.length > 0) {

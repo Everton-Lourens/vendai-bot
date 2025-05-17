@@ -1,19 +1,19 @@
 {
     "database": {
       "stage_0": {
-        "message_number_1": "👋 Bem-vindo(a)\nSou a Megan, Assistente Virtual.\nPosso te ajudar? 🙋‍♀ 🥰\n\n——————————\n1️⃣ –> FAZER PEDIDO\n2️⃣ → TAXA de Entrega\n3️⃣ → FALAR C/ Atendente"
+        "position_1": "👋 Bem-vindo(a)\nSou a Megan, Assistente Virtual.\nPosso te ajudar? 🙋‍♀ 🥰\n\n——————————\n1️⃣ –> FAZER PEDIDO\n2️⃣ → TAXA de Entrega\n3️⃣ → FALAR C/ Atendente"
       },
       "stage_1": {
-        "message_number_1": "1️⃣ –> FAZER PEDIDO \n3️⃣ → FALAR C/ Atendente"
+        "position_1": "1️⃣ –> FAZER PEDIDO \n3️⃣ → FALAR C/ Atendente"
       },
       "stage_3": {
-        "message_number_1": "Você será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
+        "position_1": "Você será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
       },
       "stage_4": {
-        "message_number_1": "✍️ AGORA DIGITE SEU ENDEREÇO\n––> EM APENAS 1 MENSAGEM! <––\n\nPor Exemplo:\n\n( Rua,Número,Bairro,Referência )"
+        "position_1": "✍️ AGORA DIGITE SEU ENDEREÇO\n––> EM APENAS 1 MENSAGEM! <––\n\nPor Exemplo:\n\n( Rua,Número,Bairro,Referência )"
       },
       "stage_5": {
-        "message_number_1": "–>🛑 –FORMA DE PAGAMENTO:\n——————————\n1️⃣ –> Pix\n2️⃣ → Dinheiro\n3️⃣ → Cartão"
+        "position_1": "–>🛑 –FORMA DE PAGAMENTO:\n——————————\n1️⃣ –> Pix\n2️⃣ → Dinheiro\n3️⃣ → Cartão"
       },
       "all_items": {
         "1": {
@@ -42,10 +42,10 @@
         }
       },
       "delivery_tax": {
-        "message_number_1": "TAXA DE ENTREGA:\n——————————\n🛵 → Centro: R$ 5,00\n🛵 → Avenida Sul: R$ 8,00\n🛵 → Avenida Norte: R$ 10,00\n——————————\n1️⃣ –> FAZER PEDIDO \n3️⃣ → FALAR C/ Atendente"
+        "position_1": "TAXA DE ENTREGA:\n——————————\n🛵 → Centro: R$ 5,00\n🛵 → Avenida Sul: R$ 8,00\n🛵 → Avenida Norte: R$ 10,00\n——————————\n1️⃣ –> FAZER PEDIDO \n3️⃣ → FALAR C/ Atendente"
       },
       "attendant_stage": {
-        "message_number_1": "Você será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
+        "position_1": "Você será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰"
       }
     }
   }

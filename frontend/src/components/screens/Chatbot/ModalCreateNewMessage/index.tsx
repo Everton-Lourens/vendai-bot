@@ -71,7 +71,7 @@ export function ModalCreateNewMessage({
           size="small"
           label="Posição *"
           type="number"
-          placeholder="Estágios de 1 a 3"
+          placeholder="Posição dentro do estágio"
           {...register('position', { required: true, valueAsNumber: true })}
           error={!!errors.position}
           helperText={errors.position && errors?.position?.message}
