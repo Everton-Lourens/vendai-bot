@@ -46,6 +46,17 @@ export function ModalCreateNewMessage({
       loading={isSubmitting}
     >
       <div className={style.fieldsContainer}>
+        <Typography
+          sx={{
+            p: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+          }}
+          className={style.popover}
+        >
+          Estágio: {messageDataToEdit ? messageDataToEdit?.stage : '--'}
+        </Typography>
         <CustomTextField
           size="small"
           label="Texto *"
@@ -58,17 +69,13 @@ export function ModalCreateNewMessage({
 
         <CustomTextField
           size="small"
-          label="Estágio *"
+          label="Posição *"
           type="number"
           placeholder="Estágios de 1 a 3"
           {...register('position', { required: true, valueAsNumber: true })}
           error={!!errors.position}
           helperText={errors.position && errors?.position?.message}
         />
-
-        <Typography sx={{ p: 2 }} className={style.popover}>
-          Estágio: {messageDataToEdit ? messageDataToEdit?.stage : '--'}
-        </Typography>
 
         <div className={style.labelDefaultMessage}>
           <FormControlLabel
