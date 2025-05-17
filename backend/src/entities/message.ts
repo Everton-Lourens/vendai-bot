@@ -4,6 +4,7 @@ export interface Message {
   _id: Types.ObjectId | string
   text: string
   stage: number
+  position: number
   code: string
   user: string
   isDefault: boolean
@@ -14,6 +15,7 @@ const messageSchema = new mongoose.Schema({
   code: { type: String, default: null },
   text: { type: String, default: null },
   stage: { type: Number, default: null },
+  position: { type: Number, default: null },
   user: { type: 'ObjectId', ref: 'User', default: null },
   isDefault: { type: Boolean, default: false },
 })

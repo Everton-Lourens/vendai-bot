@@ -6,6 +6,7 @@ interface IRequest {
   idMessage: string
   text: string
   stage: number
+  position: number
   isDefault: boolean
 }
 
@@ -22,6 +23,7 @@ export class UpdateNewMessageService {
     idMessage,
     text,
     stage,
+    position,
     isDefault,
   }: IRequest): Promise<void> {
     if (!idMessage) throw new AppError('_id da mensagem não informado')
@@ -37,6 +39,7 @@ export class UpdateNewMessageService {
     const updateFields = {
       text,
       stage,
+      position,
       isDefault,
     }
 

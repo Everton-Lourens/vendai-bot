@@ -43,12 +43,13 @@ export class MessageController {
   }
 
   async createNewMessage(req: Request, res: Response): Promise<Response> {
-    const { text, stage, isDefault, userInfo } = req.body
+    const { text, stage, position, isDefault, userInfo } = req.body
     const createNewMessageService = container.resolve(CreateNewMessageService)
 
     const newMessage = await createNewMessageService.execute({
       text,
       stage,
+      position,
       isDefault,
       userId: userInfo?._id,
     })
@@ -61,14 +62,14 @@ export class MessageController {
   }
 
   async updateMessage(req: Request, res: Response): Promise<Response> {
-    const { text, _id: idMessage, stage, isDefault } = req.body
+    const { text, _id: idMessage, stage, position, isDefault } = req.body
 
     const updateNewMessageService = container.resolve(UpdateNewMessageService)
     const updatedMessage = await updateNewMessageService.execute({
       text,
       idMessage,
-
       stage,
+      position,
       isDefault,
     })
 

@@ -28,6 +28,7 @@ export class MessagesRepository implements IMessagesRepository {
     code,
     isDefault,
     stage,
+    position,
     text,
     userId,
   }: INewMessageDTO): Promise<Message> {
@@ -35,6 +36,7 @@ export class MessagesRepository implements IMessagesRepository {
       code,
       isDefault,
       stage,
+      position,
       text,
       user: userId,
     })

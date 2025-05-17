@@ -6,6 +6,7 @@ import { AppError } from '../../../errors/AppError'
 interface IRequest {
   text: string
   stage: number
+  position: number
   isDefault: boolean
   userId: string
 }
@@ -22,6 +23,7 @@ export class CreateNewMessageService {
   async execute({
     text,
     stage,
+    position,
     isDefault,
     userId,
   }: IRequest): Promise<Message> {
@@ -39,6 +41,7 @@ export class CreateNewMessageService {
       code,
       text,
       stage,
+      position,
       userId,
       isDefault,
     })
