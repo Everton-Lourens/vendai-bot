@@ -9,6 +9,7 @@ interface IRequest {
   position: number
   isDefault: boolean
   userId: string
+  isDefaultMessage: boolean
 }
 
 @injectable()
@@ -26,7 +27,14 @@ export class CreateNewMessageService {
     position,
     isDefault,
     userId,
+    isDefaultMessage = false,
   }: IRequest): Promise<Message> {
+
+    if (isDefaultMessage)
+      await this.messagesRepository.createDefault({
+        userId,
+      })
+
     const alreadExistMessage = await this.messagesRepository.findByName(text)
 
     if (alreadExistMessage)

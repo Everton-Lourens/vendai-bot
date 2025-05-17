@@ -5,14 +5,12 @@ export interface Message {
   text: string
   stage: number
   position: number
-  code: string
   user: string
   isDefault: boolean
   amount?: number
 }
 
 const messageSchema = new mongoose.Schema({
-  code: { type: String, default: null },
   text: { type: String, default: null },
   stage: { type: Number, default: null },
   position: { type: Number, default: null },

@@ -32,6 +32,7 @@ export interface IMessagesRepository {
     onlyDefault,
   }: FiltersListMessages) => Promise<Message[]>
   create: (MessageData: INewMessageDTO) => Promise<Message>
+  createDefault(params: { userId: string }): Promise<Message[]>
   delete: (idMessage: string) => Promise<void>
   findByName: (text: string) => Promise<Message>
   findById: (messageId: string | Types.ObjectId) => Promise<Message>

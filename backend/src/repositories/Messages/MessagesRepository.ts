@@ -7,6 +7,8 @@ import {
   UpdateParams,
 } from './IMessagesRepository'
 
+import allDefaultMessages from '../../config/defaultMessages/0-1'
+
 export class MessagesRepository implements IMessagesRepository {
   model: Model<Message> = MessageModel
   async list({
@@ -24,8 +26,20 @@ export class MessagesRepository implements IMessagesRepository {
     return await MessageModel.find(query).lean()
   }
 
+  async createDefault({ userId }: { userId: string }): Promise<Message[]> {
+    const formatted = allDefaultMessages.map(({ stage, position, text }) => ({
+      stage,
+      position,
+      text,
+      isDefault: (stage === 0 && position === 1 ? true : false),
+      user: userId,
+    }));
+
+    return await this.model.create(formatted);
+  }
+
+
   async create({
-    code,
     isDefault,
     stage,
     position,
@@ -33,7 +47,6 @@ export class MessagesRepository implements IMessagesRepository {
     userId,
   }: INewMessageDTO): Promise<Message> {
     const newMessage = await this.model.create({
-      code,
       isDefault,
       stage,
       position,
