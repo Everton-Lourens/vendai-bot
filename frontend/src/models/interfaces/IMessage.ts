@@ -5,7 +5,8 @@ import { IChatbot } from './IChatbot'
 export interface IMessage {
   _id: string
   date: Date
-  stage: number
+  position: number
+  code: number
   client: IClient
   status: string
   products: IProduct[]

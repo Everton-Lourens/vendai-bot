@@ -35,11 +35,11 @@ export const messageService = {
   },
 
   create(
-    { text, stage, isDefault }: CreateMessageDTO,
+    { text, position, isDefault }: CreateMessageDTO,
     httpClientProvider: IHttpClientProvider,
   ) {
     const body = {
-      stage,
+      position,
       text,
       isDefault,
       userInfo: this.userInfo,
@@ -50,13 +50,13 @@ export const messageService = {
   },
 
   update(
-    { _id, text, stage, isDefault }: UpdateMessageDTO,
+    { _id, text, position, isDefault }: UpdateMessageDTO,
     httpClientProvider: IHttpClientProvider,
   ) {
     const body = {
       _id,
       text,
-      stage,
+      position,
       isDefault,
     }
 

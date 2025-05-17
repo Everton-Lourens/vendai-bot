@@ -9,7 +9,7 @@ type Message = {
 
 type ChatbotClient = {
   id: string
-  stage: number
+  position: number
   message: string
   response?: string
 }
@@ -32,7 +32,7 @@ export function Home() {
   }>({
     client: {
       id: '999',
-      stage: 0,
+      position: 0,
       message: '',
     },
   })

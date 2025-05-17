@@ -27,7 +27,7 @@ export function useFormMessage({ handleClose, messageDataToEdit }: Props) {
   } = useForm<INewMessage>({
     defaultValues: messageDataToEdit || {
       text: '',
-      stage: 0,
+      position: 0,
       isDefault: false,
     },
     resolver: zodResolver(newMessageSchema),

@@ -61,10 +61,14 @@ export function ModalCreateNewMessage({
           label="Estágio *"
           type="number"
           placeholder="Estágios de 1 a 3"
-          {...register('stage', { required: true, valueAsNumber: true })}
-          error={!!errors.stage}
-          helperText={errors.stage && errors?.stage?.message}
+          {...register('position', { required: true, valueAsNumber: true })}
+          error={!!errors.position}
+          helperText={errors.position && errors?.position?.message}
         />
+
+        <Typography sx={{ p: 2 }} className={style.popover}>
+          Estágio: {messageDataToEdit ? messageDataToEdit?.code : '--'}
+        </Typography>
 
         <div className={style.labelDefaultMessage}>
           <FormControlLabel

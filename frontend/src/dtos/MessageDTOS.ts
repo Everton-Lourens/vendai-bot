@@ -4,14 +4,14 @@ export interface GetAllMessagesDTO {
 
 export interface CreateMessageDTO {
   text: string
-  stage: number
+  position: number
   isDefault: boolean
 }
 
 export interface UpdateMessageDTO {
   _id: string
   text: string
-  stage: number
+  position: number
   isDefault: boolean
 }
 
