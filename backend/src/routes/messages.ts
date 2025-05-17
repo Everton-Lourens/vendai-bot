@@ -9,10 +9,10 @@ const messageController = new MessageController()
 messagesRoutes.use(ensureAuthenticated)
 
 // Routes
-messagesRoutes.get('/', messageController.listMessages)
-messagesRoutes.get('/padroes', messageController.getDefaultMessages)
-messagesRoutes.post('/', messageController.createNewMessage)
-messagesRoutes.put('/', messageController.updateMessage)
-messagesRoutes.delete('/', messageController.deleteMessage)
+messagesRoutes.get('/', messageController.listMessages.bind(messageController))
+messagesRoutes.get('/padroes', messageController.getDefaultMessages.bind(messageController))
+messagesRoutes.post('/', messageController.createNewMessage.bind(messageController))
+messagesRoutes.put('/', messageController.updateMessage.bind(messageController))
+messagesRoutes.delete('/', messageController.deleteMessage.bind(messageController))
 
 export { messagesRoutes }

@@ -34,7 +34,7 @@ export function useColumns({
   return [
     {
       headerName: 'Estágio',
-      field: 'code',
+      field: 'stage',
       valueFormatter: (params: CellFunctionParams<IMessage>) =>
         params.value || '--',
     },
@@ -45,10 +45,10 @@ export function useColumns({
         params.value || '--',
     },
     {
-      headerName: 'Posição no estágio',
+      headerName: 'Posição da mensagem',
       field: 'position',
       valueFormatter: (params: CellFunctionParams<IMessage>) =>
-        params.value || 0,
+        params.value || '--',
     },
     {
       headerName: '',

@@ -12,11 +12,11 @@ interface IRequest {
 
 @injectable()
 export class UpdateNewMessageService {
-  productsRepository: IMessagesRepository
+  messagesRepository: IMessagesRepository
   constructor(
-    @inject('MessagesRepository') productsRepository: IMessagesRepository,
+    @inject('MessagesRepository') messagesRepository: IMessagesRepository,
   ) {
-    this.productsRepository = productsRepository
+    this.messagesRepository = messagesRepository
   }
 
   async execute({
@@ -28,9 +28,9 @@ export class UpdateNewMessageService {
   }: IRequest): Promise<void> {
     if (!idMessage) throw new AppError('_id da mensagem não informado')
 
-    const productNotFound = await this.productsRepository.findById(idMessage)
+    const messageNotFound = await this.messagesRepository.findById(idMessage)
 
-    if (!productNotFound) throw new AppError('Mensagem inválida')
+    if (!messageNotFound) throw new AppError('Mensagem inválida')
 
     const filters = {
       _id: idMessage,
@@ -43,7 +43,7 @@ export class UpdateNewMessageService {
       isDefault,
     }
 
-    const updatedMessage = await this.productsRepository.update({
+    const updatedMessage = await this.messagesRepository.update({
       filters,
       updateFields,
     })

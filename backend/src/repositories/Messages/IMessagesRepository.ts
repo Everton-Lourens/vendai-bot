@@ -5,7 +5,6 @@ export interface INewMessageDTO {
   text: string
   stage: number
   position: number
-  code: string
   userId: string
   isDefault: boolean
 }

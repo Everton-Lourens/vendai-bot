@@ -35,10 +35,13 @@ export class CreateNewMessageService {
     if (!text) throw new AppError('Nenhum texto foi informado para a mensagem')
 
     const messagesAmount = await this.messagesRepository.getEntries(userId)
-    const code = (messagesAmount + 1).toString()
+    const numberOfMessages = (messagesAmount + 1).toString()
+
+    const maxNumberOfMessages = Number(process.env.MAX_NUMBER_OF_MESSAGES) || 5
+    if (numberOfMessages.length > maxNumberOfMessages)
+      throw new AppError('Não é possível cadastrar mais mensagens')
 
     const newMessage = this.messagesRepository.create({
-      code,
       text,
       stage,
       position,
