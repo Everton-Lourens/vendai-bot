@@ -21,9 +21,9 @@ export class ClientController {
     })
 
     try {
-      const createNewMessageService = container.resolve(CreateNewMessageService)
+      const createDefaultMessageService = container.resolve(CreateNewMessageService)
 
-      await createNewMessageService.execute({
+      await createDefaultMessageService.execute({
         text: null,
         stage: null,
         position: null,
