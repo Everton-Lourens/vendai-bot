@@ -22,12 +22,14 @@ export function useColumns({
       title: 'Editar',
       onClickFunction: handleEditMessage,
       className: style.editButton,
+      disabled: false,
     },
     {
       icon: <FontAwesomeIcon className={style.icon} icon={faTrash} />,
       title: 'Excluir',
       onClickFunction: handleDeleteMessage,
       className: style.deleteButton,
+      disabled: true,
     },
   ]
 
@@ -63,6 +65,7 @@ export function useColumns({
                   key={action.title}
                   type="button"
                   className={action.className}
+                  disabled={action.disabled}
                   onClick={() => {
                     action?.onClickFunction?.(params.data)
                   }}
