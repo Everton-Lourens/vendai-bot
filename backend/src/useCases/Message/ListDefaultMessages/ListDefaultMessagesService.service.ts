@@ -8,20 +8,20 @@ interface IRequest {
 
 @injectable()
 export class ListDefaultMessageService {
-  productsRepository: IMessagesRepository
+  messagesRepository: IMessagesRepository
   constructor(
-    @inject('MessagesRepository') productsRepository: IMessagesRepository,
+    @inject('MessagesRepository') messagesRepository: IMessagesRepository,
   ) {
-    this.productsRepository = productsRepository
+    this.messagesRepository = messagesRepository
   }
 
   async execute({ userId }: IRequest): Promise<Message[]> {
-    const products = await this.productsRepository.list({
+    const messages = await this.messagesRepository.list({
       userId,
       searchString: null,
       onlyDefault: true,
     })
 
-    return products
+    return messages
   }
 }
