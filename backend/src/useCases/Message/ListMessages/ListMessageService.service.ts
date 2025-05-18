@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe'
 import { IMessagesRepository } from '../../../repositories/Messages/IMessagesRepository'
-import { Message } from '../../../entities/message'
+import { Message } from '../../../entities/chatbot'
 
 interface IRequest {
   userId: string

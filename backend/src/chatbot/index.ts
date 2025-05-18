@@ -1,45 +1,29 @@
-import { logger } from '../helpers/logger.js';
-import { formatApiResponse } from '../helpers/bodyResponse.js';
-import { stages, getStage } from './stages.js';
-import { getAllCachedMessages } from './cache/index.js';
+import { logger } from '../helpers/logger';
+import { formatApiResponse } from '../helpers/bodyResponse';
+import { stages, getStage } from './stages';
+import { Client } from '../entities/chatbot';
 
-interface Client {
-   id: string;
-   chatbot_id: string;
-   stage: number;
-   message: string;
-   [key: string]: any; // Optional: To allow additional properties
-}
 
-export const chatbot = async (data: {
-   client: Client;
-}): Promise<{
+interface BodyResponse {
    status: number;
    message: string;
    timestamp: string;
-   client: {
-      id: string;
-      message: string;
-      response: string;
-      order: object | undefined;
-   };
-}> => {
-   try {
-      const { id, chatbot_id, stage, message } = data?.client || data;
+   client: Client;
+}
 
-      const currentStage = await getStage({ id, stage });
-      const { nextStage, response, order } = await stages[currentStage].stage.exec({
-         id,
-         message,
-         chatbot_id
-      });
+export const chatbot = async (bodyRequest: Client): Promise<BodyResponse> => {
+   try {
+      const { message, userId, clientId, stage } = bodyRequest;
+
+      const currentStage = await getStage({ clientId, stage });
+      const { nextStage, response, order } = await stages[currentStage].stage.exec(bodyRequest);
 
       const successResponse = formatApiResponse({
          status: 200,
          message: 'Operação realizada com sucesso',
          client: {
-            id,
-            chatbot_id,
+            userId,
+            clientId,
             stage: nextStage,
             message,
             response,

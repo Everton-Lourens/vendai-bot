@@ -52,10 +52,11 @@ export function ModalCreateNewMessage({
             display: 'flex',
             justifyContent: 'center',
             fontWeight: 'bold',
+            borderRadius: '20px',
           }}
           className={style.popover}
         >
-          Estágio: {messageDataToEdit ? messageDataToEdit?.stage + 1 : '--'}
+          Estágio: {messageDataToEdit ? messageDataToEdit?.stage : '--'}
         </Typography>
         <CustomTextField
           size="small"

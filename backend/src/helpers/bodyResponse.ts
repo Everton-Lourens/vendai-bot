@@ -1,12 +1,11 @@
 interface Client {
-   id: string;
-   chatbot_id: string;
+   userId: string,
+   clientId: string;
    stage: number;
    message: string;
    response: string;
    order: object;
 }
-
 
 export function formatApiResponse({
    status,

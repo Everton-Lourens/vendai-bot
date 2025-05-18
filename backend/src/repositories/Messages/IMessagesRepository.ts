@@ -1,5 +1,5 @@
 import { Types } from 'mongoose'
-import { Message } from '../../entities/message'
+import { Message } from '../../entities/chatbot'
 
 export interface INewMessageDTO {
   text: string

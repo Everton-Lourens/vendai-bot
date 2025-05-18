@@ -1,71 +1,46 @@
-import { storage } from '../storage.js';
-import { getMessageDatabase } from '../../database/local_database.js';
-import { getOneCachedItem } from '../cache/index.js';
+import { storage } from '../storage';
+//import { getMessageDatabase } from '../../database/local_database';
+import { getOneCachedItem } from '../cache/index';
+import { BodyResponseChatbot } from './0';
+import { Message } from '../../entities/chatbot';
 
 export const stageTwo = {
-  async exec({ id, message, chatbot_id }: { id: string, message: string, chatbot_id: string }):
-    Promise<{ nextStage: number; order: {}; response: string; }> {
+  async exec({ message, userId, clientId }: Message): Promise<BodyResponseChatbot> {
 
     //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
 
       try {
-        const getNewItem = await getOneCachedItem(chatbot_id, message);
+        const getNewItem = await getOneCachedItem(userId, message);
         if (getNewItem === null)
-          return 'Digite uma opção válida, por favor. 🙋‍♀️';
+          return 'Digite uma opção válclientIda, por favor. 🙋‍♀️';
 
         const itemName = getNewItem?.name;
         const itemDescription = getNewItem?.description;
         const itemPrice = getNewItem?.price;
 
-        storage[id].items.push(getNewItem); // adiciona o item ao carrinho;
-        storage[id].stage = 3; // vai para o stage do atendente
-        storage[id].wantsHumanService = true; // vai para o stage do atendente
+        storage[clientId].items.push(getNewItem); // adiciona o item ao carrinho;
+        storage[clientId].stage = 3; // vai para o stage do atendente
+        storage[clientId].wantsHumanService = true; // vai para o stage do atendente
 
         return 'Ótima escolha!' + '\n' +
           '——————————\n' +
           `Item: ${itemName}\n` +
           `Descrição: ${itemDescription}\n` +
           `Preço: R$${itemPrice}\n` +
-          '——————————\n\n' +
-          getMessageDatabase('attendant_stage')?.position_1;
+          '——————————\n\n'
+
+        //getMessageDatabase('attendant_stage')?.position_1;
 
       } catch (error) {
-        if (getMessageDatabase('all_items')[message]) {
-          const newItem = getMessageDatabase('all_items')[message];
-          storage[id].items.push(newItem); // adiciona o item ao carrinho;
 
-          const itemDescription = newItem?.description;
-
-          // //Por enquanto apenas envia para um atendente, mas da para criar mais coisas ao invés de enviar para atendente de imadiato
-          storage[id].stage = 3; // vai para o stage do atendente
-          storage[id].wantsHumanService = true; // vai para o stage do atendente
-          return 'Ótima escolha!\n' +
-            '——————————\n' +
-            `${itemDescription}, R$${newItem?.price},00\n` +
-            '——————————\n\n' +
-            getMessageDatabase('attendant_stage')?.position_1;
-          //////////////////////
-        }
-        else {
-          return 'Digite uma opção válida, por favor. 🙋‍♀️';
-        }
       }
     })();
 
-    // armazena o que o cliente falou e o que o bot respondeu para ter controle do que está acontecendo e como melhorar caso necessário
-    storage[id].trackRecordResponse.push({
-      id,
-      currentStage: 2,
-      nextStage: storage[id].stage,
-      message,
-      response
-    });
-
     return {
-      nextStage: storage[id].stage,
+      nextStage: storage[clientId].stage,
       response,
-      order: storage[id]
+      order: storage[clientId]
     };
 
   },

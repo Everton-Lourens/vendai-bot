@@ -1,5 +1,5 @@
 import { QueryResult } from 'pg';
-import { pool } from '../connection.js';
+import { pool } from '../connection';
 
 export async function findChatbotById(id: string): Promise<QueryResult> {
     try {

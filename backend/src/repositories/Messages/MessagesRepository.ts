@@ -1,5 +1,5 @@
 import { Model } from 'mongoose'
-import { Message, MessageModel } from '../../entities/message'
+import { Message, MessageModel } from '../../entities/chatbot'
 import {
   INewMessageDTO,
   IMessagesRepository,

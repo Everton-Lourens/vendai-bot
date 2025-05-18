@@ -1,5 +1,5 @@
 import { QueryResult } from 'pg';
-import { pool } from '../connection.js';
+import { pool } from '../connection';
 import { validate } from 'uuid';
 
 export async function insertChatbot(

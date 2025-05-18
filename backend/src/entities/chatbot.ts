@@ -1,5 +1,12 @@
 import mongoose, { Types } from 'mongoose'
 
+export interface Client {
+  userId: string;
+  clientId: string;
+  stage: number;
+  message: string;
+}
+
 export interface Message {
   _id: Types.ObjectId | string
   text: string
@@ -7,7 +14,11 @@ export interface Message {
   position: number
   user: string
   isDefault: boolean
-  amount?: number
+  message: string;
+  userId: string;
+  clientId: string;
+  response: string;
+  order: object | undefined;
 }
 
 const messageSchema = new mongoose.Schema({

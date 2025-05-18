@@ -3,13 +3,13 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import cluster from 'cluster';
 import process from 'process';
-import { errorHandler, validationFilter } from './middlewares/middleware.js';
-import { chatbot } from './chatbot/index.js';
-import { logger } from './helpers/logger.js';
+import { errorHandler, validationFilter } from './middlewares/middleware';
+import { chatbot } from './chatbot/index';
+import { logger } from './helpers/logger';
 import dotenv from 'dotenv';
-import { getIdChatbotToDevelopment } from './database/postgres/queries/select.js';
-import { migrateIfNeeded } from './database/postgres/connection.js';
-//import './database/connection.js';
+import { getIdChatbotToDevelopment } from './database/postgres/queries/select';
+import { migrateIfNeeded } from './database/postgres/connection';
+//import './database/connection';
 
 dotenv.config({ path: '.env.development' });
 
