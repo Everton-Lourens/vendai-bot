@@ -9,10 +9,11 @@ const productController = new ProductController()
 produtosRoutes.use(ensureAuthenticated)
 
 // Routes
-produtosRoutes.get('/', productController.listProducts)
-produtosRoutes.get('/padroes', productController.getDefaultProducts)
-produtosRoutes.post('/', productController.createNewProduct)
-produtosRoutes.put('/', productController.updateProduct)
-produtosRoutes.delete('/', productController.deleteProduct)
+produtosRoutes.get('/', productController.listProducts.bind(productController))
+produtosRoutes.get('/padroes', productController.getDefaultProducts.bind(productController))
+produtosRoutes.post('/', productController.createNewProduct.bind(productController))
+produtosRoutes.put('/', productController.updateProduct.bind(productController))
+produtosRoutes.delete('/', productController.deleteProduct.bind(productController))
 
 export { produtosRoutes }
+

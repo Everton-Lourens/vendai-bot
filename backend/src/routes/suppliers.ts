@@ -9,8 +9,9 @@ const supplierController = new SupplierController()
 suppliersRoutes.use(ensureAuthenticated)
 
 // Routes
-suppliersRoutes.post('/', supplierController.create)
-suppliersRoutes.get('/', supplierController.list)
-suppliersRoutes.delete('/:supplierId', supplierController.delete)
+suppliersRoutes.post('/', supplierController.create.bind(supplierController))
+suppliersRoutes.get('/', supplierController.list.bind(supplierController))
+suppliersRoutes.delete('/:supplierId', supplierController.delete.bind(supplierController))
 
 export { suppliersRoutes }
+

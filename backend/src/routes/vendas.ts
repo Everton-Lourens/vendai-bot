@@ -9,9 +9,10 @@ const saleController = new SaleController()
 vendasRoutes.use(ensureAuthenticated)
 
 // Routes
-vendasRoutes.get('/', saleController.listSales)
-vendasRoutes.post('/', saleController.createNewSale)
-vendasRoutes.put('/', saleController.updateSale)
-vendasRoutes.put('/cancelar', saleController.cancelSale)
+vendasRoutes.get('/', saleController.listSales.bind(saleController))
+vendasRoutes.post('/', saleController.createNewSale.bind(saleController))
+vendasRoutes.put('/', saleController.updateSale.bind(saleController))
+vendasRoutes.put('/cancelar', saleController.cancelSale.bind(saleController))
 
 export { vendasRoutes }
+

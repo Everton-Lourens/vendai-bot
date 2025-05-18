@@ -9,6 +9,9 @@ const dashboardController = new DashboardController()
 dashboardRoutes.use(ensureAuthenticated)
 
 // Routes
-dashboardRoutes.get('/formasDePagamento', dashboardController.getPaymentTypes)
+dashboardRoutes.get(
+  '/formasDePagamento',
+  dashboardController.getPaymentTypes.bind(dashboardController)
+)
 
 export { dashboardRoutes }

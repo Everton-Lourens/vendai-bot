@@ -9,13 +9,14 @@ const accountController = new AccountController()
 contasRoutes.use(ensureAuthenticated)
 
 // Routes
-contasRoutes.get('/', accountController.listAccounts)
-contasRoutes.post('/', accountController.createNewAccount)
-contasRoutes.put('/', accountController.updateAccount)
+contasRoutes.get('/', accountController.listAccounts.bind(accountController))
+contasRoutes.post('/', accountController.createNewAccount.bind(accountController))
+contasRoutes.put('/', accountController.updateAccount.bind(accountController))
 contasRoutes.patch(
   '/updateStatus/:idAccount',
-  accountController.updateStatusAccount,
+  accountController.updateStatusAccount.bind(accountController),
 )
-contasRoutes.delete('/', accountController.deleteAccount)
+contasRoutes.delete('/', accountController.deleteAccount.bind(accountController))
 
 export { contasRoutes }
+
