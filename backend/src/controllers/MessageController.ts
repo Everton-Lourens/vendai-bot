@@ -9,23 +9,30 @@ import { chatbot } from '../chatbot'
 
 export class MessageController {
   async sendMessageToChatbot(req: Request, res: Response): Promise<Response> {
+    const { userId, clientId, stage, message } = req.body
 
-    const bodyRequest = {
+    const bodyClient = {
+      userId,
+      clientId,
+      stage,
+      message,
+    };
+
+    const bodyRequestTest = {
       userId: "682a0547e82c591ac3a97d64",
       clientId: "f2b9e012-c3e5-4c5a-91d3-25c8990eea4a",
       stage: 0,
       message: "Olá"
     };
 
-    console.log('@@@@@@@@@@@@@@@@@@@@@@')
-
     try {
-      const responseData = await chatbot(bodyRequest);
+      const responseData = await chatbot(bodyRequestTest);
       return res.status(201).json({
         data: responseData
       });
     } catch (error) {
-      return res.status(422).end();
+      res.status(422).end();
+      return error
     }
   }
   async listMessages(req: Request, res: Response): Promise<Response> {

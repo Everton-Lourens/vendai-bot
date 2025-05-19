@@ -11,12 +11,12 @@ interface BodyResponse {
    client: Client;
 }
 
-export const chatbot = async (bodyRequest: Client): Promise<BodyResponse> => {
+export const chatbot = async (bodyClient: Client): Promise<BodyResponse> => {
    try {
-      const { message, userId, clientId, stage } = bodyRequest;
+      const { userId, clientId, stage, message } = bodyClient;
 
       const currentStage = await getStage({ clientId, stage });
-      const { nextStage, response, order } = await stages[currentStage].stage.exec(bodyRequest);
+      const { nextStage, response, order } = await stages[currentStage].stage.exec(bodyClient);
 
       const successResponse = formatApiResponse({
          status: 200,
