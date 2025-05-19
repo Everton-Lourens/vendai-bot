@@ -10,17 +10,23 @@ export const validateBody = async (req: Request): Promise<boolean> => {
     try {
         const { client } = req?.body;
 
-        const requiredFields = ['id', 'stage', 'message', 'chatbot_id'];
+        const requiredFields = ['message', 'stage', 'userId', 'clientId'];
         const missingFields = requiredFields.filter(field => !String(client[field]));
 
         if (missingFields.length > 0) return false;
+        const { userId, clientId, stage, message } = client;
 
-        const { id } = client;
-        if (process.env.NODE_ENV === 'development' && !!id) { // PENAS PARA TESTES
-            return true;
-        } else {
-            if (!validate(id)) return false;
-        }
+        if (!userId && typeof userId !== 'string')
+            return false;
+
+        if (!clientId && typeof clientId !== 'string')
+            return false;
+
+        if (typeof stage !== 'number' || stage < 0)
+            return false;
+
+        if (typeof message !== 'string' || message.trim() === '')
+            return false;
 
         return true;
     } catch (error) {
@@ -34,7 +40,6 @@ export const validationFilter = (req: Request, res: Response, next: NextFunction
     try {
         if (!validateBody(req)) {
             logger.error('Erro de validação');
-            // Type 'Response<any, Record<string, any>>' is not assignable to type 'void'
             res.status(422).json({ message: 'Dados inválidos no corpo da requisição.' });
             return;
         }
