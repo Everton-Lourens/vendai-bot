@@ -1,18 +1,30 @@
 import mongoose, { Types } from 'mongoose'
 
-export interface Client {
-  userId: string;
-  clientId: string;
-  stage: number;
-  message: string;
+export interface Chatbot {
+  _id: Types.ObjectId | string
+  name: string
+  phone: string
+  user: string
+  stage: number
+  position: number
+  messages: Message[]
+}
+
+export interface ChatbotClient {
+  client: {
+    userId: string;
+    clientId: string;
+    stage: number;
+    message: string;
+    order: object;
+    response: string;
+  }
 }
 
 export interface Message {
-  _id: Types.ObjectId | string
   text: string
   stage: number
   position: number
-  user: string
   isDefault: boolean
   message: string;
   userId: string;

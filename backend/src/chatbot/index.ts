@@ -1,34 +1,19 @@
 import { logger } from '../helpers/logger';
-import { formatApiResponse } from '../helpers/bodyResponse';
+import { BodyResponse, formatApiResponse } from '../helpers/bodyResponse';
 import { stages, getStage } from './stages';
-import { Client } from '../entities/chatbot';
+import { ChatbotClient } from '../entities/chatbot';
 
-
-interface BodyResponse {
-   status: number;
-   message: string;
-   timestamp: string;
-   client: Client;
-}
-
-export const chatbot = async (bodyClient: Client): Promise<BodyResponse> => {
+export const chatbot = async (data: ChatbotClient): Promise<BodyResponse> => {
    try {
-      const { userId, clientId, stage, message } = bodyClient;
+      const { client } = data;
 
-      const currentStage = await getStage({ clientId, stage });
-      const { nextStage, response, order } = await stages[currentStage].stage.exec(bodyClient);
+      const currentStage = await getStage({ client });
+      const { respondedClient } = await stages[currentStage].stage.exec({ client });
 
       const successResponse = formatApiResponse({
          status: 200,
-         message: 'Operação realizada com sucesso',
-         client: {
-            userId,
-            clientId,
-            stage: nextStage,
-            message,
-            response,
-            order
-         }
+         messageCode: 'Operação realizada com sucesso',
+         respondedClient,
       });
 
       return successResponse;
@@ -38,8 +23,7 @@ export const chatbot = async (bodyClient: Client): Promise<BodyResponse> => {
       logger.error(error);
       const errorResponse = formatApiResponse({
          status: 500,
-         message: 'Erro desconhecido ao executar o chatbot: ' + error,
-         errorCode: 'CHATBOT_UNKNOWN_ERROR'
+         messageCode: 'Erro desconhecido ao executar o chatbot: ' + error,
       });
       return errorResponse;
    }

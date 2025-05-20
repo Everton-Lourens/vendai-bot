@@ -1,3 +1,4 @@
+import { ChatbotClient } from '../entities/chatbot';
 import {
   initialStage,
   stageOne,
@@ -26,7 +27,7 @@ export const stages = [
   },
 ];
 
-export const getStage = async ({ clientId, stage }: { clientId: string, stage?: number }): Promise<number> => {
+export const getStage = async ({ client }: ChatbotClient): Promise<number> => {
 
   const order: {
     stage: number,
@@ -34,13 +35,13 @@ export const getStage = async ({ clientId, stage }: { clientId: string, stage?: 
     items: any[],
     address: null,
   } = {
-    stage: stage ?? 0,
+    stage: client.stage ?? 0,
     wantsHumanService: false,
     items: [],
     address: null,
   };
 
-  storage[clientId] = order;
+  storage[client.clientId] = order;
 
-  return storage[clientId].stage;
+  return storage[client.clientId].stage;
 }

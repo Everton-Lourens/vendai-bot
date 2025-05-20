@@ -1,9 +1,9 @@
-import { Message } from '../../entities/chatbot';
+import { ChatbotClient } from '../../entities/chatbot';
 import { storage } from '../storage';
-import { BodyResponseChatbot } from './0';
+import { ResponseStage } from './0';
 
 export const stageThree = {
-  async exec({ message, userId, clientId }: Message): Promise<BodyResponseChatbot> {
+  async exec({ client }: ChatbotClient): Promise<ResponseStage> {
 
     //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
@@ -11,11 +11,12 @@ export const stageThree = {
       //return getMessageDatabase('stage_3')?.position_1;
     })();
 
-    return {
-      nextStage: storage[clientId].stage,
+    const respondedClient = {
+      ...client,
+      stage: storage[client.clientId].stage,
       response,
-      order: storage[clientId]
-    };
-
+      order: storage[client.clientId],
+    }
+    return { respondedClient };
   },
 }

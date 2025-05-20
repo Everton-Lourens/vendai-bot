@@ -1,16 +1,21 @@
 import { container } from 'tsyringe';
 import { storage } from '../storage';
 import { ListMessageService } from '../../useCases/Message/ListMessages/ListMessageService.service';
-import { Client } from '../../entities/chatbot';
+import { ChatbotClient } from '../../entities/chatbot';
 
-export interface BodyResponseChatbot {
-  nextStage: number;
-  response: string;
-  order: {};
+export interface ResponseStage {
+  respondedClient?: {
+    userId: string;
+    clientId: string;
+    stage: number;
+    message: string;
+    order: object;
+    response: string;
+  }
 }
 
 export const initialStage = {
-  async exec({ message, userId, clientId }: Client): Promise<BodyResponseChatbot> {
+  async exec({ client }: ChatbotClient): Promise<ResponseStage> {
 
     const welcomeMessage = await (async () => {
       try {
@@ -18,7 +23,7 @@ export const initialStage = {
         const messages = await listMessageService.execute({
           searchString: '',
           //userId: '682a0547e82c591ac3a97d64',
-          userId,
+          userId: client.userId,
         })
         return messages.find((message) => message.stage === 1 && message.position === 1)?.text || 'Erro ao buscar mensagem de boas-vindas';
       } catch (error) {
@@ -30,14 +35,15 @@ export const initialStage = {
     const response = welcomeMessage?.replace(/\\n/g, '\n');
 
     // Envia para o stage 1
-    storage[clientId].stage = 1;
+    storage[client.clientId].stage = 1;
 
-    return {
-      nextStage: storage[clientId].stage,
+    const respondedClient = {
+      ...client,
+      stage: storage[client.clientId].stage,
       response,
-      order: storage[clientId]
-    };
-
+      order: storage[client.clientId],
+    }
+    return { respondedClient };
   },
 }
 

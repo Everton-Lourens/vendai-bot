@@ -6,10 +6,11 @@ import '../containers'
 import dbConnection from '../../database/mongo/mongoConfigs'
 import cors from 'cors'
 import cluster from 'cluster';
-import { errorHandler } from '../../middlewares/middleware';
+import { errorHandler, validateBody } from '../../middlewares/middleware';
 import { logger } from '../../helpers/logger'
 import { migrateIfNeeded } from '../../database/postgres/connection'
 import { chatbot } from '../../chatbot'
+import { ChatbotClient } from '../../entities/chatbot'
 
 const TIMEOUT = Number(process.env.REQ_TIMEOUT) || 5000;
 const PORT = process.env.NODE_ENV === 'production' ? (Number(process.env.PORT) || 8080) : 9999;
@@ -37,13 +38,17 @@ app.get('/', async (req: any, res: any) => {
   }
 })
 
-app.get('/teste', async (req: any, res: any) => {
+app.get('/teste', validateBody, async (req: any, res: any) => {
   try {
-    const bodyRequest = {
-      userId: "682a0547e82c591ac3a97d64",
-      clientId: "f2b9e012-c3e5-4c5a-91d3-25c8990eea4a",
-      stage: 0,
-      message: "Olá"
+    const bodyRequest: ChatbotClient = {
+      client: {
+        userId: "682a0547e82c591ac3a97d64",
+        clientId: "f2b9e012-c3e5-4c5a-91d3-25c8990eea4a",
+        stage: 0,
+        message: "Olá",
+        response: '',
+        order: {}
+      }
     };
 
     chatbot(bodyRequest).then((response) => {

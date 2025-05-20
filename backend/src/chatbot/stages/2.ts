@@ -1,27 +1,27 @@
 import { storage } from '../storage';
 //import { getMessageDatabase } from '../../database/local_database';
 import { getOneCachedItem } from '../cache/index';
-import { BodyResponseChatbot } from './0';
-import { Message } from '../../entities/chatbot';
+import { ResponseStage } from './0';
+import { ChatbotClient } from '../../entities/chatbot';
 
 export const stageTwo = {
-  async exec({ message, userId, clientId }: Message): Promise<BodyResponseChatbot> {
+  async exec({ client }: ChatbotClient): Promise<ResponseStage> {
 
     //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
 
       try {
-        const getNewItem = await getOneCachedItem(userId, message);
+        const getNewItem = await getOneCachedItem(client.userId, client.message);
         if (getNewItem === null)
-          return 'Digite uma opção válclientIda, por favor. 🙋‍♀️';
+          return 'Digite uma opção válida, por favor. 🙋‍♀️';
 
         const itemName = getNewItem?.name;
         const itemDescription = getNewItem?.description;
         const itemPrice = getNewItem?.price;
 
-        storage[clientId].items.push(getNewItem); // adiciona o item ao carrinho;
-        storage[clientId].stage = 3; // vai para o stage do atendente
-        storage[clientId].wantsHumanService = true; // vai para o stage do atendente
+        storage[client.clientId].items.push(getNewItem); // adiciona o item ao carrinho;
+        storage[client.clientId].stage = 3; // vai para o stage do atendente
+        storage[client.clientId].wantsHumanService = true; // vai para o stage do atendente
 
         return 'Ótima escolha!' + '\n' +
           '——————————\n' +
@@ -37,11 +37,12 @@ export const stageTwo = {
       }
     })();
 
-    return {
-      nextStage: storage[clientId].stage,
+    const respondedClient = {
+      ...client,
+      stage: storage[client.clientId].stage,
       response,
-      order: storage[clientId]
-    };
-
+      order: storage[client.clientId],
+    }
+    return { respondedClient };
   },
 }

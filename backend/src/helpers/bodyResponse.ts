@@ -1,35 +1,36 @@
-interface Client {
-   userId: string,
-   clientId: string;
-   stage: number;
-   message: string;
-   response: string;
-   order: object;
+import { ChatbotClient } from "../entities/chatbot";
+
+export interface BodyResponse {
+   status: number;
+   messageCode: string;
+   userId?: string;
+   clientId?: string;
+   stage?: number;
+   message?: string;
+   response?: string;
+   order?: object;
+   timestamp?: string;
+   client?: object;
+   respondedClient?: any;
 }
 
 export function formatApiResponse({
    status,
-   message,
-   client = {} as Client,
-   errorCode = '',
-}: {
-   status: number;
-   message: string;
-   client?: Client;
-   errorCode?: string;
-}): {
-   status: number;
-   message: string;
-   timestamp: string;
-   client: Client;
-   error_code: string;
-} {
+   messageCode,
+   respondedClient,
+}: BodyResponse): BodyResponse {
    return {
       status,
-      message,
+      messageCode,
       timestamp: new Date().toISOString(),
-      client,
-      error_code: errorCode,
+      client: {
+         userId: respondedClient.userId,
+         clientId: respondedClient.clientId,
+         stage: respondedClient.stage,
+         message: respondedClient.message,
+         order: respondedClient.order,
+         response: respondedClient.response,
+      },
    };
 }
 

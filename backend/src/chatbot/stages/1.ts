@@ -1,20 +1,20 @@
 import { storage } from '../storage';
 //import { getMessageDatabase, getAllItemsDatabase } from '../../database/local_database';
 import { getAllCachedItems } from '../cache/index';
-import { Message } from '../../entities/chatbot';
-import { BodyResponseChatbot } from './0';
+import { ChatbotClient } from '../../entities/chatbot';
+import { ResponseStage } from './0';
 
 export const stageOne = {
-  async exec({ message, userId, clientId }: Message): Promise<BodyResponseChatbot> {
+  async exec({ client }: ChatbotClient): Promise<ResponseStage> {
 
     //allMessages = allMessages || await getMessageDatabase('stage_0');
     const response: string = await (async () => {
-      if (message === '1') {
-        storage[clientId].stage = 2; // stage da escolha dos itens
+      if (client.message === '1') {
+        storage[client.clientId].stage = 2; // stage da escolha dos itens
 
         const allItems = await (async () => {
           try {
-            return await getAllCachedItems(userId);
+            return await getAllCachedItems(client.userId);
           } catch (error) {
             //return getAllItemsDatabase('all_items');
           }
@@ -25,24 +25,25 @@ export const stageOne = {
           .join('\n');
         return itemsDescription || 'Erro ao buscar itens do banco de dados';
 
-      } else if (message === '2') {
-        storage[clientId].stage = 1; // permanece nesse stage, apenas mostra a taxa de entrega
+      } else if (client.message === '2') {
+        storage[client.clientId].stage = 1; // permanece nesse stage, apenas mostra a taxa de entrega
         //return getMessageDatabase('delivery_tax')?.position_1;
-      } else if (message === '3') {
-        storage[clientId].wantsHumanService = true;
-        storage[clientId].stage = 3; // vai para o stage do atendente
+      } else if (client.message === '3') {
+        storage[client.clientId].wantsHumanService = true;
+        storage[client.clientId].stage = 3; // vai para o stage do atendente
         //return getMessageDatabase('attendant_stage')?.position_1;
       } else {
         return 'Digite uma opção válida, por favor. 🙋‍♀️';
       }
     })();
 
-    return {
-      nextStage: storage[clientId].stage,
+    const respondedClient = {
+      ...client,
+      stage: storage[client.clientId].stage,
       response,
-      order: storage[clientId]
-    };
-
+      order: storage[client.clientId],
+    }
+    return { respondedClient };
   },
 }
 
