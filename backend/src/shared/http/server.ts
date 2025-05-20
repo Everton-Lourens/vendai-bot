@@ -38,7 +38,7 @@ app.get('/', async (req: any, res: any) => {
   }
 })
 
-app.get('/teste', validateBody, async (req: any, res: any) => {
+app.get('/teste', async (req: any, res: any) => {
   try {
     const bodyRequest: ChatbotClient = {
       client: {

@@ -11,8 +11,8 @@ mensagemRoutes.use(ensureAuthenticated)
 
 // Routes
 mensagemRoutes.get('/', messageController.listMessages.bind(messageController))
-mensagemRoutes.get('/chat', validationFilter, messageController.sendMessageToChatbot.bind(messageController))
-mensagemRoutes.post('/chat', messageController.sendMessageToChatbot.bind(messageController))
+mensagemRoutes.post('/chat', validationFilter, messageController.sendMessageToChatbot.bind(messageController))
+mensagemRoutes.get('/chat', messageController.sendMessageToChatbot.bind(messageController))
 mensagemRoutes.get('/padroes', messageController.getDefaultMessages.bind(messageController))
 mensagemRoutes.post('/', messageController.createNewMessage.bind(messageController))
 mensagemRoutes.put('/', messageController.updateMessage.bind(messageController))

@@ -7,12 +7,10 @@ dotenv.config({ path: '.env.development' });
 
 export const validateBody = (req: Request, _res: Response, next: NextFunction): void => {
     try {
-        console.log('@@@@@@@@@@@AAAAAAAAAAAAAA@@@@@@@@');
         const { client } = req?.body;
 
         const requiredFields = ['message', 'stage', 'userId', 'clientId'];
         const missingFields = requiredFields.filter(field => !String(client[field]));
-
 
         if (missingFields.length > 0) {
             next(new Error('Dados inválidos no corpo da requisição.'));
