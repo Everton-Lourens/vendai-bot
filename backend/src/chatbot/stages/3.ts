@@ -14,8 +14,8 @@ export const stageThree = {
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,
+      order: storage[client.clientId].order,
       response,
-      order: storage[client.clientId],
     }
     return { respondedClient };
   },
