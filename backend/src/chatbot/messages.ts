@@ -20,6 +20,10 @@ export class ChatbotMessages {
         this.deliveryTax = [];
     }
     async getMessage({ stage, position }: { stage: number, position: number }): Promise<any> {
+        if (stage <= 0 || stage >= 4 || position <= 0 || position >= 4) {
+            this.response = `STAGE OU POSITION INVALIDO!!\n\nStage (${stage}) e position (${position})`;
+            return this.response;
+        }
         try {
             if (this.messages.length > 0) {
                 return (
