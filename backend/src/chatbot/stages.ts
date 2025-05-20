@@ -7,13 +7,6 @@ import {
 } from './stages/index';
 import { storage } from './storage';
 
-interface Order {
-  stage: number;
-  wantsHumanService: boolean;
-  items: any[];
-  address: null;
-}
-
 export const stages = [
   {
     description: 'Welcome',
@@ -34,12 +27,9 @@ export const stages = [
 ];
 
 export const getStage = async ({ client }: ChatbotClient): Promise<number> => {
-  const order: Order = {
+  storage[client.clientId] = {
+    ...client,
     stage: client.stage ?? 0,
-    wantsHumanService: false,
-    items: [],
-    address: null,
   };
-  storage[client.clientId] = order;
   return storage[client.clientId].stage;
 }

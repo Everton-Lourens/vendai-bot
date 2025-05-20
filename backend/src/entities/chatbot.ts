@@ -10,13 +10,19 @@ export interface Chatbot {
   messages: Message[]
 }
 
+export interface Order {
+  wantsHumanService: false,
+  items: [],
+  address: null,
+}
+
 export interface ChatbotClient {
   client: {
     userId: string;
     clientId: string;
     stage: number;
     message: string;
-    order: object;
+    order: Order;
     response: string;
   }
 }
