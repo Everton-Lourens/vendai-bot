@@ -1,4 +1,5 @@
 import mongoose, { Types } from 'mongoose'
+import { Client } from 'pg'
 
 export interface Chatbot {
   _id: Types.ObjectId | string
@@ -16,15 +17,16 @@ export interface Order {
   address: null,
 }
 
+export interface NewClient {
+  userId: string;
+  clientId: string;
+  stage: number;
+  message: string;
+  order: Order;
+  response: string;
+}
 export interface ChatbotClient {
-  client: {
-    userId: string;
-    clientId: string;
-    stage: number;
-    message: string;
-    order: Order;
-    response: string;
-  }
+  client: NewClient
 }
 
 export interface Message {

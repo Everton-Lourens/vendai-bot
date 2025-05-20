@@ -3,40 +3,24 @@ import { storage } from '../storage';
 import { getAllCachedItems } from '../cache/index';
 import { ChatbotClient } from '../../entities/chatbot';
 import { ResponseStage } from './0';
+import { ChatbotMessages } from '../messages';
 
 export const stageOne = {
   async exec({ client }: ChatbotClient): Promise<ResponseStage> {
+    const chatbotMessages = new ChatbotMessages({ client });
 
-    //allMessages = allMessages || await getMessageDatabase('stage_0');
-    const response: string = await (async () => {
-      if (client.message === '1') {
-        storage[client.clientId].stage = 2; // stage da escolha dos itens
+    if (client.message === '1') {
+      storage[client.clientId].stage = 2;
+      const responseMessage = await chatbotMessages.getMessage({ stage: 1, position: 1 });
+      const listProductMessage = await chatbotMessages.getListProductMessage({ limit: 1, offset: 1 });
+      chatbotMessages.messages = `${responseMessage}\n${listProductMessage}`;
+    } else {
+      storage[client.clientId].stage = 3;
+      storage[client.clientId].wantsHumanService = true;
+      await chatbotMessages.getMessage({ stage: 0, position: 0 });
+    }
 
-        const allItems = await (async () => {
-          try {
-            return await getAllCachedItems(client.userId);
-          } catch (error) {
-            //return getAllItemsDatabase('all_items');
-          }
-        })();
-
-        const itemsDescription: string = Object.values(allItems)
-          .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`)
-          .join('\n');
-        return itemsDescription || 'Erro ao buscar itens do banco de dados';
-
-      } else if (client.message === '2') {
-        storage[client.clientId].stage = 1; // permanece nesse stage, apenas mostra a taxa de entrega
-        //return getMessageDatabase('delivery_tax')?.position_1;
-      } else if (client.message === '3') {
-        storage[client.clientId].wantsHumanService = true;
-        storage[client.clientId].stage = 3; // vai para o stage do atendente
-        //return getMessageDatabase('attendant_stage')?.position_1;
-      } else {
-        return 'Digite uma opção válida, por favor. 🙋‍♀️';
-      }
-    })();
-
+    const response = chatbotMessages.messages;
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,
