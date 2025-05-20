@@ -34,7 +34,6 @@ export const stages = [
 ];
 
 export const getStage = async ({ client }: ChatbotClient): Promise<number> => {
-
   const order: Order = {
     stage: client.stage ?? 0,
     wantsHumanService: false,
