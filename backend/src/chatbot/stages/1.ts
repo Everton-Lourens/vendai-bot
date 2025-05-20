@@ -13,14 +13,14 @@ export const stageOne = {
       storage[client.clientId].stage = 2;
       const responseMessage = await chatbotMessages.getMessage({ stage: 1, position: 1 });
       const listProductMessage = await chatbotMessages.getListProductMessage({ limit: 1, offset: 1 });
-      chatbotMessages.messages = `${responseMessage}\n${listProductMessage}`;
+      chatbotMessages.response = `${responseMessage}\n${listProductMessage}`;
     } else {
       storage[client.clientId].stage = 3;
       storage[client.clientId].wantsHumanService = true;
       await chatbotMessages.getMessage({ stage: 0, position: 0 });
     }
 
-    const response = chatbotMessages.messages;
+    const response = chatbotMessages.response;
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,

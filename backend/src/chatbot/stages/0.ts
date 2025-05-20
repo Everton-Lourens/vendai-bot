@@ -12,8 +12,8 @@ export const initialStage = {
   async exec({ client }: ChatbotClient): Promise<ResponseStage> {
 
     const chatbotMessages = new ChatbotMessages({ client });
-    await chatbotMessages.getMessage({ stage: 0, position: 1 });
-    const response = chatbotMessages.messages;
+    await chatbotMessages.getMessage({ stage: 1, position: 1 });
+    const response = chatbotMessages.response;
 
     storage[client.clientId].stage = 1;
 

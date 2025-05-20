@@ -7,12 +7,16 @@ import { ListProductsService } from "../useCases/Product/ListProducts/ListProduc
 export class ChatbotMessages {
     public client: NewClient
     public messages: any;
+    public response: string;
     public products: any;
+    public productsList: string;
     public deliveryTax: any;
     constructor({ client }: ChatbotClient) {
         this.client = client;
         this.messages = [];
+        this.response = '';
         this.products = [];
+        this.productsList = '';
         this.deliveryTax = [];
     }
     async getMessage({ stage, position }: { stage: number, position: number }): Promise<any> {
@@ -29,10 +33,11 @@ export class ChatbotMessages {
                 userId: this.client.userId,
             });
             this.messages = messages;
-            return (
+            this.response = (
                 this.messages.find((message) => message.stage === stage && message.position === position)?.text ||
                 `Erro ao buscar mensagem: stage ${stage} e position ${position}`
             );
+            return this.response;
         } catch (error) {
             return error;
         }
@@ -52,11 +57,12 @@ export class ChatbotMessages {
                 userId: this.client.userId,
             });
             this.products = products;
-            return (Object.values(this.products)
+            this.productsList = (Object.values(this.products)
                 .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`)
                 .join('\n') ||
                 `Erro ao buscar produtos: limit ${limit} e offset ${offset}`
             );
+            return this.productsList;
         } catch (error) {
             return error;
         }
