@@ -36,18 +36,16 @@ export const getStage = async ({ client }: ChatbotClient): Promise<number> => {
     return storage[client.clientId].stage;
   }
   const newClient = {
-    client: {
-      stage: 0,
-      userId: client.userId,
-      clientId: client.clientId,
-      message: client.message,
-      order: {
-        wantsHumanService: false,
-        items: [],
-        address: null,
-      },
-      response: '',
+    stage: 0,
+    userId: client.userId,
+    clientId: client.clientId,
+    message: client.message,
+    order: {
+      wantsHumanService: false,
+      items: [],
+      address: null,
     },
+    response: '',
   };
   storage[client.clientId] = newClient;
   return storage[client.clientId].stage;
