@@ -4,12 +4,9 @@ import { ResponseStage } from './0';
 
 export const stageThree = {
   async exec({ client }: ChatbotClient): Promise<ResponseStage> {
-
-    //allMessages = allMessages || await getMessageDatabase('stage_0');
-    const response: string = await (async () => {
-      return 'Obrigado por comprar conosco!';
-      //return getMessageDatabase('stage_3')?.position_1;
-    })();
+    var response = '';
+    if (storage[client.clientId].wantsHumanService === true)
+      response = 'Você será encaminhado para um atendente humano. Aguarde...';
 
     const respondedClient = {
       ...client,

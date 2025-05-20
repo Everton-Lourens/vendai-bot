@@ -17,7 +17,7 @@ export const stageOne = {
     } else {
       storage[client.clientId].stage = 3;
       storage[client.clientId].wantsHumanService = true;
-      await chatbotMessages.getMessage({ stage: 0, position: 0 });
+      await chatbotMessages.getMessage({ stage: 3, position: 1 });
     }
 
     const response = chatbotMessages.response;
