@@ -16,7 +16,7 @@ export const stageOne = {
       chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
     } else {
       storage[client.clientId].stage = 3;
-      storage[client.clientId].wantsHumanService = true;
+      storage[client.clientId].humanAttendant = true;
       const awaitAttendantMessage = await chatbotMessages.getMessageStored({ stage: 3, position: 1 });
       chatbotMessages.setResponse(awaitAttendantMessage);
     }

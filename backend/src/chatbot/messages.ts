@@ -10,71 +10,74 @@ export class ChatbotMessages {
     public response: string;
     public products: any;
     public productsListMessage: string;
-    public deliveryTax: any;
     constructor({ client }: ChatbotClient) {
         this.client = client;
         this.messages = [];
         this.response = '';
         this.products = [];
         this.productsListMessage = '';
-        this.deliveryTax = [];
     }
     async getMessageStored({ stage, position }: { stage: number, position: number }): Promise<any> {
-        if (stage <= 0 || stage >= 4 || position <= 0 || position >= 4) {
-            this.response = `STAGE OU POSITION INVALIDO!!\n\nStage (${stage}) e position (${position})`;
-            return this.response;
-        }
+        if (stage <= 0 || stage >= 4 || position <= 0 || position >= 4)
+            throw new Error("Valores inválidos: stage e position");
         try {
-            if (this.messages.length > 0) {
-                return (
-                    this.messages.find((message) => message.stage === stage && message.position === position)?.text ||
-                    `Encaminharemos você para o atendente, aguarde.\n\nErro ao buscar mensagem: stage ${stage} e position ${position}`
-                );
-            }
+            if (this.messages.length > 0)
+                return this.messages;
+
             const listMessageService = container.resolve(ListMessageService);
-            const messages = await listMessageService.execute({
+            this.messages = await listMessageService.execute({
                 searchString: "",
                 userId: this.client.userId,
             });
-            this.messages = messages;
-            this.response = (
-                this.messages.find((message) => message.stage === stage && message.position === position)?.text ||
-                `Erro ao buscar mensagem: stage ${stage} e position ${position}`
-            );
-            return this.response;
+            return this.messages;
         } catch (error) {
-            return error;
+            return error.message;
         }
     }
-    async getListProductMessage({ limit, offset }: { limit: number, offset: number }): Promise<string> {
+    async getListProductMessage(): Promise<string> {
         try {
-            if (this.products.length > 0) {
-                return (Object.values(this.products)
-                    .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`)
-                    .join('\n') ||
-                    `Erro ao buscar produtos: limit ${limit} e offset ${offset}`
-                );
-            }
+            if (this.productsListMessage.length > 0)
+                return this.productsListMessage
+
+            this.products = await this.getArrayProduct()
+            this.productsListMessage = this.products.map((item: any, index: number) =>
+                `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`
+            ).join('\n') ||
+                `Erro ao buscar mensagem da lista de produtos`;
+            return this.productsListMessage;
+        } catch (error) {
+            return error.message;
+        }
+    }
+    async getArrayProduct(): Promise<any> {
+        try {
+            if (this.products.length > 0)
+                return this.products
+
             const listProductsService = container.resolve(ListProductsService);
             const products = await listProductsService.execute({
                 searchString: "",
                 userId: this.client.userId,
             });
             this.products = products;
-            this.productsListMessage = (Object.values(this.products)
-                .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`)
-                .join('\n') ||
-                `Erro ao buscar produtos: limit ${limit} e offset ${offset}`
-            );
-            return this.productsListMessage;
+            return this.products;
         } catch (error) {
-            return error;
+            return error.message;
         }
     }
     setResponse(response: string) {
         this.response = response;
     }
-    getResponse(): string {
+    async getResponse({ stage = null, position = null }: { stage: number, position: number }) {
+        if (stage != null && position != null) {
+            if (!this.messages.length) {
+                this.messages = await this.getMessageStored({ stage, position });
+            }
+            this.response = (
+                this.messages.find((message) => message.stage === stage && message.position === position)?.text ||
+                `Erro ao buscar mensagem: stage ${stage} e position ${position}`
+            );
+        }
         return this.response || `Erro ao buscar resposta`;
     }
 }

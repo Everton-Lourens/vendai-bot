@@ -7,6 +7,8 @@ export interface Product {
   stock: number
   code: string
   user: string
+  limit: number
+  offset: number
   isDefault: boolean
   amount?: number
 }

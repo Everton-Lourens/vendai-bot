@@ -48,7 +48,8 @@ app.get('/teste', async (req: any, res: any) => {
         message: "Olá",
         response: '',
         order: {
-          wantsHumanService: false,
+          humanAttendant: false,
+          productList: [],
           items: [],
           address: null
         }

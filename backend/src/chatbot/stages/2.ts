@@ -3,13 +3,14 @@ import { storage } from '../storage';
 import { getOneCachedItem } from '../cache/index';
 import { ResponseStage } from './0';
 import { ChatbotClient } from '../../entities/chatbot';
+import { ChatbotMessages } from '../messages';
 
 export const stageTwo = {
   async exec({ client }: ChatbotClient): Promise<ResponseStage> {
+    const chatbotMessages = new ChatbotMessages({ client });
 
     //allMessages = allMessages || await getMessageStoredDatabase('stage_0');
     const response: string = await (async () => {
-
       try {
         const getNewItem = await getOneCachedItem(client.userId, client.message);
         if (getNewItem === null)
@@ -21,7 +22,7 @@ export const stageTwo = {
 
         storage[client.clientId].items.push(getNewItem); // adiciona o item ao carrinho;
         storage[client.clientId].stage = 3; // vai para o stage do atendente
-        storage[client.clientId].wantsHumanService = true; // vai para o stage do atendente
+        storage[client.clientId].humanAttendant = true; // vai para o stage do atendente
 
         return 'Ótima escolha!' + '\n' +
           '——————————\n' +
@@ -37,6 +38,19 @@ export const stageTwo = {
       }
     })();
 
+
+    if (client.message === '1') {
+      storage[client.clientId].stage = 2;
+      const responseMessage = await chatbotMessages.getMessageStored({ stage: 1, position: 1 });
+      const listProductMessage = await chatbotMessages.getListProductMessage({ limit: 1, offset: 1 });
+      chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
+    } else {
+      storage[client.clientId].stage = 3;
+      storage[client.clientId].humanAttendant = true;
+      const awaitAttendantMessage = await chatbotMessages.getMessageStored({ stage: 3, position: 1 });
+      chatbotMessages.setResponse(awaitAttendantMessage);
+    }
+    const response = chatbotMessages.getResponse();
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,

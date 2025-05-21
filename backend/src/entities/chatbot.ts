@@ -12,18 +12,19 @@ export interface Chatbot {
 }
 
 export interface Order {
-  wantsHumanService: false,
-  items: [],
-  address: null,
+  humanAttendant: false
+  productList: string[]
+  items: []
+  address: null
 }
 
 export interface NewClient {
-  userId: string;
-  clientId: string;
-  stage: number;
-  message: string;
-  order: Order;
-  response: string;
+  userId: string
+  clientId: string
+  stage: number
+  message: string
+  order: Order
+  response: string
 }
 export interface ChatbotClient {
   client: NewClient
@@ -34,11 +35,11 @@ export interface Message {
   stage: number
   position: number
   isDefault: boolean
-  message: string;
-  userId: string;
-  clientId: string;
-  response: string;
-  order: object | undefined;
+  message: string
+  userId: string
+  clientId: string
+  response: string
+  order: object | undefined
 }
 
 const messageSchema = new mongoose.Schema({

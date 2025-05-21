@@ -5,7 +5,7 @@ import { ResponseStage } from './0';
 export const stageThree = {
   async exec({ client }: ChatbotClient): Promise<ResponseStage> {
     var response = '';
-    if (storage[client.clientId].wantsHumanService === true)
+    if (storage[client.clientId].humanAttendant === true)
       response = 'Você será encaminhado para um atendente humano. Aguarde...';
 
     const respondedClient = {

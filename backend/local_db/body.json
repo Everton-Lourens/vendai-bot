@@ -5,7 +5,7 @@
     "response": "1️⃣ → Pequena: R$ 20,00\n——————————\nÓtima escolha!\nVocê será encaminhado para um dos nossos atendentes,\naguarde um momento, por favor. 🥰",
     "order": {
         "stage": 10,
-        "wantsHumanService": true,
+        "humanAttendant": true,
         "items": [
             {
                 "description": "Pequena: R$ 20,00",
