@@ -1,5 +1,5 @@
 import { storage } from '../storage';
-//import { getMessageDatabase, getAllItemsDatabase } from '../../database/local_database';
+//import { getMessageStoredDatabase, getAllItemsDatabase } from '../../database/local_database';
 import { getAllCachedItems } from '../cache/index';
 import { ChatbotClient } from '../../entities/chatbot';
 import { ResponseStage } from './0';
@@ -11,16 +11,16 @@ export const stageOne = {
 
     if (client.message === '1') {
       storage[client.clientId].stage = 2;
-      const responseMessage = await chatbotMessages.getMessage({ stage: 1, position: 1 });
+      const responseMessage = await chatbotMessages.getMessageStored({ stage: 1, position: 1 });
       const listProductMessage = await chatbotMessages.getListProductMessage({ limit: 1, offset: 1 });
-      chatbotMessages.response = `${responseMessage}\n${listProductMessage}`;
+      chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
     } else {
       storage[client.clientId].stage = 3;
       storage[client.clientId].wantsHumanService = true;
-      await chatbotMessages.getMessage({ stage: 3, position: 1 });
+      const awaitAttendantMessage = await chatbotMessages.getMessageStored({ stage: 3, position: 1 });
+      chatbotMessages.setResponse(awaitAttendantMessage);
     }
-
-    const response = chatbotMessages.response;
+    const response = chatbotMessages.getResponse();
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,

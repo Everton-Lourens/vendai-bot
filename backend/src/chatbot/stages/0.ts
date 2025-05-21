@@ -10,10 +10,8 @@ export interface ResponseStage {
 
 export const initialStage = {
   async exec({ client }: ChatbotClient): Promise<ResponseStage> {
-
     const chatbotMessages = new ChatbotMessages({ client });
-    await chatbotMessages.getMessage({ stage: 1, position: 1 });
-    const response = chatbotMessages.response;
+    const response = await chatbotMessages.getMessageStored({ stage: 1, position: 1 });
 
     storage[client.clientId].stage = 1;
 

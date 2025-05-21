@@ -1,4 +1,4 @@
-﻿﻿ChatBot API para Autoatendimento:
+﻿﻿﻿﻿ChatBot API para Autoatendimento:
 Backend flexível para integração com qualquer plataforma.
 
 # ChatBot API
@@ -7,7 +7,6 @@ Backend flexível para integração com qualquer plataforma.
 - *Tecnologias Utilizadas*
 - *Visão Geral*
 - *Explicação Detalhada do Back-End*
-- *Estrutura de pastas do Back-End*
 - *Como utilizar com Docker*
 - *Como utilizar Localmente*
 
@@ -51,33 +50,6 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 **Docker (nginx)**: `POST - http://localhost:9999/v1/chat`
 
 **Localmente**: `POST - http://localhost:9999/v1/chat`
-
-## Estrutura de Pastas do Back-End
-
-```
-RAIZ/
-│-- nginx.conf
-│-- docker-compose.yaml
-│-- backend/
-│   │-- Dockerfile.backend
-│   │-- package.json
-│   │-- tsconfig.json
-│   │-- src/
-│   │   │-- server.ts
-│   │   │-- helpers/
-│   │   │-- middleware/
-│   │   │-- api/
-│   │   │   │-- chatbot/
-│   │   │   │   │-- response.ts
-│   │   │   │   │-- stages.ts
-│   │   │   │   │-- storage.ts
-│   │   │   │   │-- stages/
-│   │   │   │   │   │-- 0.ts
-│   │   │   │   │   │-- 1.ts
-│   │   │   │   │   │-- 2.ts
-│   │   │   │   │   │-- 3.ts
-│   │   │   │   │   │-- index.ts
-```
 
 ## Como utilizar com Docker
 

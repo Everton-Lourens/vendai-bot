@@ -9,17 +9,17 @@ export class ChatbotMessages {
     public messages: any;
     public response: string;
     public products: any;
-    public productsList: string;
+    public productsListMessage: string;
     public deliveryTax: any;
     constructor({ client }: ChatbotClient) {
         this.client = client;
         this.messages = [];
         this.response = '';
         this.products = [];
-        this.productsList = '';
+        this.productsListMessage = '';
         this.deliveryTax = [];
     }
-    async getMessage({ stage, position }: { stage: number, position: number }): Promise<any> {
+    async getMessageStored({ stage, position }: { stage: number, position: number }): Promise<any> {
         if (stage <= 0 || stage >= 4 || position <= 0 || position >= 4) {
             this.response = `STAGE OU POSITION INVALIDO!!\n\nStage (${stage}) e position (${position})`;
             return this.response;
@@ -61,15 +61,21 @@ export class ChatbotMessages {
                 userId: this.client.userId,
             });
             this.products = products;
-            this.productsList = (Object.values(this.products)
+            this.productsListMessage = (Object.values(this.products)
                 .map((item: any, index: number) => `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`)
                 .join('\n') ||
                 `Erro ao buscar produtos: limit ${limit} e offset ${offset}`
             );
-            return this.productsList;
+            return this.productsListMessage;
         } catch (error) {
             return error;
         }
+    }
+    setResponse(response: string) {
+        this.response = response;
+    }
+    getResponse(): string {
+        return this.response || `Erro ao buscar resposta`;
     }
 }
 

@@ -1,5 +1,5 @@
 import { storage } from '../storage';
-//import { getMessageDatabase } from '../../database/local_database';
+//import { getMessageStoredDatabase } from '../../database/local_database';
 import { getOneCachedItem } from '../cache/index';
 import { ResponseStage } from './0';
 import { ChatbotClient } from '../../entities/chatbot';
@@ -7,7 +7,7 @@ import { ChatbotClient } from '../../entities/chatbot';
 export const stageTwo = {
   async exec({ client }: ChatbotClient): Promise<ResponseStage> {
 
-    //allMessages = allMessages || await getMessageDatabase('stage_0');
+    //allMessages = allMessages || await getMessageStoredDatabase('stage_0');
     const response: string = await (async () => {
 
       try {
@@ -30,7 +30,7 @@ export const stageTwo = {
           `Preço: R$${itemPrice}\n` +
           '——————————\n\n'
 
-        //getMessageDatabase('attendant_stage')?.position_1;
+        //getMessageStoredDatabase('attendant_stage')?.position_1;
 
       } catch (error) {
 
