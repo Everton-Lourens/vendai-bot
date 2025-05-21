@@ -17,9 +17,7 @@ export class ChatbotMessages {
         this.products = [];
         this.productsListMessage = '';
     }
-    async getMessageStored({ stage, position }: { stage: number, position: number }): Promise<any> {
-        if (stage <= 0 || stage >= 4 || position <= 0 || position >= 4)
-            throw new Error("Valores inválidos: stage e position");
+    async getMessageStored(): Promise<any> {
         try {
             if (this.messages.length > 0)
                 return this.messages;
@@ -68,15 +66,19 @@ export class ChatbotMessages {
     setResponse(response: string) {
         this.response = response;
     }
-    async getResponse({ stage = null, position = null }: { stage: number, position: number }) {
-        if (stage != null && position != null) {
+    async getResponse(stage?: number, position?: number): Promise<string> {
+        if (!!stage && !!position) {
+            if (stage <= 0 || stage >= 4 || position <= 0 || position >= 4)
+                throw new Error("Valores inválidos: stage e position");
+
             if (!this.messages.length) {
-                this.messages = await this.getMessageStored({ stage, position });
+                this.messages = await this.getMessageStored();
             }
             this.response = (
                 this.messages.find((message) => message.stage === stage && message.position === position)?.text ||
                 `Erro ao buscar mensagem: stage ${stage} e position ${position}`
             );
+            return this.response;
         }
         return this.response || `Erro ao buscar resposta`;
     }

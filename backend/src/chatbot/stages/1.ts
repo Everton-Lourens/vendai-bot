@@ -11,16 +11,17 @@ export const stageOne = {
 
     if (client.message === '1') {
       storage[client.clientId].stage = 2;
-      const responseMessage = await chatbotMessages.getMessageStored({ stage: 1, position: 1 });
-      const listProductMessage = await chatbotMessages.getListProductMessage({ limit: 1, offset: 1 });
+      const responseMessage = await chatbotMessages.getResponse(1, 1);
+      const listProductMessage = await chatbotMessages.getListProductMessage();
+
       chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
     } else {
       storage[client.clientId].stage = 3;
       storage[client.clientId].humanAttendant = true;
-      const awaitAttendantMessage = await chatbotMessages.getMessageStored({ stage: 3, position: 1 });
+      const awaitAttendantMessage = await chatbotMessages.getResponse(3, 1);
       chatbotMessages.setResponse(awaitAttendantMessage);
     }
-    const response = chatbotMessages.getResponse();
+    const response = await chatbotMessages.getResponse();
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,
@@ -29,17 +30,4 @@ export const stageOne = {
     }
     return { respondedClient };
   },
-}
-
-
-function numberEmoji(number: number) {
-  const blueEmojis = [
-    "1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"
-  ];
-
-  if (number < 0 || number > 9) {
-    return number;
-  }
-
-  return blueEmojis[number];
 }
