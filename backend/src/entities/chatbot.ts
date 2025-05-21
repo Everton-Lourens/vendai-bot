@@ -13,7 +13,7 @@ export interface Chatbot {
 
 export interface Order {
   humanAttendant: false
-  productList: string[]
+  productList: object[],
   items: []
   address: null
 }

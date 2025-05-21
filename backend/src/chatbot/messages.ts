@@ -51,6 +51,8 @@ export class ChatbotMessages {
         try {
             if (this.products.length > 0)
                 return this.products
+            if (this.client.order.productList.length > 0)
+                return this.client.order.productList
 
             const listProductsService = container.resolve(ListProductsService);
             const products = await listProductsService.execute({
