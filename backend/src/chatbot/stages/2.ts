@@ -17,7 +17,14 @@ export const stageTwo = {
       storage[client.clientId].humanAttendant = true;
       const newItem = await chatbotMessages.getProductByCode(client.message);
       storage[client.clientId].order.items.push(newItem._id);
-      chatbotMessages.setResponse(`Ótima escolha!\nVocê escolheu o item (${newItem.name}) no valor de (R$${newItem.value},00).`);
+      chatbotMessages.setResponse(
+        'Ótima escolha!' +
+        '\n' +
+        '——————————\n' +
+        `Item: ${newItem.name}\n` +
+        `Preço: R$${newItem.value},00\n` +
+        '——————————\n\n'
+      );
     }
 
     const response = await chatbotMessages.getResponse();
@@ -28,13 +35,5 @@ export const stageTwo = {
       response,
     }
     return { respondedClient };
-    /*
-    return 'Ótima escolha!' + '\n' +
-      '——————————\n' +
-      `Item: ${itemName}\n` +
-      `Descrição: ${itemDescription}\n` +
-      `Preço: R$${itemPrice}\n` +
-      '——————————\n\n'
-      */
   },
 }
