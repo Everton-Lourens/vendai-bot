@@ -44,12 +44,11 @@ app.get('/teste', async (req: any, res: any) => {
       client: {
         userId: "682a0547e82c591ac3a97d64",
         clientId: "f2b9e012-c3e5-4c5a-91d3-25c8990eea4a",
-        stage: 0,
-        message: "Olá",
+        stage: 2,
+        message: "1",
         response: '',
         order: {
           humanAttendant: false,
-          productList: [],
           items: [],
           address: null
         }

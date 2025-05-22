@@ -36,6 +36,10 @@ export interface IProductsRepository {
   delete: (idProduct: string) => Promise<void>
   findByName: (name: string) => Promise<Product>
   findById: (productId: string | Types.ObjectId) => Promise<Product>
+  findByCode: ({
+    userId,
+    code
+  }: { userId: string; code: string }) => Promise<Product>
   update: (updateParams: UpdateParams) => Promise<void>
   getEntries: (userId: string) => Promise<number>
 }

@@ -42,7 +42,6 @@ export const getStage = async ({ client }: ChatbotClient): Promise<number> => {
     message: client.message,
     order: {
       humanAttendant: false,
-      productList: [],
       items: [],
       address: null,
     },

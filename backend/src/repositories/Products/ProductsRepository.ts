@@ -61,6 +61,10 @@ export class ProductsRepository implements IProductsRepository {
     return await ProductModel.findOne({ _id: productId }).lean()
   }
 
+  async findByCode({ userId, code }: { userId: string; code: string; }): Promise<Product> {
+    return await ProductModel.findOne({ code, user: userId }).lean()
+  }
+
   async getEntries(userId: string): Promise<number> {
     return ProductModel.countDocuments({ user: userId }).lean()
   }

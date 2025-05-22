@@ -9,18 +9,15 @@ export const stageTwo = {
   async exec({ client }: ChatbotClient): Promise<ResponseStage> {
     const chatbotMessages = new ChatbotMessages({ client });
 
-    const arrayProductList = storage[client.clientId].order.productList;
-    console.log(storage[client.clientId]);
-
-    const index = parseInt(client.message, 10) - 1;
-    if (isNaN(index) || index < 0 || index >= arrayProductList?.length) {
+    const index = parseInt(client.message, 10);
+    if (isNaN(index) || index < 0) {
       chatbotMessages.setResponse('Digite uma opção válida, por favor. 🙋‍♀️');
     } else {
       storage[client.clientId].stage = 3;
       storage[client.clientId].humanAttendant = true;
-      const newItem = arrayProductList[index];
-      storage[client.clientId].order.items.push(newItem);
-      chatbotMessages.setResponse(`Ótima escolha!\nVocê escolheu o item ${newItem.name}.`);
+      const newItem = await chatbotMessages.getProductByCode(client.message);
+      storage[client.clientId].order.items.push(newItem._id);
+      chatbotMessages.setResponse(`Ótima escolha!\nVocê escolheu o item (${newItem.name}) no valor de (R$${newItem.value},00).`);
     }
 
     const response = await chatbotMessages.getResponse();

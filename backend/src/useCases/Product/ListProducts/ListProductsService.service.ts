@@ -5,6 +5,12 @@ import { Product } from '../../../entities/product'
 interface IRequest {
   userId: string
   searchString: string
+  code?: string
+}
+
+interface IRequestByCode {
+  userId: string
+  code: string
 }
 
 @injectable()
@@ -22,7 +28,14 @@ export class ListProductsService {
       searchString,
       onlyDefault: false,
     })
-
     return products
+  }
+  async executeByCode({ userId, code }: IRequestByCode): Promise<Product | null> {
+    const product = await this.productsRepository.findByCode({
+      userId,
+      code,
+    });
+
+    return product;
   }
 }

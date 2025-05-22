@@ -10,8 +10,6 @@ export const stageOne = {
     const chatbotMessages = new ChatbotMessages({ client });
 
     if (client.message === '1') {
-      const arrayProductList = await chatbotMessages.getArrayProduct();
-      storage[client.clientId].order.productList = arrayProductList;
       storage[client.clientId].stage = 2;
       const responseMessage = await chatbotMessages.getResponse(1, 1);
       const listProductMessage = await chatbotMessages.getListProductMessage();

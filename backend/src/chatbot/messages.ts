@@ -6,29 +6,32 @@ import { ListProductsService } from "../useCases/Product/ListProducts/ListProduc
 
 export class ChatbotMessages {
     public client: NewClient
-    public messages: any;
+    public arrayMessages: any;
     public response: string;
-    public products: any;
+    public arrayProducts: any[];
+    public product: any;
     public productsListMessage: string;
     constructor({ client }: ChatbotClient) {
         this.client = client;
-        this.messages = [];
+        this.arrayMessages = [];
         this.response = '';
-        this.products = [];
+        this.arrayProducts = [];
+        this.product = {};
         this.productsListMessage = '';
     }
     async getMessageStored(): Promise<any> {
         try {
-            if (this.messages.length > 0)
-                return this.messages;
+            if (this.arrayMessages.length > 0)
+                return this.arrayMessages;
 
             const listMessageService = container.resolve(ListMessageService);
-            this.messages = await listMessageService.execute({
+            this.arrayMessages = await listMessageService.execute({
                 searchString: "",
                 userId: this.client.userId,
             });
-            return this.messages;
+            return this.arrayMessages;
         } catch (error) {
+            console.log(error.message);
             return error.message;
         }
     }
@@ -37,31 +40,58 @@ export class ChatbotMessages {
             if (this.productsListMessage.length > 0)
                 return this.productsListMessage
 
-            this.products = await this.getArrayProduct()
-            this.productsListMessage = this.products.map((item: any, index: number) =>
+            this.arrayProducts = await this.getArrayProduct()
+            this.productsListMessage = this.arrayProducts.map((item: any, index: number) =>
                 `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`
             ).join('\n') ||
                 `Erro ao buscar mensagem da lista de produtos`;
             return this.productsListMessage;
         } catch (error) {
+            console.log(error.message);
             return error.message;
         }
     }
     async getArrayProduct(): Promise<any> {
         try {
-            if (this.products.length > 0)
-                return this.products
-            if (this.client.order.productList.length > 0)
-                return this.client.order.productList
+            if (this.arrayProducts.length > 0)
+                return this.arrayProducts
 
             const listProductsService = container.resolve(ListProductsService);
             const products = await listProductsService.execute({
                 searchString: "",
                 userId: this.client.userId,
             });
-            this.products = products;
-            return this.products;
+            this.arrayProducts = products;
+            return this.arrayProducts;
         } catch (error) {
+            console.log(error.message);
+            return error.message;
+        }
+    }
+
+    async getProductByCode(code: string): Promise<any> {
+        if (this.product?.code === code)
+            return this.product;
+        if (this.arrayProducts.length > 0) {
+            const product = this.arrayProducts.find((item: any) => item.code === code);
+            this.product = product;
+            return this.product;
+        }
+        if (this.client.order.items.length > 0) {
+            const product = this.client.order.items.find((item: any) => item.code === code);
+            this.product = product;
+            return this.product;
+        }
+        try {
+            const listProductsService = container.resolve(ListProductsService);
+            const product = await listProductsService.executeByCode({
+                code,
+                userId: this.client.userId,
+            });
+            this.product = product;
+            return this.product;
+        } catch (error) {
+            console.log(error.message);
             return error.message;
         }
     }
@@ -73,11 +103,11 @@ export class ChatbotMessages {
             if (stage <= 0 || stage >= 4 || position <= 0 || position >= 4)
                 throw new Error("Valores inválidos: stage e position");
 
-            if (!this.messages.length) {
-                this.messages = await this.getMessageStored();
+            if (!this.arrayMessages.length) {
+                this.arrayMessages = await this.getMessageStored();
             }
             this.response = (
-                this.messages.find((message) => message.stage === stage && message.position === position)?.text ||
+                this.arrayMessages.find((message) => message.stage === stage && message.position === position)?.text ||
                 `Erro ao buscar mensagem: stage ${stage} e position ${position}`
             );
             return this.response;
