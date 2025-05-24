@@ -1,0 +1,111 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    height: 100vh;
+    background-color: #f4f4f9;
+}
+
+.chat-box {
+    flex: 1;
+    padding: 20px;
+    overflow-y: scroll;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    max-width: 60%;
+    word-wrap: break-word;
+}
+
+.input-container {
+    display: flex;
+    padding: 10px;
+    background-color: rgb(219, 219, 219);
+    border-top: 1px solid #ddd;
+    width: 70%;
+    border-radius: 15px;
+    margin: 0 auto;
+    margin-bottom: 2%;
+}
+
+.user {
+    background-color: #e0e0e0;
+    align-self: flex-end;
+    margin-left: auto;
+    max-width: 30%;
+    margin-right: 10%;
+    background-color: #4f91ee;
+    font-weight: bold;
+}
+
+.bot {
+    background-color: #00a080;
+    color: white;
+    align-self: flex-start;
+    max-width: 25%; /* Para telas grandes */
+    margin-left: 10%;
+    font-weight: bold;
+}
+
+/* Telas menores (exemplo: 1024px) */
+@media (max-width: 1024px) {
+    .bot {
+        max-width: 35%;
+    }
+}
+
+/* Telas ainda menores (exemplo: 768px) */
+@media (max-width: 768px) {
+    .bot {
+        max-width: 60%;
+    }
+}
+
+/* Celulares pequenos (exemplo: 480px) */
+@media (max-width: 480px) {
+    .bot {
+        max-width: 80%;
+    }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 320px) {
+    .bot {
+        max-width: 90%;
+    }
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px 15px;
+    background-color: #3a8dff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover {
+    background-color: #2a7aff;
+}

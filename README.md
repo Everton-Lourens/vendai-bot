@@ -1,7 +1,9 @@
-﻿﻿﻿﻿ChatBot API para Autoatendimento:
-Backend flexível para integração com qualquer plataforma.
+﻿﻿O Chatbot no Backend é flexível para integração com qualquer plataforma (Whatsapp, Telegram etc).
 
-# ChatBot API
+# Vendaí Bot
+
+🚧 **Em construção** 🚧  
+Este projeto está sendo ativamente desenvolvido. Algumas funcionalidades podem mudar ou ainda não estar disponíveis.
 
 # Tópicos do README
 - *Tecnologias Utilizadas*
@@ -54,8 +56,8 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 ## Como utilizar com Docker
 
 ```bash
-git clone https://github.com/Everton-Lourens/chatbot-api.git
-cd chatbot-api
+git clone https://github.com/Everton-Lourens/vendai-bot.git
+cd vendai-bot
 docker-compose up --build
 ```
 
@@ -63,8 +65,8 @@ docker-compose up --build
 - **Descrição**: Instale as dependências "`npm run setup`" e utilize "`npm run start`" para iniciar o Front-End *(localhost:3000)* e o Back-End *(localhost:9999)* ao mesmo tempo com a lib de desenvolvimento "`concurrently`".
 
 ```bash
-git clone https://github.com/Everton-Lourens/chatbot-api.git
-cd chatbot-api
+git clone https://github.com/Everton-Lourens/vendai-bot.git
+cd vendai-bot
 npm run setup
 npm run start
 ```
