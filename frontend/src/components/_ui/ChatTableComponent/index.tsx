@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import style from './ChatTableComponent.module.scss'
 import { Column } from './interfaces'
 import { Skeleton } from '@mui/material'
@@ -17,6 +18,15 @@ export function ChatTableComponent({
   emptyText,
   heightSkeleton = 30,
 }: Props) {
+  const handleSendMessage = (message: string) => {
+    const newMessage = {
+      _id: (rows.length + 1).toString(),
+      clientMessage: message,
+    }
+    rows.push([...rows, newMessage])
+    console.log(message)
+  }
+
   return (
     <table style={loading ? { opacity: 0.5 } : {}} className={style.table}>
       <thead>
@@ -49,7 +59,7 @@ export function ChatTableComponent({
                       {column?.valueFormatter?.({
                         value: row[column.field],
                         data: row,
-                      })}
+                      }) && row[column.field]}
                     </td>
                   )
                 })}
@@ -87,6 +97,26 @@ export function ChatTableComponent({
               </tr>
             )
           })}
+
+        {!loading && (
+          <div className={style.chatInputContainer}>
+            <input
+              type="text"
+              className={style.chatInput}
+              placeholder="Digite uma mensagem..."
+              autoFocus
+            />
+            <button
+              className={style.sendButton}
+              onClick={(e) => {
+                handleSendMessage(
+                  console.log((e.currentTarget.parentNode?.firstChild as HTMLInputElement).value))
+              }}
+            >
+              Enviar
+            </button>
+          </div>
+        )}
       </tbody>
     </table>
   )

@@ -1,6 +1,6 @@
 import { HeaderPage } from '../../_ui/HeaderPage'
 import { ModalCreateNewMessage } from './ModalCreateNewMessage'
-import { TableComponent } from '../../_ui/TableComponent'
+import { ChatTableComponent } from '../../_ui/ChatTableComponent'
 import { FilterByName } from '../../_ui/FilterByName'
 import style from './Chat.module.scss'
 import { ListMobile } from '../../_ui/ListMobile'
@@ -28,16 +28,26 @@ export function Chat() {
 
   const columns = [
     {
-      headerName: "Converse com o Chatbot",
-      field: "chatMessage",
-      valueFormatter: ({ value }) => `(${'chatMessage'}): ${value}`,
+      headerName: "Chatbot",
+      field: "chatbotMessage",
+      valueFormatter: ({ value }) => `(${'Chatbot'}): ${value}`,
+      cellClass: () => "light-blue"
+    },
+    {
+      headerName: "Cliente",
+      field: "clientMessage",
+      valueFormatter: ({ value }) => `(${'Você'}): ${value}`,
       cellClass: () => "light-blue"
     },
   ];
   const messages = [
     {
       _id: "1",
-      chatMessage: "Olá! Como posso te ajudar?"
+      clientMessage: "Olá!"
+    },
+    {
+      _id: "2",
+      chatbotMessage: "Olá! Como posso te ajudar?"
     },
   ];
 
@@ -47,13 +57,13 @@ export function Chat() {
         onClickFunction={() => {
           setFormModalOpened(true)
         }}
-        buttonText="Criar Mensagem"
+        buttonText="Ajuda"
         disabled={true}
         InputFilter={<FilterByName />}
       />
 
       <div className={style.viewDesktop}>
-        <TableComponent
+        <ChatTableComponent
           loading={loadingMessages}
           columns={columns}
           rows={messages}
