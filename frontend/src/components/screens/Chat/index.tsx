@@ -10,6 +10,8 @@ import { useEditMessage } from './hooks/useEditMessage'
 
 export function Chat() {
   const { loadingMessages } = useMessageList({ otherFilters: null })
+  //const { loadingMessages, messages } = useMessageList({ otherFilters: null })
+
   const {
     formModalOpened,
     messageDataToEdit,
@@ -53,15 +55,6 @@ export function Chat() {
 
   return (
     <>
-      <HeaderPage
-        onClickFunction={() => {
-          setFormModalOpened(true)
-        }}
-        buttonText="Ajuda"
-        disabled={true}
-        InputFilter={<FilterByName />}
-      />
-
       <div className={style.viewDesktop}>
         <ChatTableComponent
           loading={loadingMessages}

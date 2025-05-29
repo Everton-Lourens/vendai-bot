@@ -18,34 +18,52 @@ export function ChatTableComponent({
   emptyText,
   heightSkeleton = 30,
 }: Props) {
-  const handleSendMessage = (message: string) => {
+  const [message, setMessage] = useState('')
+
+  const handleChatbotSendMessage = (message: string) => {
+    if (!message || message.trim() === '') {
+      return false
+    }
+    // HOOK PARA O CHATBOT
     const newMessage = {
       _id: (rows.length + 1).toString(),
-      clientMessage: message,
+      chatbotMessage: message,
     }
-    rows.push([...rows, newMessage])
-    console.log(message)
+    rows.push(newMessage)
+    return true
   }
+  const handleClientSendMessage = (message: string) => {
+    if (!message || message.trim() === '') {
+      return false
+    }
+    const response = handleChatbotSendMessage(message)
+    if (response) {
+      const newMessage = {
+        _id: (rows.length + 1).toString(),
+        clientMessage: message,
+      }
+      rows.push(newMessage)
+    }
+  }
+
+
 
   return (
     <table style={loading ? { opacity: 0.5 } : {}} className={style.table}>
-      <thead>
-        <tr>
-          {columns?.map((column) => {
-            return (
-              <th key={column.field}>
-                <p>{column?.headerName || ''}</p>
-              </th>
-            )
-          })}
-        </tr>
-      </thead>
-      <tbody>
+
+      <tbody className={style.chat}>
         {rows.length > 0 &&
           !loading &&
           rows?.map((row) => {
             return (
-              <tr key={row._id}>
+              <tr
+                key={row._id}
+                className={
+                  row['clientMessage']
+                    ? style.bubbleClient
+                    : style.bubbleChatbot
+                }
+              >
                 {columns.map((column) => {
                   return (
                     <td
@@ -66,7 +84,6 @@ export function ChatTableComponent({
               </tr>
             )
           })}
-
         {rows.length === 0 && !loading && (
           <tr className={style.emptyRow}>
             <td className={style.emptyCell} colSpan={columns.length}>
@@ -97,7 +114,6 @@ export function ChatTableComponent({
               </tr>
             )
           })}
-
         {!loading && (
           <div className={style.chatInputContainer}>
             <input
@@ -105,12 +121,20 @@ export function ChatTableComponent({
               className={style.chatInput}
               placeholder="Digite uma mensagem..."
               autoFocus
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleClientSendMessage(message)
+                  setMessage('')
+                }
+              }}
             />
             <button
               className={style.sendButton}
-              onClick={(e) => {
-                handleSendMessage(
-                  console.log((e.currentTarget.parentNode?.firstChild as HTMLInputElement).value))
+              onClick={() => {
+                handleClientSendMessage(message)
+                setMessage('')
               }}
             >
               Enviar
