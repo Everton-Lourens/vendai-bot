@@ -6,23 +6,28 @@ import { DeleteMessageService } from '../useCases/Message/DeleteMessage/DeleteMe
 import { ListMessageService } from '../useCases/Message/ListMessages/ListMessageService.service'
 import { ListDefaultMessageService } from '../useCases/Message/ListDefaultMessages/ListDefaultMessagesService.service'
 import { chatbot } from '../chatbot'
+import { ChatbotClient } from '../entities/chatbot'
+import { logger } from '../helpers/logger'
 
 export class MessageController {
   async sendMessageToChatbot(req: Request, res: Response): Promise<Response> {
-    const { userId, clientId, stage, message } = req.body
+    //const { userId, clientId, stage, message } = req.body
+    const { client } = req?.body?.params
 
-    const bodyClient = {
-      userId,
-      clientId,
-      stage,
-      message,
-    };
-
-    const bodyRequestTest = {
-      userId: "682a0547e82c591ac3a97d64",
-      clientId: "f2b9e012-c3e5-4c5a-91d3-25c8990eea4a",
-      stage: 0,
-      message: "Olá"
+    const bodyRequestTest: ChatbotClient = {
+      client: {
+        userId: client?.userId || "682a0547e82c591ac3a97d64",
+        clientId: client?.clientId || "f2b9e012-c3e5-4c5a-91d3-25c8990eea4a",
+        stage: client?.stage || 0,
+        message: client?.message || 'Olá, tudo bem?',
+        //userName: client?.userName || 'Usuário Teste',
+        response: '',
+        order: {
+          humanAttendant: false,
+          items: [],
+          address: null
+        }
+      }
     };
 
     try {
@@ -36,6 +41,13 @@ export class MessageController {
     }
   }
   async listMessages(req: Request, res: Response): Promise<Response> {
+    return res.status(200).json({
+      success: true,
+      message: 'Usuário autenticado com sucesso',
+      user: req.user,
+      params: req?.params,
+      headers: req?.headers,
+    })
     const { searchString } = req.query as any
     const { userId } = req.user
 

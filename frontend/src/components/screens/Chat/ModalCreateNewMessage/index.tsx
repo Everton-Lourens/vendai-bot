@@ -5,7 +5,7 @@ import { Checkbox, FormControlLabel, Popover, Typography } from '@mui/material'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { IMessage } from '../../../../models/interfaces/IMessage'
-import { useFormMessage } from '../hooks/useFormMessage'
+import { useFormChatbot } from '../hooks/useFormChatbot'
 
 interface Props {
   messageDataToEdit: IMessage | null
@@ -29,7 +29,7 @@ export function ModalCreateNewMessage({
     isDefault,
     anchorEl,
     setAnchorEl,
-  } = useFormMessage({
+  } = useFormChatbot({
     handleClose,
     messageDataToEdit,
   })

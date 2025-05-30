@@ -29,7 +29,7 @@ export const stages = [
 export const getStage = async ({ client }: ChatbotClient): Promise<number> => {
   if (!client || !client.clientId || !client.userId) throw new Error('Client not found');
 
-  if (!!client.stage) {
+  if (client.stage > 0) {
     storage[client.clientId] = {
       ...client
     };

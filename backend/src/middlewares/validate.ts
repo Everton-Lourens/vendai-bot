@@ -5,50 +5,36 @@ import { logger } from '../helpers/logger';
 import dotenv from 'dotenv';
 dotenv.config({ path: '.env.development' });
 
-export const validateBody = (req: Request, _res: Response, next: NextFunction): void => {
+export const validateBody = (req: Request, _res: Response, next: NextFunction): boolean => {
     try {
-        const { client } = req?.body;
+        const { client } = req?.body?.params
 
-        const requiredFields = ["userId", "clientId", "stage", "message", "response", "order"];
+        const requiredFields = ["userId", "message"];
         const missingFields = requiredFields.filter(field => !String(client[field]));
 
-        if (missingFields.length > 0) {
-            next(new Error('Dados inválidos no corpo da requisição.'));
-            return;
-        }
-        const { userId, clientId, stage, message } = client;
+        if (missingFields.length > 0)
+            return false;
 
-        if (!userId && typeof userId !== 'string') {
-            next(new Error('Dados inválidos no corpo da requisição.'));
-            return;
-        }
+        const { userId, message } = client;
 
-        if (!clientId && typeof clientId !== 'string') {
-            next(new Error('Dados inválidos no corpo da requisição.'));
-            return;
-        }
+        if (!userId && typeof userId !== 'string')
+            return false;
+        if (typeof message !== 'string' || message.trim() === '')
+            return false;
 
-        if (typeof stage !== 'number' || stage < 0) {
-            next(new Error('Dados inválidos no corpo da requisição.'));
-            return;
-        }
-
-        if (typeof message !== 'string' || message.trim() === '') {
-            next(new Error('Dados inválidos no corpo da requisição.'));
-            return;
-        }
-
-        next();
+        return true
     } catch (error) {
         logger.error('Erro de validação');
-        logger.error(error);
-        next(error);
+        logger.error(error.message);
+        return false;
     }
 };
-
 export const validationFilter = (req: Request, res: Response, next: NextFunction): void => {
     try {
-        validateBody(req, res, next);
+        if (validateBody(req, res, next))
+            next();
+        else
+            res.status(422).json({ message: 'Dados inválidos no corpo da requisição.' });
     } catch (error) {
         logger.error(error);
         res.status(500).json({ message: 'Erro interno no servidor. Tente novamente mais tarde.' });

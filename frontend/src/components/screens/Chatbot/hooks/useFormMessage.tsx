@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form'
 import { AlertContext } from '../../../../contexts/alertContext'
 import { IMessage } from '../../../../models/interfaces/IMessage'
 import { messageService } from '../../../../services/messageService'
+import { chatbotService } from '../../../../services/chatbotService'
 import { httpClientProvider } from '../../../../providers/HttpClientProvider'
 import { ALERT_NOTIFY_TYPE } from '../../../../models/enums/AlertNotifyType'
 
@@ -37,37 +38,6 @@ export function useFormMessage({ handleClose, messageDataToEdit }: Props) {
 
   const router = useRouter()
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
-
-  function onResposeChatbot(message: INewMessage) {
-    messageService
-      .create({ ...newMessage }, httpClientProvider)
-      .then(() => {
-        router.push({
-          pathname: router.route,
-          query: router.query,
-        })
-
-        reset()
-
-        handleClose()
-
-        setAlertNotifyConfigs({
-          ...alertNotifyConfigs,
-          open: true,
-          type: ALERT_NOTIFY_TYPE.SUCCESS,
-          text: 'Mensagem cadastrada com sucesso',
-        })
-      })
-      .catch((err) => {
-        setAlertNotifyConfigs({
-          ...alertNotifyConfigs,
-          open: true,
-          type: ALERT_NOTIFY_TYPE.ERROR,
-          text: `Erro ao tentar cadastrar mensagem - ${err?.message}`,
-        })
-      })
-  }
-
   function onCreateNewMessage(newMessage: INewMessage) {
     messageService
       .create({ ...newMessage }, httpClientProvider)

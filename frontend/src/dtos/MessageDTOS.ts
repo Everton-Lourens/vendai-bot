@@ -1,3 +1,7 @@
+export interface SendMessageToBot {
+  message: string
+}
+
 export interface GetAllMessagesDTO {
   filters: any
 }

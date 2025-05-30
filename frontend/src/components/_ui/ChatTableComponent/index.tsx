@@ -7,6 +7,7 @@ interface Props {
   columns: Column[]
   rows: any[]
   loading: boolean
+  chatbot: (message: string) => void
   emptyText?: string
   heightSkeleton?: number
 }
@@ -15,42 +16,29 @@ export function ChatTableComponent({
   columns,
   rows,
   loading,
+  chatbot,
   emptyText,
   heightSkeleton = 30,
 }: Props) {
   const [message, setMessage] = useState('')
-
-  const handleChatbotSendMessage = (message: string) => {
+  const communicateWithBot = async (message: string) => {
     if (!message || message.trim() === '') {
       return false
     }
-    // HOOK PARA O CHATBOT
-    const newMessage = {
+    const newMessageClient = {
       _id: (rows.length + 1).toString(),
-      chatbotMessage: message,
+      clientMessage: message,
     }
-    rows.push(newMessage)
-    return true
+    rows.push(newMessageClient)
+    const response = chatbot(message)
+    const newMessageChatbot = {
+      _id: (rows.length + 1).toString(),
+      chatbotMessage: response,
+    }
+    rows.push(newMessageChatbot)
   }
-  const handleClientSendMessage = (message: string) => {
-    if (!message || message.trim() === '') {
-      return false
-    }
-    const response = handleChatbotSendMessage(message)
-    if (response) {
-      const newMessage = {
-        _id: (rows.length + 1).toString(),
-        clientMessage: message,
-      }
-      rows.push(newMessage)
-    }
-  }
-
-
-
   return (
     <table style={loading ? { opacity: 0.5 } : {}} className={style.table}>
-
       <tbody className={style.chat}>
         {rows.length > 0 &&
           !loading &&
@@ -125,7 +113,7 @@ export function ChatTableComponent({
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  handleClientSendMessage(message)
+                  communicateWithBot(message)
                   setMessage('')
                 }
               }}
@@ -133,7 +121,7 @@ export function ChatTableComponent({
             <button
               className={style.sendButton}
               onClick={() => {
-                handleClientSendMessage(message)
+                communicateWithBot(message)
                 setMessage('')
               }}
             >

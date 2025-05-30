@@ -1,14 +1,14 @@
-import { HeaderPage } from '../../_ui/HeaderPage'
 import { ModalCreateNewMessage } from './ModalCreateNewMessage'
 import { ChatTableComponent } from '../../_ui/ChatTableComponent'
-import { FilterByName } from '../../_ui/FilterByName'
 import style from './Chat.module.scss'
 import { ListMobile } from '../../_ui/ListMobile'
 import { useFieldsMobile } from './hooks/useFieldsMobile'
 import { useMessageList } from '../../../hooks/useMessageList'
 import { useEditMessage } from './hooks/useEditMessage'
+import { useFormChatbot } from './hooks/useFormChatbot'
 
 export function Chat() {
+  const { communicateWithBot } = useFormChatbot()
   const { loadingMessages } = useMessageList({ otherFilters: null })
   //const { loadingMessages, messages } = useMessageList({ otherFilters: null })
 
@@ -58,6 +58,7 @@ export function Chat() {
       <div className={style.viewDesktop}>
         <ChatTableComponent
           loading={loadingMessages}
+          chatbot={communicateWithBot}
           columns={columns}
           rows={messages}
           emptyText="Nenhuma mensagem cadastrada"

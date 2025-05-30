@@ -38,35 +38,6 @@ app.get('/', async (req: any, res: any) => {
   }
 })
 
-app.get('/teste', async (req: any, res: any) => {
-  try {
-    const bodyRequest: ChatbotClient = {
-      client: {
-        userId: "682a0547e82c591ac3a97d64",
-        clientId: "f2b9e012-c3e5-4c5a-91d3-25c8990eea4a",
-        stage: 2,
-        message: "1",
-        response: '',
-        order: {
-          humanAttendant: false,
-          items: [],
-          address: null
-        }
-      }
-    };
-
-    chatbot(bodyRequest).then((response) => {
-      res.status(201).json({
-        data: response
-      }).end();
-    }).catch(() => {
-      res.status(422).end();
-    });
-  } catch (err) {
-    res.status(500).send('<h1>Falha ao iniciar o servidor</h1>', err)
-  }
-})
-
 app.use(errorHandler);
 
 const numForks = Number(process.env.CLUSTER_WORKERS) || 1;
