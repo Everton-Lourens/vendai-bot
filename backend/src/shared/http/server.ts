@@ -6,7 +6,7 @@ import '../containers'
 import dbConnection from '../../database/mongo/mongoConfigs'
 import cors from 'cors'
 import cluster from 'cluster';
-import { errorHandler, validateBody } from '../../middlewares/middleware';
+import { errorHandler, validateBody } from '../../middlewares/validate';
 import { logger } from '../../helpers/logger'
 import { migrateIfNeeded } from '../../database/postgres/connection'
 import { chatbot } from '../../chatbot'
