@@ -9,7 +9,7 @@ export const validateBody = (req: Request, _res: Response, next: NextFunction): 
     try {
         const { client } = req?.body;
 
-        const requiredFields = ['message', 'stage', 'userId', 'clientId'];
+        const requiredFields = ["userId", "clientId", "stage", "message", "response", "order"];
         const missingFields = requiredFields.filter(field => !String(client[field]));
 
         if (missingFields.length > 0) {
