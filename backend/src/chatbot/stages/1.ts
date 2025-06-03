@@ -1,29 +1,16 @@
+import { container } from 'tsyringe';
 import { storage } from '../storage';
-//import { getMessageStoredDatabase, getAllItemsDatabase } from '../../database/local_database';
-import { getAllCachedItems } from '../cache/index';
+import { ListMessageService } from '../../useCases/Message/ListMessages/ListMessageService.service';
 import { ChatbotClient } from '../../entities/chatbot';
 import { ChatbotMessages } from '../messages';
 
-export const stageOne = {
+export const initialStage = {
   async exec({ client }: { client: ChatbotClient }): Promise<{ respondedClient: ChatbotClient }> {
     const chatbotMessages = new ChatbotMessages({ client });
+    const response = await chatbotMessages.getResponse(1, 1);
 
-    if (client.message === '1') {
-      storage[client.clientId].stage = 2;
-      const responseMessage = await chatbotMessages.getResponse(1, 1);
-      console.log('@@@@@@@@@@@@');
-      console.log(responseMessage);
-      console.log('@@@@@@@@@@@@');
-      const listProductMessage = await chatbotMessages.getListProductMessage();
-      chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
-    } else {
-      storage[client.clientId].stage = 3;
-      storage[client.clientId].humanAttendant = true;
-      const awaitAttendantMessage = await chatbotMessages.getResponse(3, 1);
-      chatbotMessages.setResponse(awaitAttendantMessage);
-    }
-    const response = await chatbotMessages.getResponse();
-        console.log(response);
+    storage[client.clientId].stage = 1;
+
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,

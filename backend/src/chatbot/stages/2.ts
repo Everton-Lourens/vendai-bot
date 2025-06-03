@@ -1,6 +1,6 @@
 import { storage } from '../storage';
-//import { getResponseDatabase } from '../../database/local_database';
-import { getOneCachedItem } from '../cache/index';
+//import { getMessageStoredDatabase, getAllItemsDatabase } from '../../database/local_database';
+import { getAllCachedItems } from '../cache/index';
 import { ChatbotClient } from '../../entities/chatbot';
 import { ChatbotMessages } from '../messages';
 
@@ -8,25 +8,22 @@ export const stageTwo = {
   async exec({ client }: { client: ChatbotClient }): Promise<{ respondedClient: ChatbotClient }> {
     const chatbotMessages = new ChatbotMessages({ client });
 
-    const index = parseInt(client.message, 10);
-    if (isNaN(index) || index < 0) {
-      chatbotMessages.setResponse('Digite uma opção válida, por favor. 🙋‍♀️');
+    if (client.message === '1') {
+      storage[client.clientId].stage = 2;
+      const responseMessage = await chatbotMessages.getResponse(2, 1);
+      console.log('@@@@@@@@@@@@');
+      console.log(responseMessage);
+      console.log('@@@@@@@@@@@@');
+      const listProductMessage = await chatbotMessages.getListProductMessage();
+      chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
     } else {
       storage[client.clientId].stage = 3;
       storage[client.clientId].humanAttendant = true;
-      const newItem = await chatbotMessages.getProductByCode(client.message);
-      storage[client.clientId].order.items.push(newItem._id);
-      chatbotMessages.setResponse(
-        'Ótima escolha!' +
-        '\n' +
-        '——————————\n' +
-        `Item: ${newItem.name}\n` +
-        `Preço: R$${newItem.value},00\n` +
-        '——————————\n\n'
-      );
+      const awaitAttendantMessage = await chatbotMessages.getResponse(3, 1);
+      chatbotMessages.setResponse(awaitAttendantMessage);
     }
-
     const response = await chatbotMessages.getResponse();
+        console.log(response);
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,
