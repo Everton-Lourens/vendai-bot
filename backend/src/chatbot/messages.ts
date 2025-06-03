@@ -1,17 +1,17 @@
 import { container } from "tsyringe";
 import { ListMessageService } from "../useCases/Message/ListMessages/ListMessageService.service";
-import { Chatbot, ChatbotClient, Message, NewClient, Order } from "../entities/chatbot";
+import { Chatbot, ChatbotClient, Message, Order } from "../entities/chatbot";
 import { numberEmoji } from "../helpers/numberEmoji";
 import { ListProductsService } from "../useCases/Product/ListProducts/ListProductsService.service";
 
 export class ChatbotMessages {
-    public client: NewClient
+    public client: ChatbotClient
     public arrayMessages: any;
     public response: string;
     public arrayProducts: any[];
     public product: any;
     public productsListMessage: string;
-    constructor({ client }: ChatbotClient) {
+    constructor({ client }: { client: ChatbotClient }) {
         this.client = client;
         this.arrayMessages = [];
         this.response = '';
@@ -105,6 +105,7 @@ export class ChatbotMessages {
 
             if (!this.arrayMessages.length) {
                 this.arrayMessages = await this.getMessageStored();
+                console.log(this.arrayMessages);
             }
             this.response = (
                 this.arrayMessages.find((message) => message.stage === stage && message.position === position)?.text ||

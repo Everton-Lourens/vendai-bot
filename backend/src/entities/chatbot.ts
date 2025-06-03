@@ -17,16 +17,13 @@ export interface Order {
   address: null
 }
 
-export interface NewClient {
+export interface ChatbotClient {
   userId: string
   clientId: string
   stage: number
   message: string
   order: Order
   response: string
-}
-export interface ChatbotClient {
-  client: NewClient
 }
 
 export interface Message {

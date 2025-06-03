@@ -44,11 +44,11 @@ export function Chat() {
   const messages = [
     {
       _id: '1',
-      clientMessage: 'Olá!',
+      chatbotMessage: 'Olá! Como posso te ajudar?',
     },
     {
       _id: '2',
-      chatbotMessage: 'Olá! Como posso te ajudar?',
+      clientMessage: 'Olá! Eu gostaria de saber mais sobre os seus serviços.',
     },
   ]
 

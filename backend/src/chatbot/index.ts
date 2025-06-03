@@ -3,10 +3,8 @@ import { BodyResponse, formatApiResponse } from '../helpers/bodyResponse';
 import { stages, getStage } from './stages';
 import { ChatbotClient } from '../entities/chatbot';
 
-export const chatbot = async (data: ChatbotClient): Promise<BodyResponse> => {
+export const chatbot = async ({ client }: { client: ChatbotClient }): Promise<BodyResponse> => {
    try {
-      const { client } = data;
-
       const currentStage = await getStage({ client });
       const { respondedClient } = await stages[currentStage].stage.exec({ client });
 
@@ -15,9 +13,7 @@ export const chatbot = async (data: ChatbotClient): Promise<BodyResponse> => {
          messageCode: 'Operação realizada com sucesso',
          respondedClient,
       });
-
       return successResponse;
-
    } catch (error) {
       logger.error('Erro desconhecido ao executar o chatbot');
       logger.error(error);

@@ -11,7 +11,7 @@ import { usersService } from './usersService'
 export const chatbotService = {
   userInfo: usersService.getUserInfo(),
   sendMessageToBot(
-    { client }: ClientChatbotDTO,
+    { client }: { client: ClientChatbotDTO },
     httpClientProvider: IHttpClientProvider,
   ) {
     const params = {

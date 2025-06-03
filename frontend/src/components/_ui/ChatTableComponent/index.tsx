@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import style from './ChatTableComponent.module.scss'
 import { Column } from './interfaces'
 import { Skeleton } from '@mui/material'
@@ -8,7 +8,7 @@ interface Props {
   columns: Column[]
   rows: any[]
   loading: boolean
-  chatbot: (client: ClientChatbotDTO) => ClientChatbotDTO
+  chatbot: (client: ClientChatbotDTO) => Promise<ClientChatbotDTO>
   emptyText?: string
   heightSkeleton?: number
 }
@@ -23,31 +23,33 @@ export function ChatTableComponent({
   const [message, setMessage] = useState('')
 
   const [client, setClient] = useState<ClientChatbotDTO>(defaultClient)
+  useEffect(() => {
+    if (rows.length === 0 && !loading) {
+      const initialMessage = {
+        _id: '1',
+        chatbotMessage: 'Olá! Como posso te ajudar?',
+      }
+      rows.push(initialMessage)
+    }
+  }, [rows, loading])
+  useEffect(() => {
+    console.log('client atualizado:', client)
+  }, [client])
 
   const speakWithBot = async (message: string) => {
     if (!message || message.trim() === '') {
       return false
     }
-    console.log('Enviando mensagem para o chatbot:', message)
     const newMessageClient = {
       _id: (rows.length + 1).toString(),
       clientMessage: message,
     }
     rows.push(newMessageClient)
-    if (client?.client) {
-      setClient((prev: ClientChatbotDTO) => ({
-        ...prev,
-        client: {
-          ...prev.client!,
-          message,
-        },
-      }))
-    }
-    setClient(client)
-    const clientResponse = chatbot(client)
-    setClient(clientResponse)
-    console.log(clientResponse)
-    const response = client?.response || 'Resposta do chatbot não disponível'
+    client.message = message
+    const chatbotResponse = await chatbot(client)
+    setClient((prev) => ({ ...prev, ...chatbotResponse }))
+    const response =
+      chatbotResponse?.response || 'Resposta do chatbot não disponível'
     const newMessageChatbot = {
       _id: (rows.length + 1).toString(),
       chatbotMessage: response,

@@ -2,16 +2,18 @@ import { storage } from '../storage';
 //import { getMessageStoredDatabase, getAllItemsDatabase } from '../../database/local_database';
 import { getAllCachedItems } from '../cache/index';
 import { ChatbotClient } from '../../entities/chatbot';
-import { ResponseStage } from './0';
 import { ChatbotMessages } from '../messages';
 
 export const stageOne = {
-  async exec({ client }: ChatbotClient): Promise<ResponseStage> {
+  async exec({ client }: { client: ChatbotClient }): Promise<{ respondedClient: ChatbotClient }> {
     const chatbotMessages = new ChatbotMessages({ client });
 
     if (client.message === '1') {
       storage[client.clientId].stage = 2;
       const responseMessage = await chatbotMessages.getResponse(1, 1);
+      console.log('@@@@@@@@@@@@');
+      console.log(responseMessage);
+      console.log('@@@@@@@@@@@@');
       const listProductMessage = await chatbotMessages.getListProductMessage();
       chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
     } else {
@@ -21,6 +23,7 @@ export const stageOne = {
       chatbotMessages.setResponse(awaitAttendantMessage);
     }
     const response = await chatbotMessages.getResponse();
+        console.log(response);
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,

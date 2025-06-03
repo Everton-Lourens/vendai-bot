@@ -11,27 +11,9 @@ import { logger } from '../helpers/logger'
 
 export class MessageController {
   async sendMessageToChatbot(req: Request, res: Response): Promise<Response> {
-    //const { userId, clientId, stage, message } = req.body
-    const { client } = req?.body?.params
-
-    const bodyRequestTest: ChatbotClient = {
-      client: {
-        userId: client?.userId || "682a0547e82c591ac3a97d64",
-        clientId: client?.clientId || "f2b9e012-c3e5-4c5a-91d3-25c8990eea4a",
-        stage: client?.stage || 0,
-        message: client?.message || 'Olá, tudo bem?',
-        //userName: client?.userName || 'Usuário Teste',
-        response: '',
-        order: {
-          humanAttendant: false,
-          items: [],
-          address: null
-        }
-      }
-    };
-
+    const client: ChatbotClient = req?.body?.params
     try {
-      const responseData = await chatbot(bodyRequestTest);
+      const responseData = await chatbot({ client });
       return res.status(201).json({
         data: responseData
       });

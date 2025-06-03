@@ -6,11 +6,9 @@ import '../containers'
 import dbConnection from '../../database/mongo/mongoConfigs'
 import cors from 'cors'
 import cluster from 'cluster';
-import { errorHandler, validateBody } from '../../middlewares/validate';
+import { errorHandler } from '../../middlewares/validate';
 import { logger } from '../../helpers/logger'
 import { migrateIfNeeded } from '../../database/postgres/connection'
-import { chatbot } from '../../chatbot'
-import { ChatbotClient } from '../../entities/chatbot'
 
 const TIMEOUT = Number(process.env.REQ_TIMEOUT) || 5000;
 const PORT = process.env.NODE_ENV === 'production' ? (Number(process.env.PORT) || 8080) : 9999;

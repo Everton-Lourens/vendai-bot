@@ -7,17 +7,19 @@ dotenv.config({ path: '.env.development' });
 
 export const validateBody = (req: Request, _res: Response, next: NextFunction): boolean => {
     try {
-        const { client } = req?.body?.params
+        const client = req?.body?.params
 
-        const requiredFields = ["userId", "message"];
+        const requiredFields = ["userId", "clientId", "message"];
         const missingFields = requiredFields.filter(field => !String(client[field]));
 
         if (missingFields.length > 0)
             return false;
 
-        const { userId, message } = client;
+        const { userId, clientId, message } = client;
 
         if (!userId && typeof userId !== 'string')
+            return false;
+        if (!clientId && typeof clientId !== 'string')
             return false;
         if (typeof message !== 'string' || message.trim() === '')
             return false;

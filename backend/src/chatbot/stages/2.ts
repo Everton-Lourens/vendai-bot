@@ -1,12 +1,11 @@
 import { storage } from '../storage';
 //import { getResponseDatabase } from '../../database/local_database';
 import { getOneCachedItem } from '../cache/index';
-import { ResponseStage } from './0';
 import { ChatbotClient } from '../../entities/chatbot';
 import { ChatbotMessages } from '../messages';
 
 export const stageTwo = {
-  async exec({ client }: ChatbotClient): Promise<ResponseStage> {
+  async exec({ client }: { client: ChatbotClient }): Promise<{ respondedClient: ChatbotClient }> {
     const chatbotMessages = new ChatbotMessages({ client });
 
     const index = parseInt(client.message, 10);

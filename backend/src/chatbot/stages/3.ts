@@ -1,9 +1,8 @@
 import { ChatbotClient } from '../../entities/chatbot';
 import { storage } from '../storage';
-import { ResponseStage } from './0';
 
 export const stageThree = {
-  async exec({ client }: ChatbotClient): Promise<ResponseStage> {
+  async exec({ client }: { client: ChatbotClient }): Promise<{ respondedClient: ChatbotClient }> {
     var response = '';
     if (storage[client.clientId].humanAttendant === true)
       response = 'Você será encaminhado para um atendente. Aguarde...';

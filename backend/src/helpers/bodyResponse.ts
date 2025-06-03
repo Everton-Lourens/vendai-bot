@@ -23,14 +23,12 @@ export function formatApiResponse({
       status,
       messageCode,
       timestamp: new Date().toISOString(),
-      client: {
-         userId: respondedClient.userId,
-         clientId: respondedClient.clientId,
-         stage: respondedClient.stage,
-         message: respondedClient.message,
-         order: respondedClient.order,
-         response: respondedClient.response,
-      },
+      userId: respondedClient.userId,
+      clientId: respondedClient.clientId,
+      stage: respondedClient.stage,
+      message: respondedClient.message,
+      order: respondedClient.order,
+      response: respondedClient.response,
    };
 }
 

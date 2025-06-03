@@ -9,11 +9,12 @@ export function useFormChatbot() {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
 
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
-
-  function communicateWithBot(client: ClientChatbotDTO): ClientChatbotDTO {
+  async function communicateWithBot(
+    client: ClientChatbotDTO,
+  ): Promise<ClientChatbotDTO> {
     if (Object.keys(client).length === 0) return defaultClient
-    const response = chatbotService
-      .sendMessageToBot(client, httpClientProvider)
+    const response = await chatbotService
+      .sendMessageToBot({ client }, httpClientProvider)
       .catch((err) => {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
@@ -28,7 +29,6 @@ export function useFormChatbot() {
     }
     return defaultClient
   }
-
   return {
     communicateWithBot,
     anchorEl,
