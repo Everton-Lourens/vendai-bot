@@ -46,10 +46,6 @@ export function Chat() {
       _id: '1',
       chatbotMessage: 'Olá! Como posso te ajudar?',
     },
-    {
-      _id: '2',
-      clientMessage: 'Olá! Eu gostaria de saber mais sobre os seus serviços.',
-    },
   ]
 
   return (

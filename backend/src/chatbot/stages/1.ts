@@ -7,7 +7,11 @@ import { ChatbotMessages } from '../messages';
 export const initialStage = {
   async exec({ client }: { client: ChatbotClient }): Promise<{ respondedClient: ChatbotClient }> {
     const chatbotMessages = new ChatbotMessages({ client });
-    const response = await chatbotMessages.getResponse(1, 1);
+    const response = await chatbotMessages.getResponse(1, 1) +
+      '\n——————————\n' +
+      '1️⃣ –> FAZER PEDIDO\n' +
+      '2️⃣ → TAXA de Entrega\n' +
+      '3️⃣ → FALAR C/ Atendente';
 
     storage[client.clientId].stage = 1;
 

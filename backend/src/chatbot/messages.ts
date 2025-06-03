@@ -3,6 +3,7 @@ import { ListMessageService } from "../useCases/Message/ListMessages/ListMessage
 import { Chatbot, ChatbotClient, Message, Order } from "../entities/chatbot";
 import { numberEmoji } from "../helpers/numberEmoji";
 import { ListProductsService } from "../useCases/Product/ListProducts/ListProductsService.service";
+import { format } from "../helpers/format";
 
 export class ChatbotMessages {
     public client: ChatbotClient
@@ -29,6 +30,10 @@ export class ChatbotMessages {
                 searchString: "",
                 userId: this.client.userId,
             });
+            this.arrayMessages = this.arrayMessages.map((item: Message) => ({
+                ...item,
+                text: format.insertLineBreaks(item.text)
+            }));
             return this.arrayMessages;
         } catch (error) {
             console.log(error.message);

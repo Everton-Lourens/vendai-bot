@@ -12,7 +12,10 @@ export const stageTwo = {
       storage[client.clientId].stage = 2;
       const responseMessage = await chatbotMessages.getResponse(2, 1);
       const listProductMessage = await chatbotMessages.getListProductMessage();
-      chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
+      chatbotMessages.setResponse(`${responseMessage}\n——————————\n${listProductMessage}`);
+      console.log(`${responseMessage}\n——————————\n${listProductMessage}`);
+      console.log(`@@@@@@@@@@@@@@@@@@`);
+            console.log(await chatbotMessages.getResponse());
     } else {
       storage[client.clientId].stage = 3;
       storage[client.clientId].humanAttendant = true;
@@ -20,6 +23,7 @@ export const stageTwo = {
       chatbotMessages.setResponse(awaitAttendantMessage);
     }
     const response = await chatbotMessages.getResponse();
+
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,

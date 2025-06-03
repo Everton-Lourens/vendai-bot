@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import style from './ChatTableComponent.module.scss'
 import { Column } from './interfaces'
 import { Skeleton } from '@mui/material'
@@ -23,41 +23,15 @@ export function ChatTableComponent({
   const [message, setMessage] = useState('')
 
   const [client, setClient] = useState<ClientChatbotDTO>(defaultClient)
-  useEffect(() => {
-    if (rows.length === 0 && !loading) {
-      const initialMessage = {
-        _id: '1',
-        chatbotMessage: 'Olá! Como posso te ajudar?',
-      }
-      rows.push(initialMessage)
-    }
-  }, [rows, loading])
 
   const formatText = (text?: string) => {
     if (!text) return null
-    if (!text.includes('\n')) text = insertLineBreaks(text)
     return text.split('\n').map((line, index) => (
       <span key={index}>
         {line}
         <br />
       </span>
     ))
-    function insertLineBreaks(text: string, maxLength: number = 35): string {
-      let result = ''
-      let lastBreak = 0
-
-      for (let i = 0; i < text.length; i++) {
-        // Quando atingirmos o limite mínimo de caracteres
-        if (i - lastBreak >= maxLength && text[i] === ' ') {
-          result += text.slice(lastBreak, i) + '\n'
-          lastBreak = i + 1 // pula o espaço
-        }
-      }
-
-      // Adiciona o restante
-      result += text.slice(lastBreak)
-      return result
-    }
   }
 
   const speakWithBot = async (message: string) => {

@@ -22,7 +22,7 @@ export const stageThree = {
         '——————————\n' +
         `Item: ${newItem.name}\n` +
         `Preço: R$${newItem.value},00\n` +
-        '——————————\n\n'
+        '——————————'
       );
     }
 
