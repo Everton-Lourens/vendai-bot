@@ -32,15 +32,32 @@ export function ChatTableComponent({
       rows.push(initialMessage)
     }
   }, [rows, loading])
-  useEffect(() => {
-    console.log('client atualizado:', client)
-  }, [client])
 
-  function formatText(text: string) {
-    return (
-      text.trim().replace(/\n/g, '<br />') ||
-      'Resposta do chatbot não disponível'
-    )
+  const formatText = (text?: string) => {
+    if (!text) return null
+    if (!text.includes('\n')) text = insertLineBreaks(text)
+    return text.split('\n').map((line, index) => (
+      <span key={index}>
+        {line}
+        <br />
+      </span>
+    ))
+    function insertLineBreaks(text: string, maxLength: number = 35): string {
+      let result = ''
+      let lastBreak = 0
+
+      for (let i = 0; i < text.length; i++) {
+        // Quando atingirmos o limite mínimo de caracteres
+        if (i - lastBreak >= maxLength && text[i] === ' ') {
+          result += text.slice(lastBreak, i) + '\n'
+          lastBreak = i + 1 // pula o espaço
+        }
+      }
+
+      // Adiciona o restante
+      result += text.slice(lastBreak)
+      return result
+    }
   }
 
   const speakWithBot = async (message: string) => {
