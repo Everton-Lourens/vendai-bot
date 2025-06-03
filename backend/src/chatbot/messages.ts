@@ -40,9 +40,13 @@ export class ChatbotMessages {
             if (this.productsListMessage.length > 0)
                 return this.productsListMessage
 
-            this.arrayProducts = await this.getArrayProduct()
+            this.arrayProducts = await this.getArrayProduct();
+            if (!this.arrayProducts || this.arrayProducts.length === 0) {
+                this.productsListMessage = `Nenhum produto encontrado.`;
+                return this.productsListMessage;
+            }
             this.productsListMessage = this.arrayProducts.map((item: any, index: number) =>
-                `${numberEmoji(index)} → ${item?.description}, R$${item?.price},00`
+                `${numberEmoji(index)} → ${item?.name}, R$${item?.value},00`
             ).join('\n') ||
                 `Erro ao buscar mensagem da lista de produtos`;
             return this.productsListMessage;
