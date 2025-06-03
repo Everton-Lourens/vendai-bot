@@ -36,6 +36,13 @@ export function ChatTableComponent({
     console.log('client atualizado:', client)
   }, [client])
 
+  function formatText(text: string) {
+    return (
+      text.trim().replace(/\n/g, '<br />') ||
+      'Resposta do chatbot não disponível'
+    )
+  }
+
   const speakWithBot = async (message: string) => {
     if (!message || message.trim() === '') {
       return false
@@ -48,8 +55,7 @@ export function ChatTableComponent({
     client.message = message
     const chatbotResponse = await chatbot(client)
     setClient((prev) => ({ ...prev, ...chatbotResponse }))
-    const response =
-      chatbotResponse?.response || 'Resposta do chatbot não disponível'
+    const response = formatText(chatbotResponse?.response)
     const newMessageChatbot = {
       _id: (rows.length + 1).toString(),
       chatbotMessage: response,

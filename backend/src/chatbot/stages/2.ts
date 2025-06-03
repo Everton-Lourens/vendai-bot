@@ -20,7 +20,6 @@ export const stageTwo = {
       chatbotMessages.setResponse(awaitAttendantMessage);
     }
     const response = await chatbotMessages.getResponse();
-        console.log(response);
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,
