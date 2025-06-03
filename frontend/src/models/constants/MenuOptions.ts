@@ -6,6 +6,7 @@ import {
   faTruckField,
   faUsers,
   faRobot,
+  faGear,
 } from '@fortawesome/free-solid-svg-icons'
 import { IMenuOption } from '../interfaces/IMenuOption'
 
@@ -17,9 +18,15 @@ export const menuOptions: IMenuOption[] = [
     name: 'dashboard',
   },
   {
+    title: 'Chat',
+    link: '/chat',
+    icon: faRobot,
+    name: 'chat',
+  },
+  {
     title: 'Chatbot',
     link: '/chatbot',
-    icon: faRobot,
+    icon: faGear,
     name: 'chatbot',
   },
   {
