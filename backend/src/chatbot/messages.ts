@@ -105,7 +105,6 @@ export class ChatbotMessages {
 
             if (!this.arrayMessages.length) {
                 this.arrayMessages = await this.getMessageStored();
-                console.log(this.arrayMessages);
             }
             this.response = (
                 this.arrayMessages.find((message) => message.stage === stage && message.position === position)?.text ||

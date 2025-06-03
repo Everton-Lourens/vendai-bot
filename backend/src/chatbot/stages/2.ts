@@ -11,9 +11,6 @@ export const stageTwo = {
     if (client.message === '1') {
       storage[client.clientId].stage = 2;
       const responseMessage = await chatbotMessages.getResponse(2, 1);
-      console.log('@@@@@@@@@@@@');
-      console.log(responseMessage);
-      console.log('@@@@@@@@@@@@');
       const listProductMessage = await chatbotMessages.getListProductMessage();
       chatbotMessages.setResponse(`${responseMessage}\n\n${listProductMessage}`);
     } else {

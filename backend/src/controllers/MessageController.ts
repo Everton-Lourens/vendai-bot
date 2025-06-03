@@ -5,31 +5,9 @@ import { UpdateNewMessageService } from '../useCases/Message/UpdateMessage/Updat
 import { DeleteMessageService } from '../useCases/Message/DeleteMessage/DeleteMessageService.service'
 import { ListMessageService } from '../useCases/Message/ListMessages/ListMessageService.service'
 import { ListDefaultMessageService } from '../useCases/Message/ListDefaultMessages/ListDefaultMessagesService.service'
-import { chatbot } from '../chatbot'
-import { ChatbotClient } from '../entities/chatbot'
-import { logger } from '../helpers/logger'
 
 export class MessageController {
-  async sendMessageToChatbot(req: Request, res: Response): Promise<Response> {
-    const client: ChatbotClient = req?.body?.params
-    try {
-      const responseData = await chatbot({ client });
-      return res.status(201).json({
-        data: responseData
-      });
-    } catch (error) {
-      res.status(422).end();
-      return error
-    }
-  }
   async listMessages(req: Request, res: Response): Promise<Response> {
-    return res.status(200).json({
-      success: true,
-      message: 'Usuário autenticado com sucesso',
-      user: req.user,
-      params: req?.params,
-      headers: req?.headers,
-    })
     const { searchString } = req.query as any
     const { userId } = req.user
 

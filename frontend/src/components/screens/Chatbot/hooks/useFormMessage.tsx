@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import { AlertContext } from '../../../../contexts/alertContext'
 import { IMessage } from '../../../../models/interfaces/IMessage'
 import { messageService } from '../../../../services/messageService'
-import { chatbotService } from '../../../../services/chatbotService'
 import { httpClientProvider } from '../../../../providers/HttpClientProvider'
 import { ALERT_NOTIFY_TYPE } from '../../../../models/enums/AlertNotifyType'
 
