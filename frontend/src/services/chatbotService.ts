@@ -2,26 +2,23 @@ import {
   CreateMessageDTO,
   DeleteMessageDTO,
   GetAllMessagesDTO,
-  SendMessageToBot,
   UpdateMessageDTO,
 } from '../dtos/MessageDTOS'
+import { ClientChatbotDTO } from '../dtos/ClientDTOS'
 import { IHttpClientProvider } from './../providers/HttpClientProvider/IHttpClientProvider'
 import { usersService } from './usersService'
 
 export const chatbotService = {
   userInfo: usersService.getUserInfo(),
   sendMessageToBot(
-    { message }: SendMessageToBot,
+    { client }: ClientChatbotDTO,
     httpClientProvider: IHttpClientProvider,
   ) {
     const params = {
+      ...client,
       userId: this.userInfo?._id,
-      client: {
-        message,
-        userId: this.userInfo?._id,
-        clientId: this.userInfo?._id, // Assuming clientId is the same as userId
-        userName: this.userInfo?.name,
-      },
+      clientId: this.userInfo?._id, // Assuming clientId is the same as userId
+      userName: this.userInfo?.name,
     }
 
     return httpClientProvider.post('/chat/chatbot', {

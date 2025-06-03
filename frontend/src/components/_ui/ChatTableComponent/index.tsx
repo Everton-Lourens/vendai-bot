@@ -2,16 +2,16 @@ import { useState } from 'react'
 import style from './ChatTableComponent.module.scss'
 import { Column } from './interfaces'
 import { Skeleton } from '@mui/material'
+import { ClientChatbotDTO, defaultClient } from '../../../dtos/ClientDTOS'
 
 interface Props {
   columns: Column[]
   rows: any[]
   loading: boolean
-  chatbot: (message: string) => void
+  chatbot: (client: ClientChatbotDTO) => ClientChatbotDTO
   emptyText?: string
   heightSkeleton?: number
 }
-
 export function ChatTableComponent({
   columns,
   rows,
@@ -21,16 +21,33 @@ export function ChatTableComponent({
   heightSkeleton = 30,
 }: Props) {
   const [message, setMessage] = useState('')
-  const communicateWithBot = async (message: string) => {
+
+  const [client, setClient] = useState<ClientChatbotDTO>(defaultClient)
+
+  const speakWithBot = async (message: string) => {
     if (!message || message.trim() === '') {
       return false
     }
+    console.log('Enviando mensagem para o chatbot:', message)
     const newMessageClient = {
       _id: (rows.length + 1).toString(),
       clientMessage: message,
     }
     rows.push(newMessageClient)
-    const response = chatbot(message)
+    if (client?.client) {
+      setClient((prev: ClientChatbotDTO) => ({
+        ...prev,
+        client: {
+          ...prev.client!,
+          message,
+        },
+      }))
+    }
+    setClient(client)
+    const clientResponse = chatbot(client)
+    setClient(clientResponse)
+    console.log(clientResponse)
+    const response = client?.response || 'Resposta do chatbot não disponível'
     const newMessageChatbot = {
       _id: (rows.length + 1).toString(),
       chatbotMessage: response,
@@ -47,9 +64,7 @@ export function ChatTableComponent({
               <tr
                 key={row._id}
                 className={
-                  row['clientMessage']
-                    ? style.bubbleClient
-                    : style.bubbleChatbot
+                  row.clientMessage ? style.bubbleClient : style.bubbleChatbot
                 }
               >
                 {columns.map((column) => {
@@ -113,7 +128,7 @@ export function ChatTableComponent({
               onChange={(e) => setMessage(e.target.value)}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
-                  communicateWithBot(message)
+                  speakWithBot(message)
                   setMessage('')
                 }
               }}
@@ -121,7 +136,7 @@ export function ChatTableComponent({
             <button
               className={style.sendButton}
               onClick={() => {
-                communicateWithBot(message)
+                speakWithBot(message)
                 setMessage('')
               }}
             >

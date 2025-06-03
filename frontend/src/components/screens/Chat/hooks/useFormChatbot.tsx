@@ -3,15 +3,17 @@ import { AlertContext } from '../../../../contexts/alertContext'
 import { chatbotService } from '../../../../services/chatbotService'
 import { httpClientProvider } from '../../../../providers/HttpClientProvider'
 import { ALERT_NOTIFY_TYPE } from '../../../../models/enums/AlertNotifyType'
+import { ClientChatbotDTO, defaultClient } from '../../../../dtos/ClientDTOS'
 
 export function useFormChatbot() {
   const { alertNotifyConfigs, setAlertNotifyConfigs } = useContext(AlertContext)
 
   const [anchorEl, setAnchorEl] = useState<Element | null>(null)
 
-  async function communicateWithBot(message: string): Promise<string | false> {
-    const response = await chatbotService
-      .sendMessageToBot({ message }, httpClientProvider)
+  function communicateWithBot(client: ClientChatbotDTO): ClientChatbotDTO {
+    if (Object.keys(client).length === 0) return defaultClient
+    const response = chatbotService
+      .sendMessageToBot(client, httpClientProvider)
       .catch((err) => {
         setAlertNotifyConfigs({
           ...alertNotifyConfigs,
@@ -19,8 +21,12 @@ export function useFormChatbot() {
           type: ALERT_NOTIFY_TYPE.ERROR,
           text: `Erro ao tentar enviar mensagem - ${err?.message}`,
         })
+        return defaultClient
       })
-    return response.data.data.client.response || false
+    if (response && (response as any).data && (response as any).data.data) {
+      return (response as any).data.data
+    }
+    return defaultClient
   }
 
   return {

@@ -10,8 +10,6 @@ import { useFormChatbot } from './hooks/useFormChatbot'
 export function Chat() {
   const { communicateWithBot } = useFormChatbot()
   const { loadingMessages } = useMessageList({ otherFilters: null })
-  //const { loadingMessages, messages } = useMessageList({ otherFilters: null })
-
   const {
     formModalOpened,
     messageDataToEdit,
@@ -30,28 +28,29 @@ export function Chat() {
 
   const columns = [
     {
-      headerName: "Chatbot",
-      field: "chatbotMessage",
-      valueFormatter: ({ value }) => `(${'Chatbot'}): ${value}`,
-      cellClass: () => "light-blue"
+      headerName: 'Chatbot',
+      field: 'chatbotMessage',
+      valueFormatter: ({ value }: { value: string }) =>
+        `(${'Chatbot'}): ${value}`,
+      cellClass: () => 'light-blue',
     },
     {
-      headerName: "Cliente",
-      field: "clientMessage",
-      valueFormatter: ({ value }) => `(${'Você'}): ${value}`,
-      cellClass: () => "light-blue"
+      headerName: 'Cliente',
+      field: 'clientMessage',
+      valueFormatter: ({ value }: { value: string }) => `(${'Você'}): ${value}`,
+      cellClass: () => 'light-blue',
     },
-  ];
+  ]
   const messages = [
     {
-      _id: "1",
-      clientMessage: "Olá!"
+      _id: '1',
+      clientMessage: 'Olá!',
     },
     {
-      _id: "2",
-      chatbotMessage: "Olá! Como posso te ajudar?"
+      _id: '2',
+      chatbotMessage: 'Olá! Como posso te ajudar?',
     },
-  ];
+  ]
 
   return (
     <>
