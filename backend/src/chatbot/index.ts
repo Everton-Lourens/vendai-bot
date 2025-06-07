@@ -7,7 +7,6 @@ export const chatbot = async ({ client }: { client: ChatbotClient }): Promise<Bo
    try {
       const currentStage = await getStage({ client });
       const { respondedClient } = await stages[currentStage].stage.exec({ client });
-
       const successResponse = formatApiResponse({
          status: 200,
          messageCode: 'Operação realizada com sucesso',

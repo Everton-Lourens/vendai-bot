@@ -1,5 +1,5 @@
 import { ChatbotClient } from '../entities/chatbot';
-import { initialStage, stageTwo, stageThree, stageFour } from './stages/index';
+import { initialStage, stageOne, stageTwo, stageThree } from './stages/index';
 import { storage } from './storage';
 
 export const stages = [
@@ -9,15 +9,15 @@ export const stages = [
   },
   {
     description: 'Chatbot or human service?',
-    stage: stageTwo,
+    stage: stageOne,
   },
   {
     description: 'Choose the items',
-    stage: stageThree,
+    stage: stageTwo,
   },
   {
     description: 'Attendant stage',
-    stage: stageFour,
+    stage: stageThree,
   },
 ];
 

@@ -77,7 +77,6 @@ export class ChatbotMessages {
             return error.message;
         }
     }
-
     async getProductByCode(code: string): Promise<any> {
         if (this.product?.code === code)
             return this.product;
@@ -109,7 +108,7 @@ export class ChatbotMessages {
     }
     async getResponse(stage?: number, position?: number): Promise<string> {
         if (!!stage && !!position) {
-            if (stage <= 0 || stage >= 4 || position <= 0 || position >= 4)
+            if (stage <= 0 || stage >= 5 || position <= 0 || position >= 5)
                 throw new Error("Valores inválidos: stage e position");
 
             if (!this.arrayMessages.length) {
@@ -121,7 +120,7 @@ export class ChatbotMessages {
             );
             return this.response;
         }
-        return this.response || `Erro ao buscar resposta`;
+        return this.response || `Informe o stage e position para buscar a mensagem.`;
     }
 }
 

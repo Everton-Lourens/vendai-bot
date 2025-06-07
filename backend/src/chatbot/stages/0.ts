@@ -1,16 +1,20 @@
+import { container } from 'tsyringe';
+import { storage } from '../storage';
+import { ListMessageService } from '../../useCases/Message/ListMessages/ListMessageService.service';
 import { ChatbotClient } from '../../entities/chatbot';
 import { ChatbotMessages } from '../messages';
-import { storage } from '../storage';
 
-export const stageThree = {
+export const initialStage = {
   async exec({ client }: { client: ChatbotClient }): Promise<{ respondedClient: ChatbotClient }> {
     const chatbotMessages = new ChatbotMessages({ client });
-    const item = storage[client.clientId].order.items[0];
-    const response = await chatbotMessages.getResponse(3, 1) +
+    const response = await chatbotMessages.getResponse(1, 1) +
       '\n——————————\n' +
-      `Item: ${item.name}\n` +
-      `Preço: R$${item.value},00\n` +
-      '——————————';
+      '1️⃣ –> FAZER PEDIDO\n' +
+      '2️⃣ → TAXA de Entrega\n' +
+      '3️⃣ → FALAR C/ Atendente';
+
+    storage[client.clientId].stage = 1;
+
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,
