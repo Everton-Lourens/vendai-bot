@@ -17,7 +17,9 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter()
   const title = 'Sistema de vendas'
   const restrictLayout =
-    router.route !== '/login' && router.route !== '/createAccount'
+    router.route !== '/login' &&
+    router.route !== '/createAccount' &&
+    router.route !== '/chat'
   const [menuOptionsOpened, setMenuOptionsOpened] = useState<boolean>(false)
 
   function handleOpenMenuOptions() {

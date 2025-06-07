@@ -1,8 +1,6 @@
 import { ModalCreateNewMessage } from './ModalCreateNewMessage'
 import { ChatTableComponent } from '../../_ui/ChatTableComponent'
 import style from './Chat.module.scss'
-import { ListMobile } from '../../_ui/ListMobile'
-import { useFieldsMobile } from './hooks/useFieldsMobile'
 import { useMessageList } from '../../../hooks/useMessageList'
 import { useEditMessage } from './hooks/useEditMessage'
 import { useFormChatbot } from './hooks/useFormChatbot'
@@ -23,8 +21,6 @@ export function Chat() {
     handleDeleteMessage,
   })
   */
-
-  const fieldsMobile = useFieldsMobile()
 
   const columns = [
     {
@@ -56,16 +52,6 @@ export function Chat() {
           chatbot={communicateWithBot}
           columns={columns}
           rows={messages}
-          emptyText="Nenhuma mensagem cadastrada"
-        />
-      </div>
-
-      <div className={style.viewMobile}>
-        <ListMobile
-          collapseItems={columns}
-          itemFields={fieldsMobile}
-          items={messages}
-          loading={loadingMessages}
           emptyText="Nenhuma mensagem cadastrada"
         />
       </div>

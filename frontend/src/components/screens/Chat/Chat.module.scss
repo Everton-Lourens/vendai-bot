@@ -46,13 +46,6 @@
 }
 
 @media (max-width: 815px) {
-  .viewMobile {
-    display: flex;
-  }
-  .viewDesktop {
-    display: none;
-  }
-
   .actionsContainer {
     flex-direction: column;
     width: 100%;

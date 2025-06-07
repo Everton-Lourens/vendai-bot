@@ -11,7 +11,7 @@
       &:not(.emptyRow) {
         box-shadow: 1px 3px 4px rgba(0 0 0 / 0.35);
       }
-      
+
       border-radius: 20px;
     }
   }
@@ -86,51 +86,68 @@
 }
 
 .chatInputContainer {
-  position: absolute;
+  position: fixed;
   top: 93%;
-  left: 50%;
+  left: 55%;
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 60%;
+  width: 90%;
   max-width: 100%;
   padding: 10px;
   background-color: transparent;
   z-index: 1;
 
-  @media (min-width: 768px) {
-    left: 60%;
+  @media (max-width: 767px) {
+    width: 90%;
   }
 
   @media (min-width: 1024px) {
-    left: 60%;
+    left: 53%;
+    width: 60%;
   }
 
   @media (min-width: 1440px) {
-    left: 50%;
+    left: 53%;
+    width: 60%;
   }
 }
 
-.chat {
-  max-height: 100%;
+.chatContainer {
   overflow-y: auto;
   flex-direction: column;
   gap: 8px;
   display: flex;
-  margin-bottom: 7%;
+  margin-top: 100%;
+  margin-bottom: 5%;
 }
 
-.bubbleClient {
-  margin-right: 10%;
-  margin-left: auto;
-  background-color: rgba(rgb(0, 0, 97), 0.3);
-}
+.bubble {
+  position: relative;
+  animation: slideUp 0.5s ease-in-out;
+  
+  &Client {
+    margin-left: auto;
+    background-color: rgba(rgb(0, 10, 150), 0.3);
+  }
 
-.bubbleChatbot {
-  margin-left: 10%;
-  margin-right: auto;
-  background-color: rgba(green, 0.3);
+  &Chatbot {
+    margin-right: auto;
+    background-color: rgba(green, 0.3);
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(20px);
+      opacity: 0;
+    }
+
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }
 
 

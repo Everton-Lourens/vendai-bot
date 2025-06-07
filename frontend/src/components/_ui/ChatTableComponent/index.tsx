@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import style from './ChatTableComponent.module.scss'
 import { Column } from './interfaces'
 import { Skeleton } from '@mui/material'
@@ -20,8 +20,8 @@ export function ChatTableComponent({
   emptyText,
   heightSkeleton = 30,
 }: Props) {
+  const bottomRef = useRef<HTMLDivElement | null>(null)
   const [message, setMessage] = useState('')
-
   const [client, setClient] = useState<ClientChatbotDTO>(defaultClient)
 
   const formatText = (text?: string) => {
@@ -53,69 +53,82 @@ export function ChatTableComponent({
     }
     rows.push(newMessageChatbot)
   }
+  useEffect(() => {
+    setTimeout(() => {
+      bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, 200)
+  }, [message, rows])
   return (
-    <table style={loading ? { opacity: 0.5 } : {}} className={style.table}>
-      <tbody className={style.chat}>
-        {rows.length > 0 &&
-          !loading &&
-          rows?.map((row) => {
-            return (
-              <tr
-                key={row._id}
-                className={
-                  row.clientMessage ? style.bubbleClient : style.bubbleChatbot
-                }
-              >
-                {columns.map((column) => {
-                  return (
-                    <td
-                      className={column?.cellClass?.({
-                        value: row[column.field],
-                        data: row,
-                      })}
-                      key={column.field}
-                      style={{ flex: 1 }}
-                    >
-                      {column?.valueFormatter?.({
-                        value: row[column.field],
-                        data: row,
-                      }) && row[column.field]}
-                    </td>
-                  )
-                })}
-              </tr>
-            )
-          })}
-        {rows.length === 0 && !loading && (
+    <div style={{ overflowY: 'auto' }}>
+      <table style={loading ? { opacity: 0.5 } : {}} className={style.table}>
+        <tbody className={style.chatContainer}>
+          {rows.length > 0 &&
+            !loading &&
+            rows?.map((row) => {
+              return (
+                <tr
+                  key={row._id}
+                  className={
+                    row.clientMessage ? style.bubbleClient : style.bubbleChatbot
+                  }
+                >
+                  {columns.map((column) => {
+                    return (
+                      <td
+                        className={column?.cellClass?.({
+                          value: row[column.field],
+                          data: row,
+                        })}
+                        key={column.field}
+                        style={{ flex: 1 }}
+                      >
+                        {column?.valueFormatter?.({
+                          value: row[column.field],
+                          data: row,
+                        }) && row[column.field]}
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+
           <tr className={style.emptyRow}>
             <td className={style.emptyCell} colSpan={columns.length}>
-              <p>{emptyText || 'Nenhum item encontrado'}</p>
+              <div ref={bottomRef} />
             </td>
           </tr>
-        )}
+          {rows.length === 0 && !loading && (
+            <tr className={style.emptyRow}>
+              <td className={style.emptyCell} colSpan={columns.length}>
+                <p>{emptyText || 'Nenhum item encontrado'}</p>
+              </td>
+            </tr>
+          )}
 
-        {loading &&
-          [1, 2, 3, 4, 5].map((item) => {
-            return (
-              <tr key={item}>
-                {columns.map((column) => {
-                  return (
-                    <td
-                      className={style.skeleton}
-                      key={column.field}
-                      style={{ flex: 1 }}
-                    >
-                      <Skeleton
-                        variant="rounded"
-                        height={heightSkeleton}
-                        sx={{ fontSize: '1rem', borderRadius: 15 }}
-                      />
-                    </td>
-                  )
-                })}
-              </tr>
-            )
-          })}
+          {loading &&
+            [1, 2, 3, 4, 5].map((item) => {
+              return (
+                <tr key={item}>
+                  {columns.map((column) => {
+                    return (
+                      <td
+                        className={style.skeleton}
+                        key={column.field}
+                        style={{ flex: 1 }}
+                      >
+                        <Skeleton
+                          variant="rounded"
+                          height={heightSkeleton}
+                          sx={{ fontSize: '1rem', borderRadius: 15 }}
+                        />
+                      </td>
+                    )
+                  })}
+                </tr>
+              )
+            })}
+        </tbody>
         {!loading && (
           <div className={style.chatInputContainer}>
             <input
@@ -143,7 +156,8 @@ export function ChatTableComponent({
             </button>
           </div>
         )}
-      </tbody>
-    </table>
+      </table>
+      <div ref={bottomRef} />
+    </div>
   )
 }
