@@ -1,8 +1,13 @@
 export default [
   {
+    stage: 4,
+    position: 1,
+    text: 'TEXTO 4, POSIÇÃO 1',
+  },
+  {
     stage: 3,
     position: 1,
-    text: 'TEXTO 3, POSIÇÃO 1',
+    text: '(Stage atendente) Aguarde um momento, você será atendido por um atendente humano. 🧑‍💼',
   },
   {
     stage: 2,
