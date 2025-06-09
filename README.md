@@ -48,10 +48,8 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 `GET - http://localhost:3000`
 
 ### Endpoint Back-End
-
-**Docker (nginx)**: `POST - http://localhost:9999/v1/chat`
-
-**Localmente**: `POST - http://localhost:9999/v1/chat`
+**Docker (nginx)**: `POST - http://localhost:9999/chat/chatbot`
+**Localmente**: `POST - http://localhost:9999/chat/chatbot`
 
 ## Como utilizar Localmente
 - **Descrição**: Instale as dependências "`npm run setup`" e utilize "`npm run start`" para iniciar o Front-End *(localhost:3000)* e o Back-End *(localhost:9999)* ao mesmo tempo com a lib de desenvolvimento "`concurrently`".
