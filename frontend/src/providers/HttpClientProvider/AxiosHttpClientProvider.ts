@@ -6,7 +6,10 @@ import { httpClientProvider } from '.'
 
 export class AxiosHttpClientProvider implements IHttpClientProvider {
   private httpIntance: Axios = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_BASE_URL,
+    baseURL:
+      process.env.NODE_ENV === 'development'
+        ? 'http://localhost:9999/'
+        : process.env.NEXT_PUBLIC_BASE_URL,
   })
 
   private static _instance = new AxiosHttpClientProvider()
