@@ -12,8 +12,8 @@ export const stageOne = {
       const responseMessage = await chatbotMessages.getResponse(2, 1);
       const listProductMessage = await chatbotMessages.getListProductMessage();
       chatbotMessages.setResponse(
-        `${responseMessage}\n
-        ——————————\n
+        `${responseMessage}
+        ——————————
         ${listProductMessage}
         `);
     } else {

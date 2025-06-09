@@ -47,7 +47,7 @@ export class ChatbotMessages {
 
             this.arrayProducts = await this.getArrayProduct();
             if (!this.arrayProducts || this.arrayProducts.length === 0) {
-                this.productsListMessage = `Nenhum produto encontrado.`;
+                this.productsListMessage = `Nenhum produto encontrado.\nCadastre um produto na página inicial.`;
                 return this.productsListMessage;
             }
             this.productsListMessage = this.arrayProducts.map((item: any, index: number) =>
