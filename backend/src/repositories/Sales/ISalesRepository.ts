@@ -6,7 +6,25 @@ export interface INewSaleDTO {
   paymentType: string
   totalValue: number
   userId: string
+  code?: string
+}
+
+export interface ICompletedSaleDTO {
+  client: null
+  products: {
+    _id: string
+    name: string
+    value: number
+    amount: number
+  }[]
+  paymentType: string
+  totalValue: number
+  status: null
+  user: string
   code: string
+  _id: string
+  date: Date
+  __v: number
 }
 
 export interface FiltersGetSales {
