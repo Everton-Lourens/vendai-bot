@@ -53,12 +53,12 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 
 **Localmente**: `POST - http://localhost:9999/v1/chat`
 
-## Como utilizar com Docker
+## Como utilizar com Docker (INDISPONÍVEL NO MOMENTO)
 
 ```bash
-git clone https://github.com/Everton-Lourens/vendai-bot.git
-cd vendai-bot
-docker-compose up --build
+#git clone https://github.com/Everton-Lourens/vendai-bot.git
+#cd vendai-bot
+#docker-compose up --build
 ```
 
 ## Como utilizar Localmente
