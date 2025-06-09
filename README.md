@@ -53,14 +53,6 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 
 **Localmente**: `POST - http://localhost:9999/v1/chat`
 
-## Como utilizar com Docker (INDISPONÍVEL NO MOMENTO)
-
-```bash
-#git clone https://github.com/Everton-Lourens/vendai-bot.git
-#cd vendai-bot
-#docker-compose up --build
-```
-
 ## Como utilizar Localmente
 - **Descrição**: Instale as dependências "`npm run setup`" e utilize "`npm run start`" para iniciar o Front-End *(localhost:3000)* e o Back-End *(localhost:9999)* ao mesmo tempo com a lib de desenvolvimento "`concurrently`".
 
@@ -69,4 +61,12 @@ git clone https://github.com/Everton-Lourens/vendai-bot.git
 cd vendai-bot
 #npm run setup
 #npm run start
+```
+
+## Como utilizar com Docker (INDISPONÍVEL NO MOMENTO)
+
+```bash
+#git clone https://github.com/Everton-Lourens/vendai-bot.git
+#cd vendai-bot
+#docker-compose up --build
 ```
