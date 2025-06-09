@@ -49,6 +49,7 @@ Toda pagina estática pode ser armazenada em cache (Redis ou Memcached) para mel
 
 ### Endpoint Back-End
 **Docker (nginx)**: `POST - http://localhost:9999/chat/chatbot`
+
 **Localmente**: `POST - http://localhost:9999/chat/chatbot`
 
 ## Como utilizar Localmente
