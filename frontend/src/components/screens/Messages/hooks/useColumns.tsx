@@ -2,7 +2,7 @@ import {
   IColumn,
   CellFunctionParams,
 } from '../../../../models/interfaces/IColumn'
-import style from '../Chatbot.module.scss'
+import style from '../Messages.module.scss'
 import { IMessage } from '../../../../models/interfaces/IMessage'
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'

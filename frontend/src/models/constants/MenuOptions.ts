@@ -24,10 +24,10 @@ export const menuOptions: IMenuOption[] = [
     name: 'chat',
   },
   {
-    title: 'Chatbot',
-    link: '/chatbot',
+    title: 'Mensagens',
+    link: '/mensagens',
     icon: faGear,
-    name: 'chatbot',
+    name: 'mensagens',
   },
   {
     title: 'Vendas',

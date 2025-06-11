@@ -18,4 +18,13 @@ export const dashboardService = {
       params,
     })
   },
+  getTokenSession(httpClientProvider: IHttpClientProvider) {
+    const params = {
+      userId: this.userInfo?._id,
+    }
+
+    return httpClientProvider.get('/dashboard/formasDePagamento/', {
+      params,
+    })
+  },
 }

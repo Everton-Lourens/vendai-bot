@@ -1,10 +1,10 @@
-import { Chatbot } from '../../src/components/screens/Chatbot'
+import { Messages } from '../../src/components/screens/Messages'
 import { usersService } from '../../src/services/usersService'
 
 export default function ChatbotPage() {
   return (
     <>
-      <Chatbot />
+      <Messages />
     </>
   )
 }

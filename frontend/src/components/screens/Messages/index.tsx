@@ -4,14 +4,14 @@ import { TableComponent } from '../../_ui/TableComponent'
 import { IColumn } from '../../../models/interfaces/IColumn'
 import { useColumns } from './hooks/useColumns'
 import { FilterByName } from '../../_ui/FilterByName'
-import style from './Chatbot.module.scss'
+import style from './Messages.module.scss'
 import { ListMobile } from '../../_ui/ListMobile'
 import { useFieldsMobile } from './hooks/useFieldsMobile'
 import { useMessageList } from '../../../hooks/useMessageList'
 import { useDeleteMessage } from './hooks/useDeleteMessage'
 import { useEditMessage } from './hooks/useEditMessage'
 
-export function Chatbot() {
+export function Messages() {
   const { loadingMessages, messages } = useMessageList({ otherFilters: null })
   const { handleDeleteMessage } = useDeleteMessage()
   const {
