@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { dashboardRoutes } from './dashboard'
+import { tokenRoutes } from './token'
 import { vendasRoutes } from './vendas'
 import { messagesRoutes } from './messages'
 import { chatRoutes } from './chat'
@@ -13,6 +14,7 @@ import { clientsRoutes } from './clients'
 const routes = Router()
 
 routes.use(authenticateRoutes)
+routes.use('/token', tokenRoutes)
 routes.use('/vendas', vendasRoutes)
 routes.use('/dashboard', dashboardRoutes)
 routes.use('/mensagens', messagesRoutes)
