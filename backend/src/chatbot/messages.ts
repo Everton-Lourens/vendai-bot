@@ -108,7 +108,7 @@ export class ChatbotMessages {
     }
     async getResponse(stage?: number, position?: number): Promise<string> {
         if (!!stage && !!position) {
-            if (stage <= 0 || stage >= 5 || position <= 0 || position >= 5)
+            if (stage < 0 || stage >= 4 || position <= 0 || position >= 5)
                 throw new Error("Valores inválidos: stage e position");
 
             if (!this.arrayMessages.length) {
@@ -116,7 +116,7 @@ export class ChatbotMessages {
             }
             this.response = (
                 this.arrayMessages.find((message) => message.stage === stage && message.position === position)?.text ||
-                `Erro ao buscar mensagem: stage ${stage} e position ${position}`
+                `Erro ao buscar mensagem: stage (${stage}) e position (${position})`
             );
             return this.response;
         }
