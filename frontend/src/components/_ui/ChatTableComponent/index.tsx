@@ -60,13 +60,6 @@ export function ChatTableComponent({
   }, [message, rows])
   return (
     <div style={{ overflowY: 'auto' }}>
-      <a
-        href="/"
-        className={style.sendButton}
-        style={{ position: 'fixed', top: '10px', left: '10px' }}
-      >
-        Voltar
-      </a>
       <table style={loading ? { opacity: 0.5 } : {}} className={style.table}>
         <tbody className={style.chatContainer}>
           {rows.length > 0 &&
