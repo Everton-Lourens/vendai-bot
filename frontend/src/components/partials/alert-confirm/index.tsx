@@ -4,7 +4,8 @@ import { Modal } from '@mui/material'
 import { AlertContext } from '@/contexts/alertContext'
 
 export function AlertConfirm() {
-  const { alertConfirmConfigs } = useContext(AlertContext)
+  const { alertDialogConfirmConfigs: alertConfirmConfigs } =
+    useContext(AlertContext)
 
   if (!alertConfirmConfigs.open) return <></>
 

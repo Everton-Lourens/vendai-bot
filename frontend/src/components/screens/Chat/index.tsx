@@ -1,26 +1,11 @@
-import { ModalCreateNewMessage } from './ModalCreateNewMessage'
 import { ChatTableComponent } from '../../_ui/ChatTableComponent'
 import style from './Chat.module.scss'
 import { useMessageList } from '../../../hooks/useMessageList'
-import { useEditMessage } from './hooks/useEditMessage'
 import { useFormChatbot } from './hooks/useFormChatbot'
 
 export function Chat() {
   const { communicateWithBot } = useFormChatbot()
   const { loadingMessages } = useMessageList({ otherFilters: null })
-  const {
-    formModalOpened,
-    messageDataToEdit,
-    setFormModalOpened,
-    setMessageDataToEdit,
-  } = useEditMessage()
-
-  /*
-  const columns: IColumn[] = useColumns({
-    handleEditMessage,
-    handleDeleteMessage,
-  })
-  */
 
   const columns = [
     {
@@ -55,17 +40,6 @@ export function Chat() {
           emptyText="Nenhuma mensagem cadastrada"
         />
       </div>
-
-      {formModalOpened && (
-        <ModalCreateNewMessage
-          messageDataToEdit={messageDataToEdit}
-          open={formModalOpened}
-          handleClose={() => {
-            setFormModalOpened(false)
-            setMessageDataToEdit(null)
-          }}
-        />
-      )}
     </>
   )
 }

@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8080
 
 # Comando para iniciar o backend @@@@@@@ npx tsc na pasta do backend
-CMD ["node", "src/server.js"]
+CMD ["node", "src/shared/http/server.js"]
