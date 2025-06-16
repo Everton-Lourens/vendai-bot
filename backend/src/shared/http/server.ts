@@ -8,7 +8,6 @@ import cors from 'cors'
 import cluster from 'cluster';
 import { errorHandler } from '../../middlewares/validate';
 import { logger } from '../../helpers/logger'
-import { migrateIfNeeded } from '../../database/postgres/connection'
 
 const TIMEOUT = Number(process.env.REQ_TIMEOUT) || 5000;
 const PORT = process.env.NODE_ENV === 'production' ? (Number(process.env.PORT) || 8080) : 9999;
@@ -42,7 +41,6 @@ const numForks = Number(process.env.CLUSTER_WORKERS) || 1;
 
 if (cluster.isPrimary && process.env.CLUSTER === 'true') {
   logger.info(`index.js: Primary ${process.pid} is running`);
-  migrateIfNeeded(); // Run migrations if needed (postgres run only once in primary process)
 
   for (let i = 0; i < numForks; i++) {
     cluster.fork();
