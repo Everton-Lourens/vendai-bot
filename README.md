@@ -2,6 +2,8 @@
 
 # Vendaí Bot
 
+- **Descrição do Projeto**: O Vendaí Bot é um sistema de vendas com painel completo e chatbot integrado. Por meio do chatbot, o cliente pode fazer pedidos, consultar o cardápio, ver a taxa de entrega ou falar com um atendente. Os pedidos realizados são enviados automaticamente para a API, que registra a compra e a exibe na aba de vendas do sistema em tempo real.
+
 🚧 **Em construção** 🚧  
 Este projeto está sendo ativamente desenvolvido. Algumas funcionalidades podem mudar ou ainda não estar disponíveis.
 
@@ -24,7 +26,6 @@ Este projeto está sendo ativamente desenvolvido. Algumas funcionalidades podem 
 - **Next.js**
 
 ## Visão Geral
-- **Descrição do Projeto**: O Vendaí Bot é um sistema de vendas com painel completo e chatbot integrado. Por meio do chatbot, o cliente pode fazer pedidos, consultar o cardápio, ver a taxa de entrega ou falar com um atendente. Os pedidos realizados são enviados automaticamente para a API, que registra a compra e a exibe na aba de vendas do sistema em tempo real.
 
 ## ⚙️ Funcionalidades
 
