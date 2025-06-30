@@ -7,10 +7,11 @@ export const stageThree = {
     const chatbotMessages = new ChatbotMessages({ client });
     const item = storage[client.clientId].order.items[0];
     const response = await chatbotMessages.getResponse(3, 1) +
-      '\n——————————\n' +
-      `Item: ${item.name}\n` +
-      `Preço: R$${item.value},00\n` +
-      '——————————';
+      (item ?
+        '\n——————————\n' +
+        `Item: ${item.name}\n` +
+        `Preço: R$${item.value},00\n` +
+        '——————————' : '');
     const respondedClient = {
       ...client,
       stage: storage[client.clientId].stage,
