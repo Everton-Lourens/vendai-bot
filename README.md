@@ -1,8 +1,8 @@
 ﻿﻿O Chatbot no Backend é flexível para integração com qualquer plataforma (Whatsapp, Telegram etc).
 
-# Vendaí Bot
+# Venda aí, bot!
 
-## Sistema de vendas com Chatbot integrado
+## Sistema de vendas com Chatbot integrado.
 
 ![Demonstração do Sistema](./exemple.jpg)
 
