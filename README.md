@@ -2,7 +2,7 @@
 
 # Vendaí Bot
 
-## Sistema de vendas com painel completo e chatbot integrado
+## Sistema de vendas com chatbot integrado
 
 ![Demonstração do Sistema](./exemple.jpg)
 
